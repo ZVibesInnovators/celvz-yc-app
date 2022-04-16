@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;800&family=Nunito:wght@200;300;400;600;700&family=Poppins:wght@300&display=swap');
+
+
+
+:root {
+  --primary-white: #fff;
+  --primary-orange: #D3006C;
+
+}
+
+body {
+  font-family: "Roboto Condesed" sans-serif;
+}
+
+/* ****************************NAVBAR*********************************************** */
+.logo {
+  width: 6.25rem;
+}
+
+/* *************MENU LINKS**************************** */
+nav a.nav.link {
+  font-size: 1.875rem;
+  font-weight: 400;
+  letter-spacing: 0.0375rem;
+  cursor: pointer;
+}
+
+.navbar-nav .nav-link,
+.navbar-nav a.btn,
+li a.sign-in {
+    height: 29px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    text-decoration: none
+}
+
+li a.sign-in {
+  color: var(--primary-orange) !important;
+}
+nav ul li {
+  text-transform: uppercase;
+}
+
+.navbar-nav>li>a {
+  margin-right: 1.875rem;
+  margin-left: 1.875rem;
+  color: var(--primary-white) !important;
+}
+
+.navbar-brand {
+  max-width: 17.25rem;
+  padding: 0 !important;
+  height: 4.5rem !important;
+}
+
+.search-bar {
+  margin-left: 1.875rem;
+}
+
+a.btn-orange {
+  border: 2px solid transparent;
+  background: var(--primary-orange);
+
+}
+
+.sign-in {
+  color: #D3006C;
+  font-weight: 400;
+  letter-spacing: 0.0375rem;
+  cursor: pointer;
+}
+
+/* ****************************HEADER*********************************************** */
+.main-nav {
+  z-index: 1;
+}
+.header-wraper {
+  background: url(logo-1.png) no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+}
+
+.header-bg {
+  background-color: rgb(0, 0, 0);
+  position: absolute;
+  width: 100vw;
+  height: 642px;
+  top: 0px;
+  display: flex;
+}
+
+.main-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-color: rgba(0, 0, 0, 0.62);
+}
+
+.sub-view {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 56px;
+  text-transform: capitalize;
+  color: #fff;
+}
+
+.big-view {
+  color: #fff;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 100px;
+  text-transform: uppercase;
+}
+
+.btn-next {
+  margin-left: -15px;
+}
