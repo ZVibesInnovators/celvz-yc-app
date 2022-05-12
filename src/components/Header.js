@@ -1,5 +1,4 @@
 import React from "react";
-import "./Header.css"
 import { LargeHeroButton } from "./home/CallToActionButtons";
 
 const Header = () => {
@@ -13,11 +12,10 @@ const Header = () => {
         <span className="mt-md-5">
           <ul class="btn btn-next mt-md-5 mt-3">
             <LargeHeroButton>What We Do</LargeHeroButton>
-            <LargeHeroButton outline={true} style={{marginLeft: 10}}>Stay Connected</LargeHeroButton>
+            <LargeHeroButton outline={true} style={{ marginLeft: 10 }}>Stay Connected</LargeHeroButton>
           </ul>
         </span>
       </div>
-
     </div>
   );
 };

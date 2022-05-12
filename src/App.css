@@ -9,7 +9,8 @@
 }
 
 body {
-  font-family: "Roboto Condesed" sans-serif;
+  font-family: Roboto Condesed sans-serif;
+  overflow-x: hidden;
 }
 
 /* ****************************NAVBAR*********************************************** */
@@ -28,28 +29,32 @@ nav a.nav.link {
 .navbar-nav .nav-link,
 .navbar-nav a.btn,
 li a.sign-in {
-    height: 29px !important;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 12px;
-    text-decoration: none
+  height: 29px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  text-decoration: none
 }
 
-li a.sign-in {
+.sign-inn {
   color: var(--primary-orange) !important;
 }
+
 nav ul li {
   text-transform: uppercase;
 }
 
 .navbar-nav>li>a {
   margin-right: 1.875rem;
-  margin-left: 1.875rem;
+  margin-left: 5.575rem;
   color: var(--primary-white) !important;
 }
 
+.navbar-nav {
+  margin-left: 110px;
+}
 .navbar-brand {
   max-width: 17.25rem;
   padding: 0 !important;
@@ -57,31 +62,27 @@ nav ul li {
 }
 
 .search-bar {
-  margin-left: 1.875rem;
+  margin-left: 3.875rem;
 }
 
 a.btn-orange {
   border: 2px solid transparent;
   background: var(--primary-orange);
+  color: var(--primary-white);
+  margin-right: 40px;
 
-}
-
-.sign-in {
-  color: #D3006C;
-  font-weight: 400;
-  letter-spacing: 0.0375rem;
-  cursor: pointer;
 }
 
 /* ****************************HEADER*********************************************** */
 .main-nav {
   z-index: 1;
 }
+
 .header-wraper {
   background: url(logo-1.png) no-repeat;
   background-size: cover;
   background-position: center;
-  position: absolute;
+
 }
 
 .header-bg {
@@ -122,3 +123,6 @@ a.btn-orange {
 .btn-next {
   margin-left: -15px;
 }
+
+
+

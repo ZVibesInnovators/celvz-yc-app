@@ -1,0 +1,156 @@
+.body {
+    position: relative;
+    margin-top: 490px;
+    width: 100vw;
+    background: url(../components/assest/image/img-1.png) no-repeat;
+    background-size: cover;
+    top: 60px;
+  }
+  
+  .btn-text {
+    margin-left: -15px;
+  }
+  
+  .sub-text {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 100px;
+    line-height: 56px;
+    text-transform: capitalize;
+    color: #fff;
+    transform: rotateZ();
+  }
+  
+  .big-text {
+    color: #fff;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 1200;
+    font-size: 70px;
+    text-transform: uppercase;
+    margin-right: -530px;
+  }
+
+  .body-txt {
+   margin-right: 100px;
+   margin-bottom: 250px;
+   
+  }
+  
+  
+  .body-info {
+    display: flex;
+    text-align: end;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: linear-gradient(to left, #000000 9.56%, rgba(0, 0, 0, 0) 100.97%);
+    height: 615px;
+  
+  }
+
+  .btn-top{
+    margin-bottom: -250px;
+    margin-right: -40px;
+  }
+
+  .body-1 {
+    background: url(../components/assest/image/emage.png) no-repeat;
+    background-size: cover;
+    position: relative;
+    margin-bottom: 10px;
+    width: 100vw;
+    top: 50px;
+    /* height: 615px; */
+  }
+
+  .body-bg {
+    background:  linear-gradient(90deg, rgba(0, 0, 0, 0.46) 4.53%, rgba(0, 0, 0, 0.77) 56.27%);
+    height: 550px;
+    margin-top: 10px;
+    color: white;
+    padding-left: 60px;
+    padding-top: 120px;
+  }
+
+  .sub-txt {
+    font-weight: normal;
+    font-size: 60px;
+  }
+
+  .big-txt {
+    font-weight: bolder;
+    box-sizing: border-box;
+    font-size: 60px;
+    line-height: 30px;
+  }
+
+  .ark {
+    margin-top: 50px;
+    padding-right: 505px;
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  .highlight-word-color {
+    color: #D3006C;
+  }
+
+  .social {
+    background-color: #000000;
+    background-size: cover;
+    height: 600px;
+    margin-top: 50px;
+  }
+
+  .social-px {
+     background: url(../components/assest/image/back-icons.png);
+     background-size: cover;
+     width: 650px;
+     height: 580px;
+     color: #fff
+  }
+
+  .hero {
+    background-image: linear-gradient(to right,
+    rgba(0,0,0,1),
+    rgba(0,0,0,1),
+    rgba(0,0,0,.7),
+    rgba(0,0,0,.9));
+    width: 100vw;
+    height: 570px;
+    background-size: cover;
+    display: flex;
+  }
+
+  .hero-1 {
+    padding-top: 300px;
+  }
+
+  .hero-3 {
+    background: url(../components/assest/image/phone-1.png);
+    height: 50vh;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-top: 40vh;
+  }
+
+  .flex-1 {
+    flex: 1;
+  }
+
+  .flex-2 {
+    flex: 2;
+  }
+
+  .flex-3 {
+    position: relative;
+    width: 356px;
+    height: 100px;
+    left: 100px;
+    top: 10vh
+  }
+
+  .flex {
+    /* display: flex; */
+    height: 50vh;
+  }

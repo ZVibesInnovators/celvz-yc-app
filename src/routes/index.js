@@ -1,6 +1,7 @@
 import Landing from "../pages/Landing";
 import Music from "../pages/Music";
 import Testimonies from "../pages/Testimonies";
+import Sign from "../pages/auth/Sign";
 
 export const routes = [
     {
@@ -17,5 +18,10 @@ export const routes = [
         name: "testimonies",
         path: "/testimonies",
         component: Testimonies
+    },
+    {
+        name: "sign in",
+        path: "/auth",
+        component: Sign
     },
 ]
