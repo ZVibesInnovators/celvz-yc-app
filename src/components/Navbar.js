@@ -46,7 +46,7 @@ const Navbar = (props) => {
           </ul>
         </div>
 
-        <div className="nav-item">
+        {/* <div className="nav-item">
               <Link to="/auth?register=true" className="btn btn-orange">
                 Register
               </Link>
@@ -54,7 +54,7 @@ const Navbar = (props) => {
               <Link to="/auth" className="sign-inn">
                 Sign In
               </Link>
-        </div>
+        </div> */}
 
       </div>
     </nav>
