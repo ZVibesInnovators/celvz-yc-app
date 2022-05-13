@@ -10,6 +10,7 @@ import Navbar from "./components/Navbar";
 import { routes } from './routes';
 import { useEffect, useState } from 'react';
 import { AuthProvider } from './contexts/AuthContext';
+import AlertContextProvider from "./contexts/AlertContextProvider";
 
 
 
@@ -19,18 +20,19 @@ function App() {
   })
   return (
     <>
-    <AuthProvider>
-      <BrowserRouter history={history}>
-        <Navbar />
-        <Routes>
-          {routes.map((route, i) => {
-            return <Route key={i} path={route.path} element={<route.component />} />
-          })}
-        </Routes>
+      <AlertContextProvider>
+        <AuthProvider>
+          <BrowserRouter history={history}>
+            <Navbar />
+            <Routes>
+              {routes.map((route, i) => {
+                return <Route key={i} path={route.path} element={<route.component />} />
+              })}
+            </Routes>
 
-      </BrowserRouter>
-    </AuthProvider>
-      
+          </BrowserRouter>
+        </AuthProvider>
+      </AlertContextProvider>
     </>
   );
 }
