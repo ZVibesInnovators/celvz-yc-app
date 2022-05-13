@@ -1,5 +1,4 @@
-import React, { useContext, useEffect } from 'react'
-import Header from '../components/Header'
+import React, { useContext, useEffect } from 'react';
 import "../components/Landing.css";
 import { AuthContext } from '../contexts/AuthContext';
 import { LargeHeroButton } from "../components/home/CallToActionButtons";
@@ -11,7 +10,21 @@ const Landing = (props) => {
   useEffect(() => setIsAuth(true), [])
   return (
     <div>
-      <Header />
+      <div className="header-wraper header-bg">
+      <div className="main-info p-3 p-md-5">
+        <h2 className="sub-view mb-0 mt-0">An Oasis</h2>
+        <h1 className="sub-view mb-0 mt-3 hero-text">
+          Of Love
+        </h1>
+        <span className="mt-md-5">
+          <ul class="btn btn-next mt-md-5 mt-3">
+            <LargeHeroButton style={{ marginLeft: 10, marginBottom:15}}>What We Do</LargeHeroButton>
+
+            <LargeHeroButton outline={true} style={{ marginLeft: 10}}>Stay Connected</LargeHeroButton>
+          </ul>
+        </span>
+      </div>
+    </div>
       <div className="body">
         <div className='body-info'>
           <div className='body-txt'>
@@ -44,13 +57,10 @@ const Landing = (props) => {
         <div className='social-px'>
           <div className='hero'>
             <div className="flex-2">
-              <h2 className='hero-1'>FOLLOW GOD ON</h2>
-              <h2 className='hero-2'><span>SOCIALS</span></h2>
+              <h2 className='hero-1'><span className='follow_light'>FOLLOW </span> GOD<span className='on_light'> ON</span><br/><span className='follow_span'>SOCIALS</span></h2>
+              <div className="flex-3" />
             </div>
-            <div className="flex-3">
-              <div className='hero-3' />
-              <div className='hero-3' />
-            </div>
+           
 
           </div>
 
