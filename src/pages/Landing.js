@@ -1,31 +1,54 @@
-import React, { useContext, useEffect } from 'react';
-import "../components/Landing.css";
-import { AuthContext } from '../contexts/AuthContext';
+import React from 'react';
+import { Col } from 'reactstrap';
 import { LargeHeroButton } from "../components/home/CallToActionButtons";
+import { AdsSection, YouthImg } from '../components/home/landingPageStyles';
+import "../components/Landing.css";
+import { useNavigate } from 'react-router-dom';
 
 
 const Landing = (props) => {
-  const [isAuth, setIsAuth] = useContext(AuthContext);
+  const navigate = useNavigate()
+  // const [isAuth, setIsAuth] = useContext(AuthContext);
 
-  useEffect(() => setIsAuth(true), [])
+  // useEffect(() => setIsAuth(isAuth), [isAuth])
+
   return (
     <div>
-      <div className="header-wraper header-bg">
-      <div className="main-info p-3 p-md-5">
-        <h2 className="sub-view mb-0 mt-0">An Oasis</h2>
-        <h1 className="sub-view mb-0 mt-3 hero-text">
-          Of Love
-        </h1>
-        <span className="mt-md-5">
-          <ul class="btn btn-next mt-md-5 mt-3">
-            <LargeHeroButton style={{ marginLeft: 10, marginBottom:15}}>What We Do</LargeHeroButton>
-
-            <LargeHeroButton outline={true} style={{ marginLeft: 10}}>Stay Connected</LargeHeroButton>
-          </ul>
-        </span>
+      <div className="header-wraper header-bg row">
+        <div className="main-info p-3 p-md-5 col-md-6 bg-mask">
+          <h2 className="sub-view mb-0 mt-0">An Oasis</h2>
+          <h1 className="sub-view mb-0 mt-3 hero-text">
+            Of Love
+          </h1>
+          <span className="mt-md-5">
+            <ul className="btn btn-next mt-md-5 mt-3">
+              <LargeHeroButton style={{ marginLeft: 10, marginBottom: 15 }}>What We Do</LargeHeroButton>
+              <LargeHeroButton outline={true} style={{ marginLeft: 10 }}>Stay Connected</LargeHeroButton>
+            </ul>
+          </span>
+        </div>
+        <div className="col-md-6 mr-auto bg-mask pr-md-5" style={{ display: "flex" }}>
+          <YouthImg />
+        </div>
       </div>
-    </div>
-      <div className="body">
+      <AdsSection>
+        <div className="mask row">
+          <Col md={7}>
+            <div className="top" />
+            <div className="footer row">
+              <Col md={8} className="mx-auto">
+                <h1 className='date'>JUNE 4TH-&nbsp;<small>10am prompt</small></h1>
+                <h1 className='venue'>The Tent LCA Liesure Garden</h1>
+                <h1 className='address'><small>8, billing Way,</small>&nbsp;Oregun-Ikeja</h1>
+              </Col>
+              <Col md={4} className="right">
+                <LargeHeroButton onClick={() => navigate(`/events/dyp2022`)}>Join Event</LargeHeroButton>
+              </Col>
+            </div>
+          </Col>
+        </div>
+      </AdsSection>
+      {/* <div className="body">
         <div className='body-info'>
           <div className='body-txt'>
             <h1 className="sub-text">YOU</h1>
@@ -69,7 +92,7 @@ const Landing = (props) => {
 
         </div>
 
-      </div>
+      </div> */}
 
 
 
