@@ -3,7 +3,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const AlertContext = React.createContext({
-    showError: () => { }
+    showError: () => { },
+    showAlert: () => { }
 });
 
 function AlertContextProvider(props) {
@@ -13,9 +14,14 @@ function AlertContextProvider(props) {
         toast.error(message);
     }
 
+
+    const showAlert = (type, message) => {
+        toast[type](message);
+    }
+
     return (
         <>
-            <AlertContext.Provider value={{ showError }}>
+            <AlertContext.Provider value={{ showError, showAlert }}>
                 {children}
                 <ToastContainer />
             </AlertContext.Provider>

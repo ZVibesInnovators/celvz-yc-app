@@ -8,7 +8,6 @@ import {
 import { createBrowserHistory } from 'history';
 import Navbar from "./components/Navbar";
 import { routes } from './routes';
-import { useEffect, useState } from 'react';
 import { AuthProvider } from './contexts/AuthContext';
 import AlertContextProvider from "./contexts/AlertContextProvider";
 

@@ -1,13 +1,13 @@
-import React, { useContext, useEffect } from 'react';
-import "../components/Landing.css";
-import { AuthContext } from '../contexts/AuthContext';
+import React from 'react';
 import { LargeHeroButton } from "../components/home/CallToActionButtons";
+import "../components/Landing.css";
 
 
 const Landing = (props) => {
-  const [isAuth, setIsAuth] = useContext(AuthContext);
+  // const [isAuth, setIsAuth] = useContext(AuthContext);
 
-  useEffect(() => setIsAuth(true), [])
+  // useEffect(() => setIsAuth(isAuth), [isAuth])
+  
   return (
     <div>
       <div className="header-wraper header-bg">

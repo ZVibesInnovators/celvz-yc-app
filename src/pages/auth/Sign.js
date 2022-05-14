@@ -1,18 +1,12 @@
-import React, { useContext, useEffect } from 'react'
-import "../../components/Sign.css";
-import { AuthContext } from '../../contexts/AuthContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {
-    FormGroup, Label, Input, Button, Form} from 'reactstrap';
-
-
-
-
+import React from 'react';
+import { Button, Form, FormGroup, Input } from 'reactstrap';
+import "../../components/Sign.css";
 
 const Sign = (props) => {
-    const [isAuth, setIsAuth] = useContext(AuthContext);
+    // const [isAuth, setIsAuth] = useContext(AuthContext);
 
-    useEffect(() => setIsAuth(false), [])
+    // useEffect(() => setIsAuth(false), [])
  
     return (
         <div className='rtn'>

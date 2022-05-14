@@ -4,9 +4,10 @@ import maskBg from "../../components/assest/image/mask.png"
 export const EventDetailPageWrapper = styled.div`
     width: 100vw;
     height: 100vh;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     background-size: cover;
-    background-position: center;
+    background-position: top right;
     background-repeat: no-repeat;
     background-color: #000;
     position: absolute;
@@ -27,9 +28,12 @@ export const Mask = styled.div`
         margin-top: 96px;
     }
 
-    .form.ml-5 {
-        margin-left: 84px;
+    .form {
+        &.ml-5{
+            margin-left: 84px;
+        }
 
+        select,
         input {
             height: 47px;
             color: #FFFFFF;
@@ -37,6 +41,42 @@ export const Mask = styled.div`
             border: 1px solid #C40667;
             border-radius: 8px;
         }
+
+        select,
+        input.short {
+            width: 245px !important;
+        }
+
+        button {
+            height: 60px;
+            width: 245px;
+            color: #FFFFFF;
+            border-width: 0px;
+            background: #C40667;
+            border-radius: 8px;
+        }
+
+        @media only screen and (max-width: 600px) {
+            & {
+                max-width: 90vw !important;
+            }
+            &.ml-5{
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+        }
+    }
+
+    .hint {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        text-transform: capitalize;
+        color: #FFFFFF;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
     }
 `
 
