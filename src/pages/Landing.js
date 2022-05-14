@@ -1,9 +1,13 @@
 import React from 'react';
-import { Col } from 'reactstrap';
+import { Button, Col, Row } from 'reactstrap';
 import { LargeHeroButton } from "../components/home/CallToActionButtons";
-import { AdsSection, YouthImg } from '../components/home/landingPageStyles';
+import { AdsSection, FollowGodSection, WeAreSection, YouthImg } from '../components/home/landingPageStyles';
 import "../components/Landing.css";
 import { useNavigate } from 'react-router-dom';
+import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined';
+import { AiFillInstagram, AiFillYoutube, AiOutlineTwitter } from "react-icons/ai";
+import { FaTiktok } from "react-icons/fa";
+import Footer from '../components/Footer';
 
 
 const Landing = (props) => {
@@ -36,66 +40,68 @@ const Landing = (props) => {
           <Col md={7}>
             <div className="top" />
             <div className="footer row">
-              <Col md={8} className="mx-auto">
+              <Col lg={8} className="mx-auto">
                 <h1 className='date'>JUNE 4TH-&nbsp;<small>10am prompt</small></h1>
                 <h1 className='venue'>The Tent LCA Liesure Garden</h1>
-                <h1 className='address'><small>8, billing Way,</small>&nbsp;Oregun-Ikeja</h1>
+                <h1 className='address'><small>8, billings Way,</small>&nbsp;Oregun-Ikeja</h1>
               </Col>
-              <Col md={4} className="right">
-                <LargeHeroButton onClick={() => navigate(`/events/dyp2022`)}>Join Event</LargeHeroButton>
+              <Col lg={4} className="right">
+                <LargeHeroButton style={{ width: 245 }} onClick={() => navigate(`/events/dyp2022`)}>Join Event</LargeHeroButton>
               </Col>
             </div>
           </Col>
         </div>
       </AdsSection>
-      {/* <div className="body">
-        <div className='body-info'>
-          <div className='body-txt'>
-            <h1 className="sub-text">YOU</h1>
-            <span className="big-text">Found Home</span>
-            <ul class="btn btn-top">
-              <LargeHeroButton outline={true}>Watch Previous</LargeHeroButton>
-              <LargeHeroButton style={{ marginLeft: 20 }}>Join This Family</LargeHeroButton>
-            </ul>
-          </div>
-        </div>
-      </div>
 
       <div className='body-1'>
-        <div className='body-bg'>
-          <h1 className="sub-txt mb-0 mt-0">WE ARE</h1>
-          <h1 className="big-txt mb-0 mt-2">
-            <span>LOVEWORLD</span>
-          </h1>
-          <p className='ark'> CELVZ Youth Church Is Where The Littest Youths For Jesus Are Being Raised. We Are A Special People
-            Of Purpose, Passion, And Power, Living Out The God Life, Taking God's Divine Presence To
-            The Nations And People Of The Earth, And Demonstrating The Character Of The Spirit.
-            This&nbsp;Is&nbsp;The&nbsp;Global Youth Ministry Of <span className='highlight-word-color'>Christ Embassy Lagos Virtual Zone (CELVZ)</span> - An Ark For Every
-            Young Person In The Wolrld. You're Welcome To The Love Family!
-          </p>
-        </div>
+        <WeAreSection>
+          <Row>
+            <Col xs={10} md={8} lg={6}>
+              <h1 className="sub-txt mb-0 mt-0">WE ARE</h1>
+              <h1 className="big-txt mb-0 mt-2">
+                <span>LOVEWORLD</span>
+              </h1>
+              <p className='ark'> CELVZ Youth Church Is Where The Littest Youths For Jesus Are Being Raised. We Are A Special People
+                Of Purpose, Passion, And Power, Living Out The God Life, Taking God's Divine Presence To
+                The Nations And People Of The Earth, And Demonstrating The Character Of The Spirit.
+                This&nbsp;Is&nbsp;The&nbsp;Global Youth Ministry Of <span className='highlight-word-color'>Christ Embassy Lagos Virtual Zone (CELVZ)</span> - An Ark For Every
+                Young Person In The Wolrld. You're Welcome To The Love Family!
+              </p>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={3} style={{ marginLeft: "auto" }}>
+              <Button><ArrowForwardOutlinedIcon style={{ marginRight: 10 }} />Learn More</Button>
+            </Col>
+          </Row>
+        </WeAreSection>
       </div>
 
-      <div className='social'>
-        <div className='social-px'>
-          <div className='hero'>
-            <div className="flex-2">
-              <h2 className='hero-1'><span className='follow_light'>FOLLOW </span> GOD<span className='on_light'> ON</span><br/><span className='follow_span'>SOCIALS</span></h2>
-              <div className="flex-3" />
+      <FollowGodSection>
+        <div className="row mask">
+          <Col md={6}>
+            <h3>FOLLOW GOD ON</h3>
+            <h1>SOCIALS</h1>
+            <div className="social-buttons">
+              <Button>
+                <AiFillInstagram />
+              </Button>
+              <Button>
+                <FaTiktok />
+              </Button>
+              <Button>
+                <AiFillYoutube />
+              </Button>
+              <Button>
+                <AiOutlineTwitter />
+              </Button>
             </div>
-           
-
-          </div>
-
-
-
-
+          </Col>
+          <Col md={5} className="right" />
         </div>
-
-      </div> */}
-
-
-
+        <div className="footer-mask" />
+      </FollowGodSection>
+      <Footer />
     </div>
   );
 };
