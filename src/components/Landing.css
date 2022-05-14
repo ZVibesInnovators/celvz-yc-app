@@ -6,7 +6,6 @@
 }
 
 .body {
-    background: url(../components/assest/image/img-1.png) no-repeat;
     overflow: hidden;
     font-family: 'Montserrat', sans-serif;
    
@@ -180,7 +179,7 @@
 .main-info{
   align-items: center;
   justify-content: center;
-  
+  height: 100%;
 }
 .big-view{
   margin: 0 auto;
