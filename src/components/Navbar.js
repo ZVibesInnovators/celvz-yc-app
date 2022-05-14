@@ -14,7 +14,9 @@ const Navbar = (props) => {
 
   useEffect(() => {
     if (!window.location.pathname.endsWith("auth")) setIsAuth(true);
-  }, [window.location.pathname])
+  }, 
+  // eslint-disable-next-line
+  [setIsAuth])
 
   return (
     isAuth && <nav className="navbar navbar-expand-lg navbar-light main-nav">
@@ -46,7 +48,7 @@ const Navbar = (props) => {
           </ul>
         </div>
 
-        <div className="nav-item">
+        {/* <div className="nav-item">
               <Link to="/auth?register=true" className="btn btn-orange">
                 Register
               </Link>
@@ -54,7 +56,7 @@ const Navbar = (props) => {
               <Link to="/auth" className="sign-inn">
                 Sign In
               </Link>
-        </div>
+        </div> */}
 
       </div>
     </nav>
