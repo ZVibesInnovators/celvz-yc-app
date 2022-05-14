@@ -17,7 +17,10 @@ body {
 .logo {
   width: 6.25rem;
 }
-
+html
+body {
+  overflow-x: hidden !important;
+}
 /* *************MENU LINKS**************************** */
 nav a.nav.link {
   font-size: 1.875rem;
