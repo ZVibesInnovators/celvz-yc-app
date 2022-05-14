@@ -2,6 +2,7 @@ import Landing from "../pages/Landing";
 import Music from "../pages/Music";
 import Testimonies from "../pages/Testimonies";
 import Sign from "../pages/auth/Sign";
+import EventRouter from "../pages/Events";
 
 export const routes = [
     {
@@ -24,4 +25,9 @@ export const routes = [
         path: "/auth",
         component: Sign
     },
+    {
+        name: "events",
+        path: "/events/*",
+        component: EventRouter
+    }
 ]

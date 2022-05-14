@@ -17,7 +17,10 @@ body {
 .logo {
   width: 6.25rem;
 }
-
+html
+body {
+  overflow-x: hidden !important;
+}
 /* *************MENU LINKS**************************** */
 nav a.nav.link {
   font-size: 1.875rem;
@@ -87,11 +90,12 @@ a.btn-orange {
 
 .header-bg {
   background-color: rgb(0, 0, 0);
-  position: absolute;
+  position: relative;
   width: 100vw;
   height: 642px;
-  top: 0px;
+  margin-top: -100px !important;
   display: flex;
+  margin-left: 0px !important;
 }
 
 .main-info {
@@ -99,7 +103,10 @@ a.btn-orange {
   flex: 1;
   flex-direction: column;
   justify-content: flex-end;
-  background-color: rgba(0, 0, 0, 0.62);
+}
+
+.bg-mask {
+  background-color: rgba(0, 0, 0, 0.62) !important;
 }
 
 .sub-view {

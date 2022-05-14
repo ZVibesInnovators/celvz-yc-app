@@ -6,7 +6,6 @@
 }
 
 .body {
-    background: url(../components/assest/image/img-1.png) no-repeat;
     overflow: hidden;
     font-family: 'Montserrat', sans-serif;
    
@@ -64,7 +63,8 @@
   }
 
   .body-1 {
-    background: url(../components/assest/image/emage.png) no-repeat;
+    background-image: url(../components/assest/image/emage.png);
+    background-color: #000000;
     background-size: cover;
     position: relative;
     margin-bottom: 10px;
@@ -80,6 +80,7 @@
     color: white;
     padding-left: 60px;
     padding-top: 120px;
+    margin-top: -51px;
   }
 
   .sub-txt {
@@ -95,9 +96,7 @@
   }
 
   .ark {
-   
     margin-top: 50px;
-    padding-right: 505px;
     font-weight:bolder;
     font-size: 18px;
   }
@@ -180,7 +179,7 @@
 .main-info{
   align-items: center;
   justify-content: center;
-  
+  height: 100%;
 }
 .big-view{
   margin: 0 auto;
