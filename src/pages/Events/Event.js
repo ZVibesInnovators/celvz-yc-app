@@ -4,7 +4,6 @@ import { FormControl } from "@mui/material";
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate } from "react-router";
 import { Button, Col, Form, FormGroup, Input, Row } from "reactstrap";
-// import BG from "../../components/assest/image/everbrite_banner_size.png";
 import { EventDetailPageWrapper, Mask, Subtitle, SubtitleWrapper, Title } from "../../components/events/EventStyles";
 import { AlertContext } from "../../contexts/AlertContextProvider";
 import API from "../../services/api";
@@ -15,7 +14,6 @@ const Event = () => {
     const params = useParams();
     const navigate = useNavigate();
     const { showError, showAlert } = useContext(AlertContext);
-    const eventId = "627da0ae42ab2717f096d6a3";
     const [isLoading, setIsLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [event, setEvent] = useState(null)
@@ -37,7 +35,6 @@ const Event = () => {
             const response = await api.request("get", `events?$or=link:${stub}&$include=media`);
             setIsLoading(false);
             setEvent(response.data[0])
-            console.log("response", response);
         } catch (error) {
             showError(error.message);
             navigate("/")
