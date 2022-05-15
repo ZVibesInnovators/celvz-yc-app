@@ -83,16 +83,16 @@ const Landing = (props) => {
             <h3>FOLLOW GOD ON</h3>
             <h1>SOCIALS</h1>
             <div className="social-buttons">
-              <Button>
+              <Button onClick={() => window.open("https://www.instagram.com/celvzyouthchurch/", "_blank")}>
                 <AiFillInstagram />
               </Button>
-              <Button>
+              <Button onClick={() => window.open()}>
                 <FaTiktok />
               </Button>
-              <Button>
+              <Button onClick={() => window.open("https://www.youtube.com/channel/UCygsDfFK6e5nzAZ4Gl8S0Wg", "_blank")}>
                 <AiFillYoutube />
               </Button>
-              <Button>
+              <Button onClick={() => window.open("https://twitter.com/celvzyouth", "_blank")}>
                 <AiOutlineTwitter />
               </Button>
             </div>
@@ -101,7 +101,7 @@ const Landing = (props) => {
         </div>
         <div className="footer-mask" />
       </FollowGodSection>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

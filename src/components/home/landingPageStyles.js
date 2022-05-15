@@ -150,7 +150,7 @@ export const FollowGodSection = styled.div`
     background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
-    overflow-y: hidden;
+    overflow: hidden;
 
     .mask {
         background-image: url(${socialsMask});
