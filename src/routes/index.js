@@ -2,6 +2,7 @@ import Landing from "../pages/Landing";
 import Music from "../pages/Music";
 import Testimonies from "../pages/Testimonies";
 import Sign from "../pages/auth/Sign";
+import Register from "../pages/auth/Register";
 import EventRouter from "../pages/Events";
 
 export const routes = [
@@ -24,6 +25,11 @@ export const routes = [
         name: "sign in",
         path: "/auth",
         component: Sign
+    },
+    {
+        name: "register",
+        path: "/auth",
+        component: Register
     },
     {
         name: "events",

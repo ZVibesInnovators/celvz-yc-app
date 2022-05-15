@@ -19,7 +19,7 @@ const Navbar = (props) => {
   [setIsAuth])
 
   return (
-    isAuth && <nav className="navbar navbar-expand-lg navbar-light main-nav">
+    isAuth && <nav className="navbar navbar-expand-lg navbar-light main-nav bg-dark">
       <div className='container-fluid'>
 
         <Link to="/" className="navbar-brand"><img className='logo' src={logo} alt="logo..." /></Link>
