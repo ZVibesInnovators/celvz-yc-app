@@ -17,7 +17,7 @@ const Event = () => {
     const navigate = useNavigate();
     const { showError, showAlert } = useContext(AlertContext);
     const [isLoading, setIsLoading] = useState(true);
-    const [isSubmitting, setIsSubmitting] = useState(true);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [event, setEvent] = useState(null)
 
     const [payload, setPayload] = useState({
