@@ -1,27 +1,23 @@
-import React, { useContext, useEffect } from 'react'
-import "../../components/Sign.css";
-import { AuthContext } from '../../contexts/AuthContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {
-    FormGroup, Label, Input, Button, Form} from 'reactstrap';
-
-
-
-
+import React from 'react';
+import { Button, Form, FormGroup, Input } from 'reactstrap';
+import "../../components/Register.css";
 
 const Register = (props) => {
-    const [isAuth, setIsAuth] = useContext(AuthContext);
+    // const [isAuth, setIsAuth] = useContext(AuthContext);
 
-    useEffect(() => setIsAuth(false), [])
+    // useEffect(() => setIsAuth(false), [])
  
     return (
         <div className='rtn'>
-           <div className='rtn-1'>
-             <div className='rtn-2' style={{
+           <div className='rtn-4'>
+             <div className='rtn-3' style={{
                  display: 'block', width: 550, color: 'white'
              }}>
-                 <h2 className='sine'>SIGN IN</h2>
+                 <div style={{marginLeft: 120}}>
+                 <h2 className='sine'>SIGN UP</h2>
                  <p style={{color: '#D3006C'}}>Welcome To The Love Family</p>
+                 </div>
                  <Form className='form-group'>
                      <FormGroup>
                          
@@ -31,7 +27,7 @@ const Register = (props) => {
                          
                          <Input className='pass-word' type='password' name='password' id='passwordField' placeholder='password' />
                      </FormGroup>
-                     <Button className='sine-1' style={{background: '#D3006C'}}>SIGN IN</Button>
+                     <Button className='sine-1' style={{background: '#D3006C'}}>SIGN UP</Button>
                      {/* <p className='text-center'>
                          <link to="/signup">
                              Don't Have An Account? <span className='text-sign'>Sign Up</span>
@@ -44,4 +40,4 @@ const Register = (props) => {
     )
 }
 
-export default Register;
+export default Register

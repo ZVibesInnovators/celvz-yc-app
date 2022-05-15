@@ -1,0 +1,59 @@
+.rtn {
+    background: url(../components/assest/image/register-bg.png) no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    height: 1024px;
+    /* left: 1440px; */
+    background-position: center;
+}
+
+.rtn-4{
+    background-image:  linear-gradient(to right, #000000 -4.69%, rgba(0, 0, 0, 0) 436.67%); 
+    width: 1440px;
+    height: 1024px;
+    /* left: 1440px; */
+    /*text-align: end;*/
+    backdrop-filter: grayscale(1);
+    top: 0;
+}
+
+.sine {
+    font-weight: 500;
+    font-size: 54px;
+}
+
+.rtn-3 {
+    /*margin-left: 80vh;*/
+    padding: 200px 30px 0 0;
+}
+
+.form-group {
+    text-align: end;
+}
+
+.rtn .text{
+    color: #fff;
+}
+
+.handle {
+    background-color: transparent !important;
+    margin-top: 50px;
+    width: 400px;
+    margin-left: 120px;
+}
+
+.pass-word {
+    background-color: transparent;
+    margin-top: 20px;
+    width: 400px;
+    margin-left: 120px;
+}
+
+.sine-1 {
+    padding: 10px 50px 10px 50px;
+    border-radius: 1px;
+    font-weight: 30px;
+    font-size: 20px;
+    margin-right: 222px;
+}
