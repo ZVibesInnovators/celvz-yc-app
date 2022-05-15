@@ -22,13 +22,14 @@ function App() {
       <AlertContextProvider>
         <AuthProvider>
           <BrowserRouter history={history}>
+            <div style={{ overflowX: "hidden" }}>
             <Navbar />
             <Routes>
               {routes.map((route, i) => {
                 return <Route key={i} path={route.path} element={<route.component />} />
               })}
             </Routes>
-
+            </div>
           </BrowserRouter>
         </AuthProvider>
       </AlertContextProvider>
