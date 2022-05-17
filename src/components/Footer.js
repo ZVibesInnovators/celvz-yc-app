@@ -1,7 +1,8 @@
 import React from 'react';
 import { Col, Row } from 'reactstrap';
 import styled from 'styled-components';
-import logo from "./assest/image/logoLarge.png"
+import logo from "./assest/image/logoLarge.png";
+import { useNavigate } from "react-router-dom";
 
 const FooterWrapper = styled.div`
     background-color: #000;
@@ -27,6 +28,7 @@ const FooterWrapper = styled.div`
     img {
         width: 200px;
         margin-left: auto;
+        cursor: pointer;
     }
 
     .copyright {
@@ -41,6 +43,7 @@ const FooterWrapper = styled.div`
 `
 
 const Footer = () => {
+    const navigate = useNavigate()
 
     return (
         <FooterWrapper >
@@ -52,7 +55,7 @@ const Footer = () => {
                         Ikeja, Lagos State.</span>
                 </Col>
                 <Col md={4}>
-                    <img src={logo} />
+                    <img src={logo} onClick={() => navigate("/")} />
                 </Col>
             </Row>
             <div className='copyright'>
