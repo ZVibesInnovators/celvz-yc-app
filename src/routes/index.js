@@ -3,6 +3,7 @@ import Music from "../pages/Music";
 import Testimonies from "../pages/Testimonies";
 import Sign from "../pages/auth/Sign";
 import EventRouter from "../pages/Events";
+import Live from "../pages/Live";
 
 export const routes = [
     {
@@ -29,5 +30,11 @@ export const routes = [
         name: "events",
         path: "/events/*",
         component: EventRouter
-    }
+    },
+    {
+        name: "live",
+        path: "/live",
+        component: Live
+    },
+
 ]
