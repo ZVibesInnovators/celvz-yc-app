@@ -5,6 +5,7 @@ import { Button, Form, FormGroup, Input, Row, Col, Label } from "reactstrap";
 import { AlertContext } from "../../contexts/AlertContextProvider";
 import API from "../../services/api";
 import "../../components/Register.css";
+import { LargeHeroButton } from "../../components/home/CallToActionButtons";
 
 const Register = (props) => {
   // const [isAuth, setIsAuth] = useContext(AuthContext);
@@ -114,10 +115,13 @@ const Register = (props) => {
                 </FormGroup>
               </Col>
             </Row>
-
-            <Button className="sine-2" style={{ background: "#D3006C" }}>
-              SIGN UP
-            </Button>
+            <Row className="form-margin mt-5">
+              <Col md={6} style={{ display: "flex" }}>
+                <LargeHeroButton>
+                  SIGN UP
+                </LargeHeroButton>
+              </Col>
+            </Row>
             {/* <p className='text-center'>
                          <link to="/signup">
                              Don't Have An Account? <span className='text-sign'>Sign Up</span>
