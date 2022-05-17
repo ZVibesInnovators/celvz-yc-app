@@ -14,12 +14,13 @@ const Navbar = (props) => {
 
   useEffect(() => {
     if (!window.location.pathname.endsWith("auth")) setIsAuth(true);
+    if (!window.location.pathname.endsWith("register")) setIsAuth(true);
   }, 
   // eslint-disable-next-line
   [setIsAuth])
 
   return (
-    isAuth && <nav className="navbar navbar-expand-lg navbar-light main-nav">
+    isAuth && <nav className="navbar navbar-expand-lg navbar-light main-nav bg-dark">
       <div className='container-fluid'>
 
         <Link to="/" className="navbar-brand"><img className='logo' src={logo} alt="logo..." /></Link>
