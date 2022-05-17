@@ -1,4 +1,4 @@
-.rtn {
+.rtnx {
     background: url(../components/assest/image/register-bg.png) no-repeat;
     background-size: cover;
     background-position: center;
@@ -58,7 +58,7 @@
     
 }
 
-.sine-1 {
+.sine-2 {
     padding: 10px 50px 10px 50px;
     border-radius: 1px;
     font-weight: 30px;

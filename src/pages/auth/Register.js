@@ -1,15 +1,33 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router";
 import { Button, Form, FormGroup, Input, Row, Col, Label } from "reactstrap";
+import { AlertContext } from "../../contexts/AlertContextProvider";
+import API from "../../services/api";
 import "../../components/Register.css";
 
 const Register = (props) => {
   // const [isAuth, setIsAuth] = useContext(AuthContext);
 
   // useEffect(() => setIsAuth(false), [])
+  const params = useParams();
+  const navigate = useNavigate();
+  const { showError, showAlert } = useContext(AlertContext);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [register, setRegister] = useState(null);
+
+  const [payload, setPayload] = useState({
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    phone: "",
+    dob: ""
+  });
 
   return (
-    <div className="rtn">
+    <div className="rtnx">
       <div className="rtn-4">
         <div
           className="rtn-3"
@@ -97,8 +115,7 @@ const Register = (props) => {
               </Col>
             </Row>
 
-
-            <Button className="sine-1" style={{ background: "#D3006C" }}>
+            <Button className="sine-2" style={{ background: "#D3006C" }}>
               SIGN UP
             </Button>
             {/* <p className='text-center'>
