@@ -11,7 +11,19 @@ export const EventDetailPageWrapper = styled.div`
     background-color: #000;
     position: relative;
     margin-top: -100px;
-    z-index: -1;
+    z-index: 0;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background-image:${props => `url(${props.image})`};
+        background-size: cover;
+        background-position: top right;
+        background-repeat: no-repeat;
+        filter:${props => props.blur ? "grayscale(100%)" : "none"};
+      }
 `
 
 export const Mask = styled.div`
@@ -23,6 +35,7 @@ export const Mask = styled.div`
     background-repeat: no-repeat;
     position: absolute;
     overflow-y: auto;
+    backdrop-filter:${props => props.blur ? "blur(6px)" : "none"};
 
     &>.row {
         margin-top: 96px;

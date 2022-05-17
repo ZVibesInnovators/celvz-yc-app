@@ -19,6 +19,7 @@ const Event = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [event, setEvent] = useState(null)
+    const [blur, setBlur] = useState(false)
 
     const [payload, setPayload] = useState({
         name: "",
@@ -44,6 +45,24 @@ const Event = () => {
     }
 
     useEffect(() => { fetch() }, [params])
+
+    useEffect(() => {
+        document.addEventListener("focusin", (e) => {
+            const eleType = e.target.type;
+            const v = (["text", "select"].includes(eleType?.split("-")[0]));
+            handleBlur(v);
+        });
+        document.addEventListener("focusout", () => handleBlur(false));
+
+        return () => {
+            document.removeEventListener("focusin", handleBlur);
+            document.removeEventListener("focusout", handleBlur);
+        }
+    }, [])
+
+    const handleBlur = (focused) => {
+        setBlur(focused)
+    }
 
     const handleChange = (e) => {
         setPayload((oldPayload) => ({
@@ -82,8 +101,8 @@ const Event = () => {
     }
 
     return (
-        <EventDetailPageWrapper style={{ backgroundImage: `url(${event?.media?.url})` }}>
-            <Mask>
+        <EventDetailPageWrapper blur={blur} image={event?.media?.url}>
+            <Mask blur={blur}>
                 {
                     isLoading ?
                         <Loader /> :
