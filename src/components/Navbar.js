@@ -14,6 +14,7 @@ const Navbar = (props) => {
 
   useEffect(() => {
     if (!window.location.pathname.endsWith("auth")) setIsAuth(true);
+    if (!window.location.pathname.endsWith("register")) setIsAuth(true);
   }, 
   // eslint-disable-next-line
   [setIsAuth])

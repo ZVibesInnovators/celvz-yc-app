@@ -150,7 +150,7 @@ export const FollowGodSection = styled.div`
     background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
-    overflow-y: hidden;
+    overflow: hidden;
 
     .mask {
         background-image: url(${socialsMask});
@@ -161,6 +161,20 @@ export const FollowGodSection = styled.div`
         display: flex;
         width: 103vw !important;
         height: 100%;
+
+        @media only screen and (max-width: 600px) {
+            .col-md-6 {
+                padding: 0px 0px 0px 35px !important;
+
+                h3 {
+                    margin-top: 200px !important;
+                }
+
+                h1 {
+                    font-size: 5rem !important
+                }
+            }
+        }
 
         .col-md-6 {
             display: flex;

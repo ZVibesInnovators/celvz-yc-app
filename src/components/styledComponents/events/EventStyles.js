@@ -1,17 +1,29 @@
 import styled from "styled-components";
-import maskBg from "../../components/assest/image/mask.png"
+import maskBg from "../../../components/assest/image/mask.png"
 
 export const EventDetailPageWrapper = styled.div`
     width: 100vw;
-    height: 100vh;
-    overflow-y: auto;
+    min-height: calc(100vh + 100px);
     overflow-x: hidden;
     background-size: cover;
     background-position: top right;
     background-repeat: no-repeat;
     background-color: #000;
-    position: absolute;
-    top: 0px;
+    position: relative;
+    margin-top: -100px;
+    z-index: 0;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background-image:${props => `url(${props.image})`};
+        background-size: cover;
+        background-position: top right;
+        background-repeat: no-repeat;
+        filter:${props => props.blur ? "grayscale(100%)" : "none"};
+      }
 `
 
 export const Mask = styled.div`
@@ -23,6 +35,7 @@ export const Mask = styled.div`
     background-repeat: no-repeat;
     position: absolute;
     overflow-y: auto;
+    backdrop-filter:${props => props.blur ? "blur(6px)" : "none"};
 
     &>.row {
         margin-top: 96px;
