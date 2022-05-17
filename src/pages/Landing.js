@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined';
 import { AiFillInstagram, AiFillYoutube, AiOutlineTwitter } from "react-icons/ai";
 import { FaTiktok } from "react-icons/fa";
-import Footer from '../components/Footer';
 
 
 const Landing = (props) => {
@@ -26,7 +25,7 @@ const Landing = (props) => {
           </h1>
           <span className="mt-md-5">
             <ul className="btn btn-next mt-md-5 mt-3">
-              <LargeHeroButton style={{ marginLeft: 10, marginBottom: 15 }}>What We Do</LargeHeroButton>
+              <LargeHeroButton onClick={() => navigate("/about")} style={{ marginLeft: 10, marginBottom: 15 }}>What We Do</LargeHeroButton>
               <LargeHeroButton outline={true} style={{ marginLeft: 10 }}>Stay Connected</LargeHeroButton>
             </ul>
           </span>
@@ -71,7 +70,7 @@ const Landing = (props) => {
           </Row>
           <Row>
             <Col md={3} style={{ marginLeft: "auto" }}>
-              <Button><ArrowForwardOutlinedIcon style={{ marginRight: 10 }} />Learn More</Button>
+              <Button onClick={() => navigate("/about")}><ArrowForwardOutlinedIcon style={{ marginRight: 10 }} />Learn More</Button>
             </Col>
           </Row>
         </WeAreSection>
@@ -83,16 +82,16 @@ const Landing = (props) => {
             <h3>FOLLOW GOD ON</h3>
             <h1>SOCIALS</h1>
             <div className="social-buttons">
-              <Button>
+              <Button onClick={() => window.open("https://www.instagram.com/celvzyouthchurch/", "_blank")}>
                 <AiFillInstagram />
               </Button>
-              <Button>
+              <Button onClick={() => window.open()}>
                 <FaTiktok />
               </Button>
-              <Button>
+              <Button onClick={() => window.open("https://www.youtube.com/channel/UCygsDfFK6e5nzAZ4Gl8S0Wg", "_blank")}>
                 <AiFillYoutube />
               </Button>
-              <Button>
+              <Button onClick={() => window.open("https://twitter.com/celvzyouth", "_blank")}>
                 <AiOutlineTwitter />
               </Button>
             </div>
@@ -101,7 +100,7 @@ const Landing = (props) => {
         </div>
         <div className="footer-mask" />
       </FollowGodSection>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

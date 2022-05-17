@@ -10,6 +10,7 @@ import Navbar from "./components/Navbar";
 import { routes } from './routes';
 import { AuthProvider } from './contexts/AuthContext';
 import AlertContextProvider from "./contexts/AlertContextProvider";
+import Footer from './components/Footer';
 
 
 
@@ -29,6 +30,7 @@ function App() {
                 return <Route key={i} path={route.path} element={<route.component />} />
               })}
             </Routes>
+            <Footer />
             </div>
           </BrowserRouter>
         </AuthProvider>
