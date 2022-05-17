@@ -162,6 +162,20 @@ export const FollowGodSection = styled.div`
         width: 103vw !important;
         height: 100%;
 
+        @media only screen and (max-width: 600px) {
+            .col-md-6 {
+                padding: 0px 0px 0px 35px !important;
+
+                h3 {
+                    margin-top: 200px !important;
+                }
+
+                h1 {
+                    font-size: 5rem !important
+                }
+            }
+        }
+
         .col-md-6 {
             display: flex;
             flex-direction: column;

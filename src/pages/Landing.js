@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined';
 import { AiFillInstagram, AiFillYoutube, AiOutlineTwitter } from "react-icons/ai";
 import { FaTiktok } from "react-icons/fa";
-import Footer from '../components/Footer';
 
 
 const Landing = (props) => {
@@ -26,7 +25,7 @@ const Landing = (props) => {
           </h1>
           <span className="mt-md-5">
             <ul className="btn btn-next mt-md-5 mt-3">
-              <LargeHeroButton style={{ marginLeft: 10, marginBottom: 15 }}>What We Do</LargeHeroButton>
+              <LargeHeroButton onClick={() => navigate("/about")} style={{ marginLeft: 10, marginBottom: 15 }}>What We Do</LargeHeroButton>
               <LargeHeroButton outline={true} style={{ marginLeft: 10 }}>Stay Connected</LargeHeroButton>
             </ul>
           </span>
@@ -71,7 +70,7 @@ const Landing = (props) => {
           </Row>
           <Row>
             <Col md={3} style={{ marginLeft: "auto" }}>
-              <Button><ArrowForwardOutlinedIcon style={{ marginRight: 10 }} />Learn More</Button>
+              <Button onClick={() => navigate("/about")}><ArrowForwardOutlinedIcon style={{ marginRight: 10 }} />Learn More</Button>
             </Col>
           </Row>
         </WeAreSection>

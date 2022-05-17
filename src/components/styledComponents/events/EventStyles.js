@@ -1,17 +1,17 @@
 import styled from "styled-components";
-import maskBg from "../../components/assest/image/mask.png"
+import maskBg from "../../../components/assest/image/mask.png"
 
 export const EventDetailPageWrapper = styled.div`
     width: 100vw;
-    height: 100vh;
-    overflow-y: auto;
+    min-height: calc(100vh + 100px);
     overflow-x: hidden;
     background-size: cover;
     background-position: top right;
     background-repeat: no-repeat;
     background-color: #000;
-    position: absolute;
-    top: 0px;
+    position: relative;
+    margin-top: -100px;
+    z-index: -1;
 `
 
 export const Mask = styled.div`
