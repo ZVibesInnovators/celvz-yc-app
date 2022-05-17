@@ -36,18 +36,26 @@
     color: #fff;
 }
 
-.handle {
+.form-left {
     background-color: transparent !important;
-    margin-top: 50px;
-    width: 400px;
-    margin-left: 120px;
+    border-color: #d3006c;
+    color: #696969;
+    
+    
+    
 }
 
-.pass-word {
+.form-margin{
+    margin-left: 110px;
+}
+
+.form-right {
     background-color: transparent;
-    margin-top: 20px;
-    width: 400px;
-    margin-left: 120px;
+    border-color: #d3006c;
+    color: #696969;
+
+    
+    
 }
 
 .sine-1 {
@@ -55,5 +63,5 @@
     border-radius: 1px;
     font-weight: 30px;
     font-size: 20px;
-    margin-right: 222px;
+    margin-right: 421px;
 }
