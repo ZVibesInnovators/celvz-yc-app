@@ -4,6 +4,7 @@ import Landing from "../pages/Landing";
 import Sign from "../pages/auth/Sign";
 import Register from "../pages/auth/Register";
 import EventRouter from "../pages/Events";
+import Live from "../pages/Live";
 import About from "../pages/About";
 
 export const routes = [
@@ -41,5 +42,11 @@ export const routes = [
         name: "events",
         path: "/events/*",
         component: EventRouter
-    }
+    },
+    {
+        name: "live",
+        path: "/live",
+        component: Live
+    },
+
 ]
