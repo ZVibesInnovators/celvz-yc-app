@@ -39,6 +39,17 @@ export const routes = [
         component: About
     },
     {
+        name: "about",
+        path: "/about",
+        component: About
+
+    },
+    {
+        name: "register",
+        path: "/auth/register",
+        component: Register
+    },
+    {
         name: "events",
         path: "/events/*",
         component: EventRouter
