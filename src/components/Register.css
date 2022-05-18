@@ -1,21 +1,23 @@
-.rtn {
-    background: url(../components/assest/image/logoo.png) no-repeat;
+.rtnx {
+    background: url(../components/assest/image/register-bg.png) no-repeat;
     background-size: cover;
     background-position: center;
     width: 100vw;
-    height: 1024px;
-    left: 1440px;
+    height: 100vh;
+    /* left: 1440px; */
     background-position: center;
 }
 
-.rtn-1{
-    background-image:  linear-gradient(to left, #000000 -4.69%, rgba(0, 0, 0, 0) 436.67%); 
-    width: 1440px;
-    height: 1024px;
-    left: 1440px;
-    text-align: end;
+.rtn-4{
+    background-image:  linear-gradient(to right, #000000 -4.69%, rgba(0, 0, 0, 0) 436.67%); 
+    width: 100%;
+    height: 100%;
+    /* left: 1440px; */
+    /*text-align: end;*/
     backdrop-filter: grayscale(1);
     top: 0;
+    position: relative;
+    margin-top: -100px
 }
 
 .sine {
@@ -23,8 +25,8 @@
     font-size: 54px;
 }
 
-.rtn-2 {
-    margin-left: 80vh;
+.rtn-3 {
+    /*margin-left: 80vh;*/
     padding: 200px 30px 0 0;
 }
 
@@ -36,25 +38,32 @@
     color: #fff;
 }
 
-.handle {
+.form-left {
     background-color: transparent !important;
-    margin-top: 50px;
-    width: 400px;
-    margin-left: 120px;
     border-color: #d3006c;
+    color: #696969;
+    
+    
+    
 }
 
-.pass-word {
+.form-margin{
+    margin-left: 110px;
+}
+
+.form-right {
     background-color: transparent;
-    margin-top: 20px;
-    width: 400px;
-    margin-left: 120px;
     border-color: #d3006c;
+    color: #696969;
+
+    
+    
 }
 
-.sine-1 {
+.sine-2 {
     padding: 10px 50px 10px 50px;
     border-radius: 1px;
     font-weight: 30px;
     font-size: 20px;
+    margin-right: 421px;
 }
