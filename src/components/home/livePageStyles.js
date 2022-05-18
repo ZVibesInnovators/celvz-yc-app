@@ -4,9 +4,8 @@ import maskIMG from "../assest/image/live-bg.png"
 
 export const LiveShow = styled.div`
 background: url(${discoverIMG});
-// margin-top: -4px;
 min-height: 983px;
-// background-color: #000;
+
 background-size: cover;
 background-position: cover;
 background-repeat: no-repeat;
@@ -19,11 +18,14 @@ flex-direction: column;
     background-position: center;
     background-repeat: no-repeat;
     flex: 1;
-    width: 100vw !important;
-    height: 100%;
-    background-size: cover;
     display: flex;
+    width: 120vw;
+    height: 167%;
+    background-size: cover;
     background-repeat: no-repeat;
+    position: absolute;
+    z-index: 1;
+    top: 0px;
 
     h2 {
         font-style: normal;
@@ -34,6 +36,17 @@ flex-direction: column;
     .live-txt {
         color: #FFF !important;
         margin-left: 30px;
+        margin-top: 150px;
+    }
+
+    .youth-spy {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 69px;
+        text-transform: capitalize;
+        color: #C40667;
+        margin: 0px 0px 10px 315px;
     }
 
     .youth-con {
@@ -47,40 +60,38 @@ flex-direction: column;
      text-align: center;
      text-transform: capitalize;
     }
+
+    #box {
+        background: #141313;
+        border: 1px solid #757474;
+        width: 874px;
+        height: 457px;
+        margin-left: 40px;
+    }
+
+    .right {
+        background-color: transparent !important;
+        border-color: #d3006c;
+        color: #696969;
+        margin-left: 10px;
+        flex: 2;
+        // display: flex;
+        margin-top: 680px;
+        width: 350px;
+        padding: 6px;
+        border-radius: 5px;
+
+    }
+
+    button {
+        padding: 50px;
+        font-size: 90px;
+        background: transparent;
+        border: 0px;
+        color: rgba(240, 249, 255, 0.842);
+        opacity: 0.6;
+        margin-left: 300px;
+        width: 108px;
+        height: 108px;
+    }
 `
-
-
-
-
-
-
-
-
-// .discover-dyp {
-//     color: #fff;
-//     position: absolute;
-//     height: 75px;
-//     left: 53px;
-//     top: 116px;
-
-    
-    
-// }
-
-// h2 {
-//     font-weight: 700;
-//     font-size: 44px;
-// }
-
-// .conference {
-//     position: absolute;
-// width: 286px;
-// height: 42px;
-// left: 3px;
-// font-style: normal;
-// font-weight: 400;
-// font-size: 36px;
-// line-height: 42px;
-// text-align: center;
-// text-transform: capitalize;
-// }
