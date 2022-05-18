@@ -11,6 +11,7 @@ import { routes } from './routes';
 import { AuthProvider } from './contexts/AuthContext';
 import AlertContextProvider from "./contexts/AlertContextProvider";
 import Footer from './components/Footer';
+import MaintenancePage from "./pages/MaintenancePage";
 
 
 
@@ -29,6 +30,7 @@ function App() {
               {routes.map((route, i) => {
                 return <Route key={i} path={route.path} element={<route.component />} />
               })}
+              <Route path={"/*"} element={<MaintenancePage />} />
             </Routes>
             <Footer />
             </div>

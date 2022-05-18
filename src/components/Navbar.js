@@ -7,60 +7,64 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { AuthContext } from '../contexts/AuthContext';
 
+import "./navbar.css"
 
 
 const Navbar = (props) => {
-  const [isAuth,setIsAuth] = useContext(AuthContext);
+  const [isAuth, setIsAuth] = useContext(AuthContext);
 
   useEffect(() => {
     if (!window.location.pathname.endsWith("auth")) setIsAuth(true);
     if (!window.location.pathname.endsWith("register")) setIsAuth(true);
-  }, 
-  // eslint-disable-next-line
-  [setIsAuth])
+  },
+    // eslint-disable-next-line
+    [setIsAuth])
 
   return (
-    isAuth && <nav className="navbar navbar-expand-lg navbar-light main-nav">
-      <div className='container-fluid'>
+    isAuth &&
+    <header className="header">
+      <nav className="navbar navbar-expand-xl navbar-light main-nav fixed-top">
+        <div className='container-fluid'>
 
-        <Link to="/" className="navbar-brand"><img className='logo' src={logo} alt="logo..." /></Link>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <FontAwesomeIcon icon={faBars} style={{ color: "#fff" }} />
-        </button>
+          <Link to="/" className="navbar-brand"><img className='logo' src={logo} alt="logo..." /></Link>
+          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <FontAwesomeIcon icon={faBars} style={{ color: "#fff" }} />
+          </button>
 
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav">
-            <li className="nav-item active">
-              <Link to="/" className="nav-link">Home</Link>
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav mx-auto">
+              <li className="nav-item">
+                <Link to="/" className="nav-link">Home</Link>
+              </li>
+              <li to="/music" className="nav-item">
+                <Link to="/music" className="nav-link">Music</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/live" className="nav-link">Live</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/testimonies" className="nav-link">Testimony</Link>
+              </li>
+              {/* ***********SEARCH ICON*********** */}
+              <div className='search-bar'>
+                <FiSearch color='#fff' size={17} />
+              </div>
+            </ul>
+          <ul className="navbar-nav right">
+            <li className="btn nav-item">
+              <Link to="/auth/register" className="nav-link">Register</Link>
             </li>
-            <li to="/music" className="nav-item">
-              <Link to="/music" className="nav-link">Music</Link>
+
+            <li className="btn nav-item bg-transparent sign-inn">
+              <Link to="/auth" className="nav-link">Sign In</Link>
             </li>
-            <li className="nav-item">
-              <Link to="/live" className="nav-link">Live</Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/testimonies" className="nav-link">Testimony</Link>
-            </li>
-            {/* ***********SEARCH ICON*********** */}
-            <div className='search-bar'>
-              <FiSearch color='#fff' size={17} />
-            </div>
           </ul>
+          </div>
+
+
         </div>
-
-        {/* <div className="nav-item">
-              <Link to="/auth?register=true" className="btn btn-orange">
-                Register
-              </Link>
-        
-              <Link to="/auth" className="sign-inn">
-                Sign In
-              </Link>
-        </div> */}
-
-      </div>
-    </nav>
+      </nav>
+    </header>
   )
 }
 

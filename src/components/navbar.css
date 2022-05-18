@@ -1,0 +1,138 @@
+/*
+*
+* ==========================================
+* CUSTOM UTIL CLASSES
+* ==========================================
+*
+*/
+header {
+    margin-bottom: 100px;
+}
+
+.navbar {
+    transition: all 0.4s;
+}
+
+.navbar .nav-link {
+    color: #fff;
+}
+
+.navbar .nav-link:hover {
+    color: #C40667 !important;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus {
+    color: #fff;
+    text-decoration: none;
+}
+
+.navbar .navbar-brand {
+    color: #fff;
+}
+
+
+/* Change navbar styling on scroll */
+.navbar.active {
+    background: #000;
+    box-shadow: 1px 2px 20px 0px rgb(210 0 108 / 24%);
+}
+
+.navbar.active .nav-link {
+    color: #555;
+}
+
+.navbar.active .nav-link:hover,
+.navbar.active .nav-link:focus {
+    color: #555;
+    text-decoration: none;
+}
+
+.navbar.active .navbar-brand {
+    color: #555;
+}
+
+.navbar-nav.right {
+    margin-left: auto
+}
+
+.navbar-nav li.nav-item {    
+    text-align: center;
+    align-items: center;
+    display: flex;
+    min-width: 150px;
+}
+
+.navbar-nav li.nav-item a {
+    margin: auto !important;
+}
+
+.navbar-nav li.btn.nav-item {
+    min-width: auto;
+    margin: 0px 2px;
+}
+
+.navbar-nav li.btn a {
+    background-color: #C40667;
+    padding: 15px 20px !important;
+    border-radius: 5px;
+}
+
+.navbar-nav li.btn a:hover {
+    cursor: pointer;
+    color: #FFF !important;
+    opacity: 0.8;
+}
+
+.navbar-nav li.btn.bg-transparent a {
+    background-color: transparent !important;
+    color: #C40667 !important;
+    font-weight: bolder
+}
+
+.navbar-nav li.btn.bg-transparent a:hover {
+    cursor: pointer;
+    background-color: #fff !important;
+}
+
+
+/* Change navbar styling on small viewports */
+@media (max-width: 991.98px) {
+    .navbar {
+        background: #000;
+    }
+
+    .navbar .navbar-brand, .navbar .nav-link {
+        color: #FFF;
+    }
+}
+
+@media (max-width: 600px) {
+    .navbar-nav {
+        margin-left: 0px;
+    }
+
+    .navbar-nav li.nav-item {    
+        text-align: left;
+        align-items: flex-start;
+        display: flex;
+    }
+
+    .navbar-nav li.nav-item a {
+        margin-left: 14px !important;
+    }
+
+    .navbar-nav li.btn .nav-link {
+        margin: 0px !important;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        padding-left: 10px !important;
+    }
+
+    .search-bar {
+        width: 100%;
+        margin: 10px 10px 10px 14px;
+    }
+}
