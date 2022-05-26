@@ -5,5 +5,4 @@ const Enums =  {
         orange: "#D3006C"
     }
 }
-
 export default Enums
