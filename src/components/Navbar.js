@@ -6,22 +6,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { AuthContext } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 import "./navbar.css"
 
 
 const Navbar = (props) => {
-  const [isAuth, setIsAuth] = useContext(AuthContext);
-
-  useEffect(() => {
-    if (!window.location.pathname.endsWith("auth")) setIsAuth(true);
-    if (!window.location.pathname.endsWith("register")) setIsAuth(true);
-  },
-    // eslint-disable-next-line
-    [setIsAuth])
+  const navigate = useNavigate();
+  const { isLoggedIn, logout } = useContext(AuthContext);
 
   return (
-    isAuth &&
+    // isAuth &&
     <header className="header">
       <nav className="navbar navbar-expand-xl navbar-light main-nav fixed-top">
         <div className='container-fluid'>
@@ -50,15 +45,24 @@ const Navbar = (props) => {
                 <FiSearch color='#fff' size={17} />
               </div>
             </ul>
-          <ul className="navbar-nav right">
-            <li className="btn nav-item">
-              <Link to="/auth/register" className="nav-link">Register</Link>
-            </li>
 
-            <li className="btn nav-item bg-transparent sign-inn">
-              <Link to="/auth" className="nav-link">Sign In</Link>
-            </li>
-          </ul>
+            <ul className="navbar-nav right">
+              {!isLoggedIn ?
+                <>
+                  <li className="btn nav-item">
+                    <Link to="/auth/register" className="nav-link">Register</Link>
+                  </li>
+
+                  <li className="btn nav-item bg-transparent sign-inn">
+                    <Link to="/auth" className="nav-link">Sign In</Link>
+                  </li>
+                </>
+                :
+                <li className="btn nav-item">
+                  <a onClick={() => { logout(); navigate("/")}} className="nav-link">Logout</a>
+                </li>
+              }
+            </ul>
           </div>
 
 

@@ -3,15 +3,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {
   BrowserRouter,
   Routes,
-  Route
+  Route,
 } from "react-router-dom";
 import { createBrowserHistory } from 'history';
 import Navbar from "./components/Navbar";
 import { routes } from './routes';
-import { AuthProvider } from './contexts/AuthContext';
+import { AuthContext, AuthProvider } from './contexts/AuthContext';
 import AlertContextProvider from "./contexts/AlertContextProvider";
 import Footer from './components/Footer';
 import MaintenancePage from "./pages/MaintenancePage";
+import { useContext, useEffect } from 'react';
+import _ from 'lodash';
 
 
 
@@ -25,14 +27,9 @@ function App() {
         <AuthProvider>
           <BrowserRouter history={history}>
             <div style={{ overflowX: "hidden" }}>
-            <Navbar />
-            <Routes>
-              {routes.map((route, i) => {
-                return <Route key={i} path={route.path} element={<route.component />} />
-              })}
-              <Route path={"/*"} element={<MaintenancePage />} />
-            </Routes>
-            <Footer />
+              <Navbar />
+              <AppRouter />
+              <Footer />
             </div>
           </BrowserRouter>
         </AuthProvider>
@@ -42,3 +39,15 @@ function App() {
 }
 
 export default App;
+
+
+const AppRouter = () => {
+  return (
+    <Routes>
+      {routes.map((route, i) => {
+        return <Route key={i} path={route.path} element={<route.component />} />
+      })}
+      <Route path={"/*"} element={<MaintenancePage />} />
+    </Routes>
+  )
+}

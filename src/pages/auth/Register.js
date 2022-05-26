@@ -6,26 +6,59 @@ import { AlertContext } from "../../contexts/AlertContextProvider";
 import API from "../../services/api";
 import "../../components/Register.css";
 import { LargeHeroButton } from "../../components/home/CallToActionButtons";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const Register = (props) => {
-  // const [isAuth, setIsAuth] = useContext(AuthContext);
-
-  // useEffect(() => setIsAuth(false), [])
   const params = useParams();
   const navigate = useNavigate();
   const { showError, showAlert } = useContext(AlertContext);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [register, setRegister] = useState(null);
+  const { register, isLoggedIn } = useContext(AuthContext);
+
 
   const [payload, setPayload] = useState({
     email: "",
     password: "",
+    confirmPassword: "",
     firstName: "",
     lastName: "",
     phone: "",
-    dob: ""
+    // dob: ""
   });
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      // redirect the user to the dashboard if already logged in
+      navigate("/")
+    }
+  }, [isLoggedIn])
+
+  
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      if (!payload.firstName) throw Error("Please input your first name");
+      if (!payload.lastName) throw Error("Please input your last name");
+      if (!payload.email) throw Error("Please input your Email Address");
+      if (!payload.phone) throw Error("Please input your phone number");
+      if (!payload.password || payload.password?.length < 6) throw Error("Please input a valid Password");
+      if (payload.password !== payload.confirmPassword) throw Error("Passwords do not match");
+      setIsSubmitting(true);
+      await register(payload);
+      setIsSubmitting(false);
+    } catch (error) {
+      showError(error.message);
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleChange = (e) => {
+    setPayload((old) => ({
+      ...old, 
+      [e.target.name]: e.target.value
+    }))
+  }
 
   return (
     <div className="rtnx">
@@ -42,7 +75,7 @@ const Register = (props) => {
             <h2 className="sine">SIGN UP</h2>
             <p style={{ color: "#D3006C" }}>Welcome To The Love Family</p>
           </div>
-          <Form className="form-group">
+          <Form className="form-group" onSubmit={handleSubmit}>
             <Row className="form-margin">
               <Col md={6}>
                 <FormGroup>
@@ -50,7 +83,8 @@ const Register = (props) => {
                     className="form-left"
                     type="text"
                     name="fname"
-                    id="fnameField"
+                    onChange={handleChange}
+                    value={payload.firstName}
                     placeholder="First Name"
                   />
                 </FormGroup>
@@ -61,7 +95,8 @@ const Register = (props) => {
                     className="form-right"
                     type="text"
                     name="lname"
-                    id="lnameField"
+                    onChange={handleChange}
+                    value={payload.lastName}
                     placeholder="Last Name"
                   />
                 </FormGroup>
@@ -74,7 +109,8 @@ const Register = (props) => {
                     className="form-left"
                     type="email"
                     name="email"
-                    id="emailField"
+                    onChange={handleChange}
+                    value={payload.email}
                     placeholder="Email"
                   />
                 </FormGroup>
@@ -85,7 +121,8 @@ const Register = (props) => {
                     className="form-right"
                     type="tel"
                     name="phone"
-                    id="phoneField"
+                    onChange={handleChange}
+                    value={payload.phone}
                     placeholder="Phone"
                   />
                 </FormGroup>
@@ -98,7 +135,8 @@ const Register = (props) => {
                     className="form-left"
                     type="password"
                     name="password"
-                    id="passwordField"
+                    onChange={handleChange}
+                    value={payload.password}
                     placeholder="Password"
                   />
                 </FormGroup>
@@ -108,8 +146,9 @@ const Register = (props) => {
                   <Input
                     className="form-right"
                     type="password"
-                    name="confirm-password"
-                    id="confirmPasswordField"
+                    name="confirmPassword"
+                    onChange={handleChange}
+                    value={payload.confirmPassword}
                     placeholder="Confirm Password"
                   />
                 </FormGroup>

@@ -4,19 +4,16 @@ import SyncIcon from '@mui/icons-material/Sync';
 import { useParams, useNavigate } from "react-router";
 import { Button, Form, FormGroup, Input } from "reactstrap";
 import { AlertContext } from "../../contexts/AlertContextProvider";
-import API from "../../services/api";
 import "../../components/Sign.css";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const Sign = (props) => {
-  // const [isAuth, setIsAuth] = useContext(AuthContext);
-
-  // useEffect(() => setIsAuth(false), [])
   const params = useParams();
   const navigate = useNavigate();
   const { showError, showAlert } = useContext(AlertContext);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [signin, setSignIn] = useState(null);
+  const { login, isLoggedIn } = useContext(AuthContext);
 
   const [payload, setPayload] = useState({
     email: "",
@@ -30,21 +27,20 @@ const Sign = (props) => {
     }));
   };
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      // redirect the user to the dashboard if already logged in
+      navigate("/")
+    }
+  }, [isLoggedIn])
+
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
       if (!payload.email) throw Error("Please input your Email Address");
       if (!payload.password) throw Error("Please input your Password");
       setIsSubmitting(true);
-      const api = new API();
-      const { response } = await api.request("post", `auth/login'`, {
-        ...payload,
-      });
-      showAlert("success", response.message);
-      setPayload({
-        email: "",
-        password: "",
-      });
+      await login(payload);
       setIsSubmitting(false);
     } catch (error) {
       showError(error.message);
@@ -53,7 +49,7 @@ const Sign = (props) => {
   };
 
   return (
-    <div className="rtn">
+    <div className="rtn" style={{ marginTop: -100 }}>
       <div className="rtn-1">
         <div
           className="rtn-2"
