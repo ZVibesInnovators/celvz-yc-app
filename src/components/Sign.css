@@ -37,11 +37,12 @@
 }
 
 .handle {
-    background-color: transparent !important;
+    background-color: transparent;
     margin-top: 50px;
     width: 400px;
     margin-left: 120px;
     border-color: #d3006c;
+    color: #fff;
 }
 
 .pass-word {

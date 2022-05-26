@@ -5,6 +5,7 @@ import { useParams, useNavigate } from "react-router";
 import { Button, Form, FormGroup, Input } from "reactstrap";
 import { AlertContext } from "../../contexts/AlertContextProvider";
 import "../../components/Sign.css";
+import { LargeHeroButton } from "../../components/home/CallToActionButtons";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const Sign = (props) => {
@@ -84,7 +85,7 @@ const Sign = (props) => {
                 onChange={handleChange}
               />
             </FormGroup>
-            <Button
+            <LargeHeroButton
               className="sine-1"
               style={{ background: "#D3006C" }}
               type="submit"
@@ -96,7 +97,7 @@ const Sign = (props) => {
               ) : (
                 <span></span>
               )}
-            </Button>
+            </LargeHeroButton>
             {/* <p className='text-center'>
                          <link to="/signup">
                              Don't Have An Account? <span className='text-sign'>Sign Up</span>

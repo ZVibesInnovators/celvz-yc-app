@@ -1,5 +1,5 @@
 const Enums =  {
-    BASE_URL: 'https://z-vibes-engine.herokuapp.com/api/v1',
+    BASE_URL: 'https://z-vibes-staging.herokuapp.com/api/v1',
     COLORS: {
         white: " #fff",
         orange: "#D3006C"

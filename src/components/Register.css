@@ -39,9 +39,9 @@
 }
 
 .form-left {
-    background-color: transparent !important;
+    background-color: transparent;
     border-color: #d3006c;
-    color: #696969;
+    color: #fff;
     
     
     
@@ -54,7 +54,7 @@
 .form-right {
     background-color: transparent;
     border-color: #d3006c;
-    color: #696969;
+    color: #fff;
 
     
     

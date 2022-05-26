@@ -1,8 +1,10 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
+import SyncIcon from '@mui/icons-material/Sync';
 import { Button, Form, FormGroup, Input, Row, Col, Label } from "reactstrap";
 import { AlertContext } from "../../contexts/AlertContextProvider";
+import moment from "moment";
 import API from "../../services/api";
 import "../../components/Register.css";
 import { LargeHeroButton } from "../../components/home/CallToActionButtons";
@@ -24,7 +26,7 @@ const Register = (props) => {
     firstName: "",
     lastName: "",
     phone: "",
-    // dob: ""
+    dob: moment().format("DD-MM-YYYY")
   });
 
   useEffect(() => {
@@ -34,7 +36,7 @@ const Register = (props) => {
     }
   }, [isLoggedIn])
 
-  
+
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -55,7 +57,7 @@ const Register = (props) => {
 
   const handleChange = (e) => {
     setPayload((old) => ({
-      ...old, 
+      ...old,
       [e.target.name]: e.target.value
     }))
   }
@@ -82,7 +84,7 @@ const Register = (props) => {
                   <Input
                     className="form-left"
                     type="text"
-                    name="fname"
+                    name="firstName"
                     onChange={handleChange}
                     value={payload.firstName}
                     placeholder="First Name"
@@ -94,7 +96,7 @@ const Register = (props) => {
                   <Input
                     className="form-right"
                     type="text"
-                    name="lname"
+                    name="lastName"
                     onChange={handleChange}
                     value={payload.lastName}
                     placeholder="Last Name"
@@ -107,7 +109,7 @@ const Register = (props) => {
                 <FormGroup>
                   <Input
                     className="form-left"
-                    type="email"
+                    type="text"
                     name="email"
                     onChange={handleChange}
                     value={payload.email}
@@ -157,7 +159,12 @@ const Register = (props) => {
             <Row className="form-margin mt-5">
               <Col md={6} style={{ display: "flex" }}>
                 <LargeHeroButton>
-                  SIGN UP
+                  SIGN UP{" "}
+                  {isSubmitting ? (
+                    <SyncIcon className="fa-spin" style={{ marginLeft: 20 }} />
+                  ) : (
+                    <span></span>
+                  )}
                 </LargeHeroButton>
               </Col>
             </Row>

@@ -40,9 +40,15 @@ export const AuthProvider = (props) => {
     }
 
     const register = (payload) => {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             try {
-                console.log("Registering...")
+                const api = new API();
+                const response = await api.request("post", `auth/register`, {
+                    ...payload,
+                });
+                console.log("REGISTER DATA =>", { response });
+                const authRes = await login(payload);
+                resolve(authRes);
                 // submit data to reg endpoint
 
                 // if successful, automatically log the user in
