@@ -3,19 +3,21 @@
     background-size: cover;
     background-position: center;
     width: 100vw;
-    height: 1024px;
+    height: 100vh;
     /* left: 1440px; */
     background-position: center;
 }
 
 .rtn-4{
     background-image:  linear-gradient(to right, #000000 -4.69%, rgba(0, 0, 0, 0) 436.67%); 
-    width: 1440px;
-    height: 1024px;
+    width: 100%;
+    height: 100%;
     /* left: 1440px; */
     /*text-align: end;*/
     backdrop-filter: grayscale(1);
     top: 0;
+    position: relative;
+    margin-top: -100px
 }
 
 .sine {

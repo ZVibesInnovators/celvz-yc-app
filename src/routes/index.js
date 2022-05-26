@@ -4,6 +4,7 @@ import Testimonies from "../pages/Testimonies";
 import Sign from "../pages/auth/Sign";
 import Register from "../pages/auth/Register";
 import EventRouter from "../pages/Events";
+import About from "../pages/About";
 
 export const routes = [
     {
@@ -25,6 +26,12 @@ export const routes = [
         name: "sign in",
         path: "/auth",
         component: Sign
+    },
+    {
+        name: "about",
+        path: "/about",
+        component: About
+
     },
     {
         name: "register",
