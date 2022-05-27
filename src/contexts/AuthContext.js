@@ -67,7 +67,8 @@ export const AuthProvider = (props) => {
         login,
         logout,
         register,
-        isLoggedIn
+        isLoggedIn,
+        authData
     }}>
         {props.children}
     </AuthContext.Provider>
