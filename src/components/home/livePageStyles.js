@@ -3,7 +3,7 @@ import discoverIMG from "../assest/image/live.png";
 import maskIMG from "../assest/image/live-bg.png"
 
 export const LiveShow = styled.div`
-background: url(${discoverIMG});
+background-color: #000;
 min-height: 983px;
 
 background-size: cover;

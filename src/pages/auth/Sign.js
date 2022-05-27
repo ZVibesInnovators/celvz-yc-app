@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useContext, useEffect, useState } from "react";
 import SyncIcon from '@mui/icons-material/Sync';
 import { useParams, useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import { Button, Form, FormGroup, Input } from "reactstrap";
 import { AlertContext } from "../../contexts/AlertContextProvider";
 import "../../components/Sign.css";
@@ -98,11 +99,11 @@ const Sign = (props) => {
                 <span></span>
               )}
             </LargeHeroButton>
-            {/* <p className='text-center'>
-                         <link to="/signup">
-                             Don't Have An Account? <span className='text-sign'>Sign Up</span>
-                         </link>
-                     </p> */}
+            <p className='text-center'>
+
+              Don't Have An Account? <Link to="/auth/register" style={{ textDecoration: "inherit"}}><span className='text-sign' style={{ color: "#d3006c", fontWeight: "bold" }}>Sign Up</span></Link>
+
+            </p>
           </Form>
         </div>
       </div>
