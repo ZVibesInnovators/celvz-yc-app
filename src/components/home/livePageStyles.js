@@ -27,6 +27,15 @@ export const LiveShow = styled.div`
         color: #FFFFFF;
         margin: 0px 0px 10px 68px;
     }
+    @media only screen and (max-width: 600px) {
+        h1{
+            font-size: 34px;
+            line-height: 35px;
+        }
+        span{
+            font-size: 20px;
+        }
+    }
 `
 
 export const VideoWrapper = styled.div`
@@ -35,6 +44,13 @@ export const VideoWrapper = styled.div`
     margin-left: 62px;
     background: #141313;
     border: 1px solid #757474;
+    
+
+    @media only screen and (max-width: 767px) {
+        margin-left: 22px;
+        margin-bottom: 40px;
+        margin-right: 22px;
+    }
 `
 
 export const LiveChatWrapper = styled.div`
@@ -61,6 +77,12 @@ export const LiveChatWrapper = styled.div`
         border-radius: 8px;
         height: 60px;
         color: #FFF !important;
+    }
+    @media only screen and (max-width: 600px) {
+        .chat-messages-screen{
+           
+        }
+       
     }
 `
 

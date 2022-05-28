@@ -109,11 +109,13 @@ const Live = (props) => {
                                 <h1>DISCOVER YOUR PURPOSE</h1>
                                 <span>Youth Conference</span>
                                 <Row className="mt-5">
-                                    <Col md={10} style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
+                                    <Col xs={12} md={10} style={{ display: "flex", flexDirection: "row", justifyContent: "left" }}>
                                         <VideoWrapper id={"video-wrapper"}>
                                             {liveStream.stream?.url && <ReactPlayer
-                                                width={document.getElementById("video-wrapper")?.offsetWidth}
-                                                height={document.getElementById("video-wrapper")?.offsetHeight}
+                                                width="100%"
+                                                height="100%"
+                                                // width={{document.getElementById("video-wrapper")?.offsetWidth}}
+                                                // height={document.getElementById("video-wrapper")?.offsetHeight}
                                                 url={liveStream.stream?.url} />}
                                         </VideoWrapper>
                                     </Col>
