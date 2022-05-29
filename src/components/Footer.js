@@ -59,7 +59,7 @@ const Footer = () => {
                 </Col>
             </Row>
             <div className='copyright'>
-                <small>&copy; 2021 All Rights Reserved</small>
+                <small>&copy; 2022 All Rights Reserved</small>
             </div>
         </FooterWrapper>
     )

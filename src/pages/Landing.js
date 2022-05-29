@@ -9,11 +9,8 @@ import { AiFillInstagram, AiFillYoutube, AiOutlineTwitter } from "react-icons/ai
 import { FaTiktok } from "react-icons/fa";
 
 
-const Landing = (props) => {
-  const navigate = useNavigate()
-  // const [isAuth, setIsAuth] = useContext(AuthContext);
-
-  // useEffect(() => setIsAuth(isAuth), [isAuth])
+const Landing = () => {
+  const navigate = useNavigate();
 
   return (
     <div>

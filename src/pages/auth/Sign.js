@@ -2,21 +2,20 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useContext, useEffect, useState } from "react";
 import SyncIcon from '@mui/icons-material/Sync';
 import { useParams, useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import { Button, Form, FormGroup, Input } from "reactstrap";
 import { AlertContext } from "../../contexts/AlertContextProvider";
-import API from "../../services/api";
 import "../../components/Sign.css";
+import { LargeHeroButton } from "../../components/home/CallToActionButtons";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const Sign = (props) => {
-  // const [isAuth, setIsAuth] = useContext(AuthContext);
-
-  // useEffect(() => setIsAuth(false), [])
   const params = useParams();
   const navigate = useNavigate();
   const { showError, showAlert } = useContext(AlertContext);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [signin, setSignIn] = useState(null);
+  const { login, isLoggedIn } = useContext(AuthContext);
 
   const [payload, setPayload] = useState({
     email: "",
@@ -30,21 +29,20 @@ const Sign = (props) => {
     }));
   };
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      // redirect the user to the dashboard if already logged in
+      navigate("/")
+    }
+  }, [isLoggedIn])
+
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
       if (!payload.email) throw Error("Please input your Email Address");
       if (!payload.password) throw Error("Please input your Password");
       setIsSubmitting(true);
-      const api = new API();
-      const { response } = await api.request("post", `auth/login'`, {
-        ...payload,
-      });
-      showAlert("success", response.message);
-      setPayload({
-        email: "",
-        password: "",
-      });
+      await login(payload);
       setIsSubmitting(false);
     } catch (error) {
       showError(error.message);
@@ -53,7 +51,7 @@ const Sign = (props) => {
   };
 
   return (
-    <div className="rtn">
+    <div className="rtn" style={{ marginTop: -100 }}>
       <div className="rtn-1">
         <div
           className="rtn-2"
@@ -88,7 +86,7 @@ const Sign = (props) => {
                 onChange={handleChange}
               />
             </FormGroup>
-            <Button
+            <LargeHeroButton
               className="sine-1"
               style={{ background: "#D3006C" }}
               type="submit"
@@ -100,12 +98,12 @@ const Sign = (props) => {
               ) : (
                 <span></span>
               )}
-            </Button>
-            {/* <p className='text-center'>
-                         <link to="/signup">
-                             Don't Have An Account? <span className='text-sign'>Sign Up</span>
-                         </link>
-                     </p> */}
+            </LargeHeroButton>
+            <p className='text-center'>
+
+              Don't Have An Account? <Link to="/auth/register" style={{ textDecoration: "inherit"}}><span className='text-sign' style={{ color: "#d3006c", fontWeight: "bold" }}>Sign Up</span></Link>
+
+            </p>
           </Form>
         </div>
       </div>

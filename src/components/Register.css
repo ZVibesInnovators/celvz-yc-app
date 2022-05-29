@@ -3,13 +3,13 @@
     background-size: cover;
     background-position: center;
     width: 100vw;
-    height: 100vh;
+    height: 150vh;
     /* left: 1440px; */
     background-position: center;
 }
 
-.rtn-4{
-    background-image:  linear-gradient(to right, #000000 -4.69%, rgba(0, 0, 0, 0) 436.67%); 
+.rtn-4 {
+    background-image: linear-gradient(to right, #000000 -4.69%, rgba(0, 0, 0, 0) 436.67%);
     width: 100%;
     height: 100%;
     /* left: 1440px; */
@@ -34,30 +34,30 @@
     text-align: end;
 }
 
-.rtn .text{
+.rtn .text {
     color: #fff;
 }
 
 .form-left {
-    background-color: transparent !important;
+    background-color: transparent;
     border-color: #d3006c;
-    color: #696969;
-    
-    
-    
+    color: #fff;
+
+
+
 }
 
-.form-margin{
+.form-margin {
     margin-left: 110px;
 }
 
 .form-right {
     background-color: transparent;
     border-color: #d3006c;
-    color: #696969;
+    color: #fff;
 
-    
-    
+
+
 }
 
 .sine-2 {
@@ -67,3 +67,12 @@
     font-size: 20px;
     margin-right: 421px;
 }
+
+.text-left {
+    text-align: center !important;
+    margin-left: 260px;
+    margin-top: 20px;
+    color: #fff;
+    margin-left: -250px;
+}
+

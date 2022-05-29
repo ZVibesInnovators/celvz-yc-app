@@ -3,95 +3,105 @@ import discoverIMG from "../assest/image/live.png";
 import maskIMG from "../assest/image/live-bg.png"
 
 export const LiveShow = styled.div`
-background: url(${discoverIMG});
-min-height: 983px;
+    margin-top: 100px;
+    z-index: 2;
+    position: relative;
 
-background-size: cover;
-background-position: cover;
-background-repeat: no-repeat;
-display: flex;
-flex-direction: column;
-
-.mask {
-    background-image: url(${maskIMG});
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    flex: 1;
-    display: flex;
-    width: 120vw;
-    height: 167%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: absolute;
-    z-index: 1;
-    top: 0px;
-
-    h2 {
+    h1 {
         font-style: normal;
-        line-height: 47px;
-        
+        font-weight: 700;
+        font-size: 64px;
+        line-height: 75px;
+        text-transform: capitalize;
+        color: #FFFFFF;
+        margin: 0px 0px 10px 61px;
     }
 
-    .live-txt {
-        color: #FFF !important;
-        margin-left: 30px;
-        margin-top: 150px;
-    }
-
-    .youth-spy {
+    span {
         font-style: normal;
         font-weight: 400;
-        font-size: 15px;
-        line-height: 69px;
+        font-size: 36px;
+        line-height: 42px;
+        text-align: center;
         text-transform: capitalize;
-        color: #C40667;
-        margin: 0px 0px 10px 315px;
+        color: #FFFFFF;
+        margin: 0px 0px 10px 68px;
+    }
+    @media only screen and (max-width: 600px) {
+        h1{
+            font-size: 34px;
+            line-height: 35px;
+        }
+        span{
+            font-size: 20px;
+        }
+    }
+`
+
+export const VideoWrapper = styled.div`
+    width: 95%;
+    height: 457px;
+    margin-left: 62px;
+    background: #141313;
+    border: 1px solid #757474;
+    
+
+    @media only screen and (max-width: 767px) {
+        margin-left: 22px;
+        margin-bottom: 40px;
+        margin-right: 22px;
+    }
+`
+
+export const LiveChatWrapper = styled.div`
+    padding: 0px 20px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    .chat-messages-screen {
+        flex: 1;
+        border: 1px solid #C40667;
+        border-radius: 8px;
+        min-height: 339px;
+        max-height: 350px;
+        overflow-y: auto;
+        margin-bottom: 42px;
     }
 
-    .youth-con {
-     position: absolute;
-     width: 286px;
-     height: 42px;
-     font-style: normal;
-     font-weight: 400;
-     font-size: 36px;
-     line-height: 55px;
-     text-align: center;
-     text-transform: capitalize;
+    input {
+        background: transparent !important;
+        border: 1px solid #C40667;
+        border-radius: 8px;
+        height: 60px;
+        color: #FFF !important;
+    }
+    @media only screen and (max-width: 600px) {
+        .chat-messages-screen{
+           
+        }
+       
+    }
+`
+
+export const ChatBubble = styled.div`
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+
+    .body {
+        flex: 1;
+
+        span {
+            color: #FFF;
+            font-size: 14px !important;
+            margin: 0px 10px;
+        }
+        small {
+            color: #C40667;
+        }
     }
 
-    #box {
-        background: #141313;
-        border: 1px solid #757474;
-        width: 874px;
-        height: 457px;
-        margin-left: 40px;
-    }
-
-    .right {
-        background-color: transparent !important;
-        border-color: #d3006c;
-        color: #696969;
-        margin-left: 10px;
-        flex: 2;
-        // display: flex;
-        margin-top: 680px;
-        width: 350px;
-        padding: 6px;
-        border-radius: 5px;
-
-    }
-
-    button {
-        padding: 50px;
-        font-size: 90px;
-        background: transparent;
-        border: 0px;
-        color: rgba(240, 249, 255, 0.842);
-        opacity: 0.6;
-        margin-left: 300px;
-        width: 108px;
-        height: 108px;
-    }
 `
