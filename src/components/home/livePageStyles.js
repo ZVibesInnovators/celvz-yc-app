@@ -10,7 +10,7 @@ export const LiveShow = styled.div`
     h1 {
         font-style: normal;
         font-weight: 700;
-        font-size: 64px;
+        font-size: 50px;
         line-height: 75px;
         text-transform: capitalize;
         color: #FFFFFF;
