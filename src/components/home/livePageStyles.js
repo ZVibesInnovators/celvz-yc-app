@@ -49,7 +49,7 @@ export const VideoWrapper = styled.div`
     @media only screen and (max-width: 767px) {
         margin-left: 22px;
         margin-bottom: 40px;
-        margin-right: 22px;
+        margin-Nright: 22px;
     }
 `
 
