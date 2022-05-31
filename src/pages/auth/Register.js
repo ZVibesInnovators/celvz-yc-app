@@ -67,10 +67,10 @@ const Register = (props) => {
     <div className="rtnx">
       <div className="rtn-4">
         <div
-          className="rtn-3"
+          className="rtn-3 col-md-8"
           style={{
             display: "block",
-            width: 750,
+            // width: 750,
             color: "white",
           }}
         >
@@ -169,12 +169,16 @@ const Register = (props) => {
                 </LargeHeroButton>
               </Col>
             </Row>
-            <p className='text-left'>
 
-I Have An Account? <Link to="/auth" style={{ textDecoration: "inherit"}}><span className='text-sign' style={{ color: "#d3006c", fontWeight: "bold" }}>Sign In</span></Link>
 
-</p>
           </Form>
+          <div style={{ marginLeft: 120, marginTop: 30 }}>
+            <p>
+
+              I Have An Account? <Link to="/auth" style={{ textDecoration: "inherit" }}><span className='text-sign' style={{ color: "#d3006c", fontWeight: "bold" }}>Sign In</span></Link>
+
+            </p>
+          </div>
         </div>
       </div>
     </div>
