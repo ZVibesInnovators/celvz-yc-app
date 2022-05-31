@@ -105,11 +105,11 @@ const Live = (props) => {
                 <LiveShow>
                     <Form onSubmit={sendMessage}>
                         <Row>
-                            <Col md={8}>
+                            <Col md={7}>
                                 <h1>DISCOVER YOUR PURPOSE</h1>
                                 <span>Youth Conference</span>
                                 <Row className="mt-5">
-                                    <Col xs={12} md={10} style={{ display: "flex", flexDirection: "row", justifyContent: "left" }}>
+                                    <Col xs={12} md={12} style={{ display: "flex", flexDirection: "row", justifyContent: "left" }}>
                                         <VideoWrapper id={"video-wrapper"}>
                                             {liveStream.stream?.url && <ReactPlayer
                                                 width="100%"

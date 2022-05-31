@@ -1,17 +1,71 @@
+.flex-container {
+    background: url(../components/assest/image/logoo.png) no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    height: 120vh;
+    margin-top: -100px;
+}
+
+.gradient {
+    display: flex;
+    flex-direction: row;
+    background: linear-gradient(to left, #000000 -4.69%, rgba(0, 0, 0, 0) 436.67%);
+    backdrop-filter: grayscale(1);
+    width: 100%;
+    height: 100%;
+}
+
+.flex-item-left {
+    flex: 50%;
+    margin-top: 200px;
+}
+
+.flex-item-right {
+    margin-top: 200px;
+    flex: 50%;
+    margin-left: 25px;
+    margin-right: 25px;
+    align-content: flex-end;
+}
+
+.flex-h2 {
+    color: #fff;
+    font-weight: 500;
+    font-size: 54px;
+    text-align: end;
+}
+
+@media only screen and (max-width: 767px) {
+    .gradient {
+        flex-direction: row-reverse;
+    }
+
+    .flex-item-left {
+        flex: 0%;
+    }
+
+    .flex-item-right {
+        flex: 100%;
+    }
+
+}
+
+
 .rtn {
     background: url(../components/assest/image/logoo.png) no-repeat;
     background-size: cover;
     background-position: center;
     width: 100vw;
-    height: 1024px;
+    height: 150vh;
     left: 1440px;
     background-position: center;
 }
 
-.rtn-1{
-    background-image:  linear-gradient(to left, #000000 -4.69%, rgba(0, 0, 0, 0) 436.67%); 
-    width: 1440px;
-    height: 1024px;
+.rtn-1 {
+    background-image: linear-gradient(to left, #000000 -4.69%, rgba(0, 0, 0, 0) 436.67%);
+    width: 100%;
+    height: 100%;
     left: 1440px;
     text-align: end;
     backdrop-filter: grayscale(1);
@@ -24,23 +78,23 @@
 }
 
 .rtn-2 {
-    margin-left: 80vh;
+    margin-left: 180vh;
     padding: 200px 30px 0 0;
 }
 
 .form-group {
-    text-align: end;
+    /* text-align: end; */
 }
 
-.rtn .text{
+.rtn .text {
     color: #fff;
 }
 
 .handle {
     background-color: transparent;
     margin-top: 50px;
-    width: 400px;
-    margin-left: 120px;
+
+
     border-color: #d3006c;
     color: #fff;
 }
@@ -48,8 +102,8 @@
 .pass-word {
     background-color: transparent;
     margin-top: 20px;
-    width: 400px;
-    margin-left: 120px;
+
+    color: #fff;
     border-color: #d3006c;
 }
 
@@ -60,8 +114,9 @@
     font-size: 20px;
 }
 
-.text-center {
-    text-align: center!important;
-    margin-left: 260px;
-    margin-top: 20px; 
+.text-p {
+    color: #fff;
+    text-align: end;
+
+    margin-top: 20px;
 }
