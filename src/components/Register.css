@@ -30,6 +30,13 @@
     padding: 200px 30px 0 0;
 }
 
+@media only screen and (max-width: 767px){
+    .rtn-3{
+        margin-left: -85px;
+    }
+    
+}
+
 .form-group {
     text-align: end;
 }
@@ -70,6 +77,6 @@
     margin-left: 260px;
     margin-top: 20px;
     color: #fff;
-    margin-left: -250px;
+    margin-left: -110px;
 }
 
