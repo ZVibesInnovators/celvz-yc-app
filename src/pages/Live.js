@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { Col, Form, Input, Row } from "reactstrap";
 import socketIOClient from "socket.io-client";
 import { Loader } from '../components/Misc';
@@ -22,28 +22,48 @@ const Live = (props) => {
     const [chatMessages, setChatMessages] = useState([]);
     const [message, setMessage] = useState("");
 
+    const socket = useMemo(() => {
+        return socketIOClient(Enums.BASE_URL.replace("/api/v1", ""), {
+            transportOptions: {
+                polling: {
+                    // extraHeaders
+                },
+            },
+        });
+    }, []);
+
+    useEffect(() => {
+        if (liveStream) fetchMessages()
+    }, [liveStream])
+
+    const fetchMessages = useCallback(async (newChatData) => {
+        try {
+            if (newChatData) {
+                console.log('newChatData', _.uniqBy([...chatMessages, newChatData], 'msgId'));
+            }
+            const api = new API();
+            const { comments } = await api.request("get", `stream/${liveStream?._id}/comments?$include=user&$limit=${Math.pow(10, 5)}`);
+            console.log("RES =>", comments);
+            setChatMessages(comments.data)
+        } catch (error) {
+            showError(error.message)
+        }
+    }, [liveStream])
+
     useEffect(() => {
         try {
             setLoading(true);
             const api = new API();
             api.request("get", "stream?$or=isLive:true&$limit=1").then(streams => {
-                console.log("STREAMS =>", streams)
                 setLoading(false);
                 if (streams?.data?.length > 0) {
                     const stream = streams?.data[0]
                     setLiveStream(stream);
+                    console.log("stream", stream);
                     const extraHeaders = {};
                     if (authData?.token) {
                         extraHeaders["authorization"] = authData.token;
                     }
-                    console.log("extraHeaders", extraHeaders)
-                    const socket = socketIOClient(Enums.BASE_URL.replace("/api/v1", ""), {
-                        transportOptions: {
-                            polling: {
-                                // extraHeaders
-                            },
-                        },
-                    });
 
                     socket.on("connected", () => {
                         socket.emit("join", {
@@ -58,13 +78,12 @@ const Live = (props) => {
                             }
                         });
 
-                    })
-                    socket.on(`live-chat-${stream.channelId}`, (newChatData) => {
-                        const msgAdded = chatMessages.map(m => m.msgId).includes(newChatData.msgId)
-                        if (!msgAdded) {
-                            console.log('newChatData', newChatData);
-                            setChatMessages([...chatMessages, newChatData])
-                        }
+                        socket.on(`live-chat-${stream.channelId}`, (newChatData) => {
+                            // const msgAdded = chatMessages.map(m => m.msgId).includes(newChatData.msgId)
+                            // if (!msgAdded) {
+                            fetchMessages(newChatData)
+                            // }
+                        })
                     })
                 }
             }).catch(error => {
@@ -80,22 +99,18 @@ const Live = (props) => {
     const sendMessage = useCallback((e) => {
         try {
             e.preventDefault();
-            const socket = socketIOClient(Enums.BASE_URL.replace("/api/v1", ""), {
-                transportOptions: {
-                    polling: {
-                        // extraHeaders
-                    },
-                },
-            });
+            if (!authData) throw Error("You must be logged in to join the live chat")
             socket.emit("send-message", {
                 channelId: liveStream.channelId,
-                message
+                message,
+                stream: liveStream,
+                user: authData?.user
             })
             setMessage("")
         } catch (error) {
             showError(error.message)
         }
-    }, [message])
+    }, [authData, liveStream])
 
     return (
         <EventDetailPageWrapper>
@@ -127,10 +142,15 @@ const Live = (props) => {
                                         {_.map(chatMessages, function (entry, i) {
                                             return (
                                                 <ChatBubble key={i}>
-                                                    <AccountCircleIcon sx={{ color: "#FFF", fontSize: 40 }} />
-                                                    <div className='body'>
-                                                        <span>{entry.message}</span>
-                                                        <small>-&nbsp;{(entry.sender === authData?.user?._id) ? "You" : "Anon"}</small>
+                                                    <div className="flex-row">
+                                                        <AccountCircleIcon sx={{ color: "#FFF", fontSize: 25 }} />
+                                                        <div className='x-body'>
+                                                            <span>{entry.comment}</span>
+                                                            <small>{entry.user?.firstName || ""}</small>
+                                                        </div>
+                                                    </div>
+                                                    <div className="footer">
+                                                        <small>{entry.createdAt}</small>
                                                     </div>
                                                 </ChatBubble>
                                             )

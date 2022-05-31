@@ -87,11 +87,15 @@ export const LiveChatWrapper = styled.div`
 `
 
 export const ChatBubble = styled.div`
-    display: flex;
-    flex-direction: row;
     margin: 10px;
 
-    .body {
+    .flex-row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .x-body {
         flex: 1;
 
         span {
@@ -102,6 +106,14 @@ export const ChatBubble = styled.div`
         small {
             color: #C40667;
         }
+    }
+
+    .footer {
+        border-bottom: 1px solid #262b2f;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        margin-top: -10px;
     }
 
 `
