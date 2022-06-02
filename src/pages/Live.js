@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { Col, Form, Input, Row } from "reactstrap";
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { Button, Col, Form, Input, Row } from "reactstrap";
 import socketIOClient from "socket.io-client";
 import { Loader } from '../components/Misc';
 import { EventDetailPageWrapper } from '../components/styledComponents/events/EventStyles';
@@ -9,63 +9,52 @@ import { AlertContext } from '../contexts/AlertContextProvider';
 import { AuthContext } from '../contexts/AuthContext';
 import API from '../services/api';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { ChatBubble, LiveChatWrapper, LiveShow, VideoWrapper } from '../components/home/livePageStyles';
+import { ChatBubble, ChatDisabledWrapper, LiveChatWrapper, LiveShow, LiveShowActions, OnAir, VideoWrapper } from '../components/home/livePageStyles';
 import ReactPlayer from 'react-player';
-
-
+import { LiveChatContext } from "../contexts/LiveChatContext";
+import moment from "moment";
+import { Box, CircularProgress, IconButton } from "@mui/material";
+import ShareIcon from '@mui/icons-material/Share';
+import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
+import CropFreeOutlinedIcon from '@mui/icons-material/CropFreeOutlined';
+import { scrollToElm } from "../services/scrollTo";
 
 const Live = (props) => {
     const { isLoggedIn, authData } = useContext(AuthContext);
-    const [liveStream, setLiveStream] = useState(null);
     const [loading, setLoading] = useState(true);
     const { showError, showAlert } = useContext(AlertContext);
-    const [chatMessages, setChatMessages] = useState([]);
-    const [message, setMessage] = useState("");
+    const [connected, setConnected] = useState(false)
+    const {
+        fetchMessages,
+        sendMessage,
+        handleNewMessage,
+        liveStream,
+        setLiveStream,
+        chatMessages,
+        population,
+        setPopulation,
+        sendingMessage,
+        message,
+        setMessage
+    } = useContext(LiveChatContext)
+
+    const socket = socketIOClient(Enums.BASE_URL.replace("/api/v1", ""));
+
+    useEffect(() => {
+        if (liveStream) fetchMessages()
+    }, [liveStream])
+
 
     useEffect(() => {
         try {
             setLoading(true);
             const api = new API();
-            api.request("get", "stream?$or=isLive:true&$limit=1").then(streams => {
-                console.log("STREAMS =>", streams)
+            api.request("get", "stream?$include=event&$or=isLive:true&$limit=1").then(streams => {
                 setLoading(false);
                 if (streams?.data?.length > 0) {
                     const stream = streams?.data[0]
                     setLiveStream(stream);
-                    const extraHeaders = {};
-                    if (authData?.token) {
-                        extraHeaders["authorization"] = authData.token;
-                    }
-                    console.log("extraHeaders", extraHeaders)
-                    const socket = socketIOClient(Enums.BASE_URL.replace("/api/v1", ""), {
-                        transportOptions: {
-                            polling: {
-                                // extraHeaders
-                            },
-                        },
-                    });
-
-                    socket.on("connected", () => {
-                        socket.emit("join", {
-                            channelId: stream.channelId
-                        }, (data) => {
-                            if (data.liveStream) {
-
-                                showAlert("success", data.message);
-
-                            } else {
-                                showError(data.message)
-                            }
-                        });
-
-                    })
-                    socket.on(`live-chat-${stream.channelId}`, (newChatData) => {
-                        const msgAdded = chatMessages.map(m => m.msgId).includes(newChatData.msgId)
-                        if (!msgAdded) {
-                            console.log('newChatData', newChatData);
-                            setChatMessages([...chatMessages, newChatData])
-                        }
-                    })
+                    setPopulation(_.size(stream.viewers))
                 }
             }).catch(error => {
                 showError(error.message);
@@ -77,71 +66,120 @@ const Live = (props) => {
         }
     }, [])
 
-    const sendMessage = useCallback((e) => {
-        try {
-            e.preventDefault();
-            const socket = socketIOClient(Enums.BASE_URL.replace("/api/v1", ""), {
-                transportOptions: {
-                    polling: {
-                        // extraHeaders
-                    },
-                },
+    useEffect(() => {
+        socket.on("connect", () => {
+            console.log("Connected")
+            socket.emit("identity", authData?.user?._id, () => {
+                socket.emit("subscribe", liveStream?._id)
             });
-            socket.emit("send-message", {
-                channelId: liveStream.channelId,
-                message
-            })
-            setMessage("")
-        } catch (error) {
-            showError(error.message)
-        }
-    }, [message])
+        })
+        socket.on("new-message", handleNewMessage)
+    }, [liveStream, authData, socket])
+
+    useEffect(() => {
+        // document.getElementById(`bubble-${_.size(chatMessages) - 1}`)?.scrollIntoView();
+        const box = document.querySelector('.chat-messages-screen');
+        const targetElm = document.querySelector(`#bubble-${_.size(chatMessages) - 1}`); // <-- Scroll to here within ".box"
+        if (targetElm) scrollToElm(box, targetElm, 600);
+    }, [chatMessages])
+
 
     return (
         <EventDetailPageWrapper>
-            {loading ?
-                <Loader />
-                :
-                <LiveShow>
-                    <Form onSubmit={sendMessage}>
-                        <Row>
-                            <Col md={7}>
-                                <h1>DISCOVER YOUR PURPOSE</h1>
-                                <span>Youth Conference</span>
-                                <Row className="mt-5">
-                                    <Col xs={12} md={12} style={{ display: "flex", flexDirection: "row", justifyContent: "left" }}>
-                                        <VideoWrapper id={"video-wrapper"}>
-                                            {liveStream.stream?.url && <ReactPlayer
-                                                width="100%"
-                                                height="100%"
-                                                // width={{document.getElementById("video-wrapper")?.offsetWidth}}
-                                                // height={document.getElementById("video-wrapper")?.offsetHeight}
-                                                url={liveStream.stream?.url} />}
-                                        </VideoWrapper>
-                                    </Col>
-                                </Row>
-                            </Col>
-                            <Col md={4}>
-                                <LiveChatWrapper>
-                                    <div className='chat-messages-screen'>
-                                        {_.map(chatMessages, function (entry, i) {
-                                            return (
-                                                <ChatBubble key={i}>
-                                                    <AccountCircleIcon sx={{ color: "#FFF", fontSize: 40 }} />
-                                                    <div className='body'>
-                                                        <span>{entry.message}</span>
-                                                        <small>-&nbsp;{(entry.sender === authData?.user?._id) ? "You" : "Anon"}</small>
+            {
+                loading ?
+                    <Loader />
+                    :
+                    <LiveShow>
+                        <Form onSubmit={sendMessage}>
+                            <Row>
+                                <Col md={8}>
+                                    <Row>
+                                        <Col xs={12} md={12} style={{ display: "flex", flexDirection: "row", justifyContent: "left" }}>
+                                            <VideoWrapper id={"video-wrapper"}>
+                                                {liveStream.stream?.url && <ReactPlayer
+                                                    width="100%"
+                                                    height="100%"
+                                                    url={liveStream.stream?.url} />}
+                                            </VideoWrapper>
+                                        </Col>
+                                    </Row>
+
+                                    <h1>{liveStream?.event?.title || liveStream?.title}</h1>
+                                    <LiveShowActions>
+                                        <span>{population} watching now&nbsp;&middot;&nbsp;Streaming started on {moment(liveStream.createdAt).format('DD MMM YYYY')}</span>
+                                        <Box sx={{ flex: 1, display: "flex", flexDirection: "row", alignItems: "center", m: 0, p: 0 }}>
+                                            <IconButton sx={{ margin: "10px 10px 0px 50px" }}>
+                                                <ShareIcon sx={{ color: "#FFF", fontSize: 20 }} />
+                                            </IconButton>
+                                            <IconButton sx={{ margin: "10px 10px 0px 10px" }}>
+                                                <CropFreeOutlinedIcon sx={{ color: "#FFF", fontSize: 20 }} />
+                                            </IconButton>
+                                            {liveStream.isLive &&
+                                                <OnAir>
+                                                    <span>LIVE</span>
+                                                </OnAir>}
+                                        </Box>
+                                    </LiveShowActions>
+                                    <Box>
+                                        <span>{liveStream?.event?.description}</span>
+                                    </Box>
+                                </Col>
+                                <Col md={4}>
+                                    <LiveChatWrapper>
+                                        <div className="header-wrapper">
+                                            <h5>Live Chat</h5>
+                                        </div>
+                                        <div className='chat-messages-screen'>
+                                            {_.map(chatMessages, function (entry, i) {
+                                                return (
+                                                    <ChatBubble key={i} id={`bubble-${i}`}>
+                                                        <div className="flex-row">
+                                                            <AccountCircleIcon sx={{ color: entry.color, fontSize: 25 }} />
+                                                            <div className='x-body'>
+                                                                <small>{entry.user?.firstName || ""}</small>
+                                                                <span>{entry.comment}</span>
+                                                            </div>
+                                                        </div>
+                                                    </ChatBubble>
+                                                )
+                                            })}
+                                        </div>
+                                        <div className="input-wrapper">
+                                            {isLoggedIn ?
+                                                <>
+                                                    <Input
+                                                        value={message}
+                                                        onChange={(e) => setMessage(e.target.value)}
+                                                        placeholder="Say Something..."
+                                                        maxLength={200}
+                                                    />
+                                                    <div className="info">
+                                                        <small>{message?.trim().length || 0}/200</small>{
+                                                            sendingMessage ?
+                                                                <CircularProgress size={20} style={{ margin: "0px 0px 0px 10px" }} />
+                                                                :
+                                                                <IconButton
+                                                                    sx={{ margin: "0px 0px 0px 10px" }}
+                                                                    onClick={sendMessage}
+                                                                    disabled={message.trim().length == 0}
+                                                                >
+                                                                    <SendOutlinedIcon sx={{ color: "#FFF", fontSize: 20 }} />
+                                                                </IconButton>
+                                                        }
+
                                                     </div>
-                                                </ChatBubble>
-                                            )
-                                        })}
-                                    </div>
-                                    <Input value={message} onChange={(e) => setMessage(e.target.value)} />
-                                </LiveChatWrapper>
-                            </Col>
-                        </Row>
-                    </Form>
-                </LiveShow>
+                                                </>
+                                                : <ChatDisabledWrapper>
+                                                    <Button>SIGN IN TO CHAT</Button>
+                                                    <span>Live Chat is currently disabled</span>
+                                                </ChatDisabledWrapper>}
+                                        </div>
+                                    </LiveChatWrapper>
+                                </Col>
+                            </Row>
+                        </Form>
+                    </LiveShow>
             }
         </EventDetailPageWrapper>
     )
