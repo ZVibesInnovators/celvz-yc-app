@@ -23,7 +23,7 @@ const Landing = () => {
           <span className="mt-md-5">
             <ul className="btn btn-next mt-md-5 mt-3">
               <LargeHeroButton onClick={() => navigate("/about")} style={{ marginLeft: 10, marginBottom: 15 }}>What We Do</LargeHeroButton>
-              <LargeHeroButton outline={true} style={{ marginLeft: 10 }}>Stay Connected</LargeHeroButton>
+              <LargeHeroButton onClick={() => navigate("/live")} outline={true} style={{ marginLeft: 10 }}>Stay Connected</LargeHeroButton>
             </ul>
           </span>
         </div>

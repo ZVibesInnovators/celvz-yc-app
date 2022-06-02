@@ -14,6 +14,7 @@ import Footer from './components/Footer';
 import MaintenancePage from "./pages/MaintenancePage";
 import { useContext, useEffect } from 'react';
 import _ from 'lodash';
+import LiveChatContextProvider from "./contexts/LiveChatContext";
 
 
 
@@ -25,13 +26,15 @@ function App() {
     <>
       <AlertContextProvider>
         <AuthProvider>
-          <BrowserRouter history={history}>
-            <div style={{ overflowX: "hidden" }}>
-              <Navbar />
-              <AppRouter />
-              <Footer />
-            </div>
-          </BrowserRouter>
+          <LiveChatContextProvider>
+            <BrowserRouter history={history}>
+              <div style={{ overflowX: "hidden" }}>
+                <Navbar />
+                <AppRouter />
+                <Footer />
+              </div>
+            </BrowserRouter>
+          </LiveChatContextProvider>
         </AuthProvider>
       </AlertContextProvider>
     </>
