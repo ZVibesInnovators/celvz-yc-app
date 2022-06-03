@@ -18,12 +18,13 @@ import ShareIcon from '@mui/icons-material/Share';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import CropFreeOutlinedIcon from '@mui/icons-material/CropFreeOutlined';
 import { scrollToElm } from "../services/scrollTo";
+import { useNavigate } from "react-router-dom";
 
 const Live = (props) => {
+    const navigate = useNavigate()
     const { isLoggedIn, authData } = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
     const { showError, showAlert } = useContext(AlertContext);
-    const [connected, setConnected] = useState(false)
     const {
         fetchMessages,
         sendMessage,
@@ -54,7 +55,9 @@ const Live = (props) => {
                 if (streams?.data?.length > 0) {
                     const stream = streams?.data[0]
                     setLiveStream(stream);
-                    setPopulation(_.size(stream.viewers))
+                    setPopulation(_.size(_.uniqBy(stream.viewers, function (v) {
+                        return v.client && v.active && v.deviceId
+                    })))
                 }
             }).catch(error => {
                 showError(error.message);
@@ -64,22 +67,30 @@ const Live = (props) => {
             showError(error.message);
             setLoading(false);
         }
+
+        return () => {
+            socket.emit("unsubscribe")
+            socket.emit("disconnect")
+        }
     }, [])
 
     useEffect(() => {
         socket.on("connect", () => {
-            console.log("Connected")
             socket.emit("identity", authData?.user?._id, () => {
-                socket.emit("subscribe", liveStream?._id)
+                const UUID = localStorage.getItem("UUID")
+                socket.emit("subscribe", { liveStream, user: authData?.user, deviceId: UUID })
             });
         })
         socket.on("new-message", handleNewMessage)
+
+        socket.on("audience-size", (v) => {
+            if (population !== v) setPopulation(v);
+        })
     }, [liveStream, authData, socket])
 
     useEffect(() => {
-        // document.getElementById(`bubble-${_.size(chatMessages) - 1}`)?.scrollIntoView();
         const box = document.querySelector('.chat-messages-screen');
-        const targetElm = document.querySelector(`#bubble-${_.size(chatMessages) - 1}`); // <-- Scroll to here within ".box"
+        const targetElm = document.querySelector(`#bubble-${_.size(chatMessages) - 1}`);
         if (targetElm) scrollToElm(box, targetElm, 600);
     }, [chatMessages])
 
@@ -121,8 +132,8 @@ const Live = (props) => {
                                                 </OnAir>}
                                         </Box>
                                     </LiveShowActions>
-                                    <Box>
-                                        <span>{liveStream?.event?.description}</span>
+                                    <Box sx={{ mb: 2 }}>
+                                        <span style={{ color: "#d7d7d7" }}>{liveStream?.event?.description}</span>
                                     </Box>
                                 </Col>
                                 <Col md={4}>
@@ -146,34 +157,40 @@ const Live = (props) => {
                                             })}
                                         </div>
                                         <div className="input-wrapper">
-                                            {isLoggedIn ?
-                                                <>
-                                                    <Input
-                                                        value={message}
-                                                        onChange={(e) => setMessage(e.target.value)}
-                                                        placeholder="Say Something..."
-                                                        maxLength={200}
-                                                    />
-                                                    <div className="info">
-                                                        <small>{message?.trim().length || 0}/200</small>{
-                                                            sendingMessage ?
-                                                                <CircularProgress size={20} style={{ margin: "0px 0px 0px 10px" }} />
-                                                                :
-                                                                <IconButton
-                                                                    sx={{ margin: "0px 0px 0px 10px" }}
-                                                                    onClick={sendMessage}
-                                                                    disabled={message.trim().length == 0}
-                                                                >
-                                                                    <SendOutlinedIcon sx={{ color: "#FFF", fontSize: 20 }} />
-                                                                </IconButton>
-                                                        }
+                                            {liveStream.isLive ?
+                                                isLoggedIn ?
+                                                    <>
+                                                        <Input
+                                                            value={message}
+                                                            onChange={(e) => setMessage(e.target.value)}
+                                                            placeholder="Say Something..."
+                                                            maxLength={200}
+                                                        />
+                                                        <div className="info">
+                                                            <small>{message?.trim().length || 0}/200</small>{
+                                                                sendingMessage ?
+                                                                    <CircularProgress size={20} style={{ margin: "0px 0px 0px 10px" }} />
+                                                                    :
+                                                                    <IconButton
+                                                                        sx={{ margin: "0px 0px 0px 10px" }}
+                                                                        onClick={sendMessage}
+                                                                        disabled={message.trim().length == 0}
+                                                                    >
+                                                                        <SendOutlinedIcon sx={{ color: "#FFF", fontSize: 20 }} />
+                                                                    </IconButton>
+                                                            }
 
-                                                    </div>
-                                                </>
-                                                : <ChatDisabledWrapper>
-                                                    <Button>SIGN IN TO CHAT</Button>
-                                                    <span>Live Chat is currently disabled</span>
-                                                </ChatDisabledWrapper>}
+                                                        </div>
+                                                    </>
+                                                    : <ChatDisabledWrapper>
+                                                        <Button type="button" onClick={() => navigate("/auth")}>SIGN IN TO CHAT</Button>
+                                                        <span>Live Chat is currently disabled</span>
+                                                    </ChatDisabledWrapper>
+                                                :
+                                                <ChatDisabledWrapper>
+                                                    <span>Chat is closed. Live Stream has ended</span>
+                                                </ChatDisabledWrapper>
+                                            }
                                         </div>
                                     </LiveChatWrapper>
                                 </Col>

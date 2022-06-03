@@ -17,7 +17,7 @@ function getRelativePos(elm) {
     return pos;
 }
 
-function scrollTo(element, to, duration, onDone) {
+export function scrollTo(element, to, duration, onDone) {
     var start = element.scrollTop,
         change = to - start,
         startTime = performance.now(),

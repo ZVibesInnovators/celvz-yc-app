@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import discoverIMG from "../assest/image/live.png";
-import maskIMG from "../assest/image/live-bg.png"
 
 export const LiveShow = styled.div`
     margin-top: 100px;
@@ -29,11 +27,15 @@ export const LiveShow = styled.div`
     }
     @media only screen and (max-width: 600px) {
         h1{
-            font-size: 34px;
-            line-height: 35px;
+            font-size: 24px;
+            line-height: 25px;
+            margin: 20px 0px 10px 20px;
         }
         span{
-            font-size: 20px;
+            font-size: 16px;
+            margin: 0px 10px 0px 20px;
+            flex-wrap: wrap;
+            text-align: left;
         }
     }
 `
@@ -43,13 +45,12 @@ export const VideoWrapper = styled.div`
     height: 457px;
     margin-left: 62px;
     background: #141313;
-    border: 1px solid #757474;
+    border: 1px solid #424040;
     
 
     @media only screen and (max-width: 767px) {
-        margin-left: 22px;
-        margin-bottom: 40px;
-        margin-right: 22px;
+        margin: 0px 12px 10px 12px;
+        height: 300px;
     }
 `
 
@@ -79,7 +80,7 @@ export const LiveChatWrapper = styled.div`
         min-height: 60px;
 
         small {
-            color: #d7d7d7
+            color: #d7d7d7;
         }
 
         .info {
@@ -123,6 +124,8 @@ export const LiveChatWrapper = styled.div`
         }
     }
     @media only screen and (max-width: 600px) {
+        margin-bottom: 50px;
+
         .chat-messages-screen{
            
         }
@@ -209,6 +212,14 @@ export const LiveShowActions = styled.div`
 
     button:hover {
         background-color: #1e1e1e;
+    }
+
+    @media only screen and (max-width: 767px) {
+        margin-bottom: 10px;
+
+        &  button:first-child {
+            margin-left: 10px !important;
+        }
     }
 `
 

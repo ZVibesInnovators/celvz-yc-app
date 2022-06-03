@@ -1,21 +1,18 @@
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
 import { createBrowserHistory } from 'history';
-import Navbar from "./components/Navbar";
-import { routes } from './routes';
-import { AuthContext, AuthProvider } from './contexts/AuthContext';
-import AlertContextProvider from "./contexts/AlertContextProvider";
+import { useEffect } from 'react';
+import {
+  BrowserRouter, Route, Routes, useLocation
+} from "react-router-dom";
+import './App.css';
 import Footer from './components/Footer';
-import MaintenancePage from "./pages/MaintenancePage";
-import { useContext, useEffect } from 'react';
-import _ from 'lodash';
+import Navbar from "./components/Navbar";
+import AlertContextProvider from "./contexts/AlertContextProvider";
+import { AuthProvider } from './contexts/AuthContext';
 import LiveChatContextProvider from "./contexts/LiveChatContext";
-
+import MaintenancePage from "./pages/MaintenancePage";
+import { routes } from './routes';
 
 
 function App() {
@@ -45,6 +42,13 @@ export default App;
 
 
 const AppRouter = () => {
+  const params = useLocation();
+
+  useEffect(() => {
+    // scroll to page top
+    window.scrollTo(0, 0)
+  }, [params])
+
   return (
     <Routes>
       {routes.map((route, i) => {
