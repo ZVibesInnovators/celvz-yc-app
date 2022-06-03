@@ -1,4 +1,5 @@
 import Landing from "../pages/Landing";
+import Dashboard from "../pages/Dashboard";
 // import Music from "../pages/Music";
 // import Testimonies from "../pages/Testimonies";
 import Sign from "../pages/auth/Sign";
@@ -59,5 +60,10 @@ export const routes = [
         path: "/live",
         component: Live
     },
+    {
+        name: "dashboard",
+        path: "/dashboard",
+        component: Dashboard
+    }
 
 ]
