@@ -5,7 +5,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import { Box, CircularProgress, IconButton } from "@mui/material";
 import _ from 'lodash';
 import moment from "moment";
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import ReactPlayer from 'react-player';
 import { useNavigate } from "react-router-dom";
 import { Button, Col, Form, Input, Row } from "reactstrap";
@@ -39,7 +39,9 @@ const Live = (props) => {
         setMessage
     } = useContext(LiveChatContext)
 
-    const socket = socketIOClient(Enums.BASE_URL.replace("/api/v1", ""));
+    const socket = useMemo(() => {
+        return socketIOClient(Enums.BASE_URL.replace("/api/v1", ""));
+    }, [])
 
     useEffect(() => {
         if (liveStream) fetchMessages()
@@ -58,6 +60,9 @@ const Live = (props) => {
                     setPopulation(_.size(_.uniqBy(stream.viewers, function (v) {
                         return v.client && v.active && v.deviceId
                     })))
+                    setTimeout(() => {
+                        hookupSocket()
+                    }, 5000);
                 }
             }).catch(error => {
                 showError(error.message);
@@ -73,14 +78,13 @@ const Live = (props) => {
         }
     }, [])
 
-    useEffect(() => {
-        if (liveStream) {
-            console.log("Using Socket");
+    const hookupSocket = useCallback(() => {
+        if (liveStream && authData) {
             socket.on("connect", () => {
-                // socket.emit("identity", authData?.user?._id, () => {
-                const UUID = localStorage.getItem("UUID")
-                socket.emit("subscribe", { liveStream, user: authData?.user, deviceId: UUID })
-                // });
+                socket.emit("identity", authData?.user?._id, () => {
+                    const UUID = localStorage.getItem("UUID")
+                    socket.emit("subscribe", { liveStream, user: authData?.user, deviceId: UUID })
+                });
             })
             socket.on("new-message", handleNewMessage)
 
@@ -88,7 +92,7 @@ const Live = (props) => {
                 if (population !== v) setPopulation(v);
             })
         }
-    }, [liveStream, authData])
+    }, [liveStream])
 
     useEffect(() => {
         const box = document.querySelector('.chat-messages-screen');
