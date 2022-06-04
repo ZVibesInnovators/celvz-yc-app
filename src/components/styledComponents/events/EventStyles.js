@@ -143,3 +143,32 @@ export const Subtitle = styled.div`
     text-transform: capitalize;
     color: ${props => props.small ? "#C40667" : "#FFFFFF"};
 `
+
+export const NoLiveStreamWrapper = styled.div`
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+
+    svg {
+        font-size: 250px;
+        color: #C40667
+    }
+
+    h5 {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 34px;
+        line-height: 45px;
+        text-transform: inherit;
+        text-align: center;
+        color: #FFFFFF;
+
+        @media only screen and (max-width: 600px) {
+            font-size: 20px;
+            line-height: 35px;
+        }
+    }
+`
