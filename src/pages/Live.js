@@ -69,23 +69,23 @@ const Live = (props) => {
         }
 
         return () => {
-            socket.emit("unsubscribe")
-            socket.emit("disconnect")
+            // socket.emit("unsubscribe")
+            // socket.emit("disconnect")
         }
     }, [])
 
     useEffect(() => {
-        socket.on("connect", () => {
-            socket.emit("identity", authData?.user?._id, () => {
-                const UUID = localStorage.getItem("UUID")
-                socket.emit("subscribe", { liveStream, user: authData?.user, deviceId: UUID })
-            });
-        })
-        socket.on("new-message", handleNewMessage)
+        // socket.on("connect", () => {
+        //     socket.emit("identity", authData?.user?._id, () => {
+        //         const UUID = localStorage.getItem("UUID")
+        //         socket.emit("subscribe", { liveStream, user: authData?.user, deviceId: UUID })
+        //     });
+        // })
+        // socket.on("new-message", handleNewMessage)
 
-        socket.on("audience-size", (v) => {
-            if (population !== v) setPopulation(v);
-        })
+        // socket.on("audience-size", (v) => {
+        //     if (population !== v) setPopulation(v);
+        // })
     }, [liveStream, authData, socket])
 
     useEffect(() => {
