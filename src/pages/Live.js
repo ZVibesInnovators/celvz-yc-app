@@ -25,6 +25,7 @@ const Live = (props) => {
     const { isLoggedIn, authData } = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
     const { showError, showAlert } = useContext(AlertContext);
+    const [connected, setConnected] = useState(false)
     const {
         fetchMessages,
         sendMessage,
@@ -39,14 +40,11 @@ const Live = (props) => {
         setMessage
     } = useContext(LiveChatContext)
 
-    const socket = useMemo(() => {
-        return socketIOClient(Enums.BASE_URL.replace("/api/v1", ""));
-    }, [])
+    const [socket, setSocket] = useState()
 
     useEffect(() => {
         if (liveStream) fetchMessages()
     }, [liveStream])
-
 
     useEffect(() => {
         try {
@@ -60,9 +58,6 @@ const Live = (props) => {
                     setPopulation(_.size(_.uniqBy(stream.viewers, function (v) {
                         return v.client && v.active && v.deviceId
                     })))
-                    setTimeout(() => {
-                        hookupSocket()
-                    }, 5000);
                 }
             }).catch(error => {
                 showError(error.message);
@@ -74,25 +69,43 @@ const Live = (props) => {
         }
 
         return () => {
-            socket.emit("unsubscribe")
+            socket?.emit("unsubscribe")
         }
     }, [])
 
-    const hookupSocket = useCallback(() => {
-        if (liveStream && authData) {
-            socket.on("connect", () => {
-                socket.emit("identity", authData?.user?._id, () => {
-                    const UUID = localStorage.getItem("UUID")
-                    socket.emit("subscribe", { liveStream, user: authData?.user, deviceId: UUID })
-                });
-            })
-            socket.on("new-message", handleNewMessage)
-
-            socket.on("audience-size", (v) => {
-                if (population !== v) setPopulation(v);
-            })
+    useEffect(() => {
+        if (liveStream) {
+            const connection = socketIOClient(Enums.BASE_URL.replace("/api/v1", ""), {
+                'reconnection': true,
+                'reconnectionDelay': 5000,
+                'reconnectionAttempts': 20
+            });
+            setSocket(connection);
         }
     }, [liveStream])
+
+    useEffect(() => {
+        socket?.on("connect", () => {
+            setConnected(true);
+            socket.emit("identity", authData?.user?._id, (v) => {
+                setConnected(true);
+                const UUID = localStorage.getItem("UUID")
+                socket.emit("subscribe", { liveStream, user: authData?.user, deviceId: UUID })
+            });
+        })
+
+        socket?.on("new-message", handleNewMessage)
+
+        socket?.on("audience-size", (v) => {
+            if (population !== v) setPopulation(v);
+        })
+
+        socket?.on("disconnect", () => {
+            setConnected(false)
+        })
+
+        socket?.on("live-page-refresh", () => window.location.reload())
+    }, [socket, liveStream, authData]);
 
     useEffect(() => {
         const box = document.querySelector('.chat-messages-screen');
@@ -146,9 +159,10 @@ const Live = (props) => {
                                         </Box>
                                     </Col>
                                     <Col md={4}>
-                                        <LiveChatWrapper>
+                                        <LiveChatWrapper online={connected && liveStream?.isLive}>
                                             <div className="header-wrapper">
                                                 <h5>Live Chat</h5>
+                                                <div className="status-indicator" />
                                             </div>
                                             <div className='chat-messages-screen'>
                                                 {_.map(chatMessages, function (entry, i) {
