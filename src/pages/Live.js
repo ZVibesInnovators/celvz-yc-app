@@ -67,19 +67,22 @@ const Live = (props) => {
             showError(error.message);
             setLoading(false);
         }
-
-        return () => {
-            socket?.emit("unsubscribe")
-        }
     }, [])
 
     useEffect(() => {
         if (liveStream) {
-            const connection = socketIOClient(Enums.BASE_URL.replace("/api/v1", ""), {
-                'reconnection': true,
-                'reconnectionDelay': 5000,
-                'reconnectionAttempts': 20
-            });
+            const connection = socketIOClient(Enums.BASE_URL.replace("/api/v1", "")
+            // , {
+            //     // 'reconnection': true,
+            //     // 'reconnectionDelay': 5000,
+            //     // 'reconnectionAttempts': 20,
+            //     transportOptions: {
+            //         polling: {
+            //             // extraHeaders
+            //         },
+            //     },
+            // }
+            );
             setSocket(connection);
         }
     }, [liveStream])
@@ -105,6 +108,11 @@ const Live = (props) => {
         })
 
         socket?.on("live-page-refresh", () => window.location.reload())
+
+        return () => {
+            socket?.emit("unsubscribe")
+            socket?.emit("disconnect")
+        }
     }, [socket, liveStream, authData]);
 
     useEffect(() => {
