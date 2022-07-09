@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import React from 'react';
 import { EventDetailPageWrapper } from "../../components/styledComponents/events/EventStyles";
 import RecommendedMusic from "./RecommendedMusic";
+import TopTracks from "./TopTracks"
 
 const AntTabs = styled(Tabs)({
     '& .MuiTabs-indicator': {
@@ -81,14 +82,15 @@ export default function Music() {
     return (
         <EventDetailPageWrapper style={{ paddingTop: 80 }}>
             <Box sx={{ width: '100%' }}>
-                <AntTabs sx={{ borderBottom: "0.001em solid #353535" }} value={value} onChange={handleChange} aria-label="ant example">
+                <AntTabs sx={{ borderBottom: "0.001em solid #353535" }} value={value} onChange={handleChange} aria-label="ant example" >
                     <AntTab label="Recommended" />
                     <AntTab label="New Releases" />
                     <AntTab label="Top Charts" />
                 </AntTabs>
 
-                <TabPanel value={value} index={0}>
+                <TabPanel value={value} index={0} >
                     <RecommendedMusic />
+                    <TopTracks />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
                     <Typography>Item Two</Typography>

@@ -10,7 +10,7 @@ const RecommendedMusic = () => {
         <Box>
             <HeroWrapper>
                 <Row className="mask h-100">
-                    <Col md={6} className="p-2 p-md-5" style={{ display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+                    <Col md={6} className="p-2" style={{ display: "flex", flexDirection: "column", justifyContent: "flex-end" , marginTop: "20px"}} >
                         <h1>New Trending Album</h1>
                         <label>Featured Content</label>
                         <LargeHeroButton style={{ width: "150px", fontSize: "15px", borderRadius: "50px", marginTop: 10 }}>Play All</LargeHeroButton>

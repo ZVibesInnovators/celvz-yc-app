@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
 export const HeroWrapper = styled.div`
-    height: 50vh;
+    
     background-color: #111;
 
     .mask {
         background: rgba(0, 0, 0,0.6);
+        padding: 2.5rem;
         
         h1 {
             color: #FFF;
@@ -24,3 +25,29 @@ export const HeroWrapper = styled.div`
         }
     }
 `
+
+export const TrackList = styled.div`
+    height: 50vh;
+    background-color: #111;
+    position: relative;
+    
+
+    .mask {
+        background: rgba(0, 0, 0,0.6);
+        padding: 2rem;
+
+        h3 {
+            color: #FFF;
+            font-weight: lighter;
+            font-size: 25px;
+            margin: 0px;
+            font-family: 'Raleway', sans-serif;
+
+        }
+    }
+    
+
+
+    
+`
+
