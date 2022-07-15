@@ -1,4 +1,3 @@
-import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { createBrowserHistory } from 'history';
 import { useEffect } from 'react';
@@ -11,8 +10,10 @@ import Navbar from "./components/Navbar";
 import AlertContextProvider from "./contexts/AlertContextProvider";
 import { AuthProvider } from './contexts/AuthContext';
 import LiveChatContextProvider from "./contexts/LiveChatContext";
+import { MusicPlayerContextProvider } from "./contexts/MusicPlayerContext";
 import MaintenancePage from "./pages/MaintenancePage";
 import { routes } from './routes';
+import React from 'react';
 
 
 function App() {
@@ -23,15 +24,17 @@ function App() {
     <>
       <AlertContextProvider>
         <AuthProvider>
-          <LiveChatContextProvider>
-            <BrowserRouter history={history}>
-              <div style={{ overflowX: "hidden" }}>
-                <Navbar />
-                <AppRouter />
-                <Footer />
-              </div>
-            </BrowserRouter>
-          </LiveChatContextProvider>
+          <MusicPlayerContextProvider>
+            <LiveChatContextProvider>
+              <BrowserRouter history={history}>
+                <div style={{ overflowX: "hidden" }}>
+                  <Navbar />
+                  <AppRouter />
+                  <Footer />
+                </div>
+              </BrowserRouter>
+            </LiveChatContextProvider>
+          </MusicPlayerContextProvider>
         </AuthProvider>
       </AlertContextProvider>
     </>

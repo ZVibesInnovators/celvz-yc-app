@@ -21,7 +21,6 @@ export const AuthProvider = (props) => {
             // generate a unique id for the device if none exists
             if(!localStorage.getItem("UUID")){
                 var uuid = new DeviceUUID().get();
-                console.log("UUID", uuid)
                 localStorage.setItem("UUID", uuid)
             }
         } catch (error) {
@@ -52,7 +51,6 @@ export const AuthProvider = (props) => {
                 const response = await api.request("post", `auth/register`, {
                     ...payload,
                 });
-                console.log("REGISTER DATA =>", { response });
                 const authRes = await login(payload);
                 resolve(authRes);
                 // submit data to reg endpoint

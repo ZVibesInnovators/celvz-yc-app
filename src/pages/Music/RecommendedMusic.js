@@ -3,11 +3,12 @@ import React from 'react';
 import { Col, Row } from "reactstrap";
 import { LargeHeroButton } from "../../components/home/CallToActionButtons";
 import { HeroWrapper } from "../../components/styledComponents/musicStyles";
+import TopTracks from "./TopTracks"
 
 const RecommendedMusic = () => {
 
     return (
-        <Box>
+        <Box sx={{ marginBottom: "200px" }}>
             <HeroWrapper>
                 <Row className="mask h-100">
                     <Col md={6} className="p-2" style={{ display: "flex", flexDirection: "column", justifyContent: "flex-end" , marginTop: "20px"}} >
@@ -27,6 +28,8 @@ const RecommendedMusic = () => {
                     </Col>
                 </Row>
             </HeroWrapper>
+            {/* top tracks */}
+            <TopTracks />
         </Box>
     )
 }
