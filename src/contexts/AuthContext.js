@@ -1,3 +1,4 @@
+import {DeviceUUID} from "device-uuid";
 import { reject } from "lodash";
 import { React, createContext, useState, useEffect, useMemo } from "react";
 import API from "../services/api";
@@ -17,6 +18,11 @@ export const AuthProvider = (props) => {
         try {
             // this initializes the authData if any has been saved to the localStorage
             setAuthData(JSON.parse(localStorage.getItem("authData")))
+            // generate a unique id for the device if none exists
+            if(!localStorage.getItem("UUID")){
+                var uuid = new DeviceUUID().get();
+                localStorage.setItem("UUID", uuid)
+            }
         } catch (error) {
             console.log(error.message)
         }
@@ -29,7 +35,6 @@ export const AuthProvider = (props) => {
                 const response = await api.request("post", `auth/login`, {
                     ...payload,
                 });
-                console.log("AUTH DATA =>", { response });
                 setAuthData(response);
                 localStorage.setItem("authData", JSON.stringify(response))
                 resolve(response);
@@ -46,7 +51,6 @@ export const AuthProvider = (props) => {
                 const response = await api.request("post", `auth/register`, {
                     ...payload,
                 });
-                console.log("REGISTER DATA =>", { response });
                 const authRes = await login(payload);
                 resolve(authRes);
                 // submit data to reg endpoint

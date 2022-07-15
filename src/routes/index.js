@@ -1,5 +1,6 @@
 import Landing from "../pages/Landing";
-// import Music from "../pages/Music";
+import Dashboard from "../pages/Dashboard";
+import Music from "../pages/Music";
 // import Testimonies from "../pages/Testimonies";
 import Sign from "../pages/auth/Sign";
 import Register from "../pages/auth/Register";
@@ -13,11 +14,11 @@ export const routes = [
         path: "/",
         component: Landing
     },
-    // {
-    //     name: "music",
-    //     path: "/music",
-    //     component: Music
-    // },
+    {
+        name: "music",
+        path: "/music",
+        component: Music
+    },
     // {
     //     name: "testimonies",
     //     path: "/testimonies",
@@ -59,5 +60,10 @@ export const routes = [
         path: "/live",
         component: Live
     },
+    {
+        name: "dashboard",
+        path: "/dashboard",
+        component: Dashboard
+    }
 
 ]

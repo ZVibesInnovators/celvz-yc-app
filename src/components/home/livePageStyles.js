@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import discoverIMG from "../assest/image/live.png";
-import maskIMG from "../assest/image/live-bg.png"
 
 export const LiveShow = styled.div`
     margin-top: 100px;
@@ -29,11 +27,15 @@ export const LiveShow = styled.div`
     }
     @media only screen and (max-width: 600px) {
         h1{
-            font-size: 34px;
-            line-height: 35px;
+            font-size: 24px;
+            line-height: 25px;
+            margin: 20px 0px 10px 20px;
         }
         span{
-            font-size: 20px;
+            font-size: 16px;
+            margin: 0px 10px 0px 20px;
+            flex-wrap: wrap;
+            text-align: left;
         }
     }
 `
@@ -43,13 +45,12 @@ export const VideoWrapper = styled.div`
     height: 457px;
     margin-left: 62px;
     background: #141313;
-    border: 1px solid #757474;
+    border: 1px solid #424040;
     
 
     @media only screen and (max-width: 767px) {
-        margin-left: 22px;
-        margin-bottom: 40px;
-        margin-right: 22px;
+        margin: 0px 12px 10px 12px;
+        height: 300px;
     }
 `
 
@@ -79,7 +80,7 @@ export const LiveChatWrapper = styled.div`
         min-height: 60px;
 
         small {
-            color: #d7d7d7
+            color: #d7d7d7;
         }
 
         .info {
@@ -123,6 +124,8 @@ export const LiveChatWrapper = styled.div`
         }
     }
     @media only screen and (max-width: 600px) {
+        margin-bottom: 50px;
+
         .chat-messages-screen{
            
         }
@@ -210,6 +213,14 @@ export const LiveShowActions = styled.div`
     button:hover {
         background-color: #1e1e1e;
     }
+
+    @media only screen and (max-width: 767px) {
+        margin-bottom: 10px;
+
+        &  button:first-child {
+            margin-left: 10px !important;
+        }
+    }
 `
 
 export const OnAir = styled.div`
@@ -226,4 +237,175 @@ export const OnAir = styled.div`
         color: #cc0100;
         font-size: 10px !important;
     }
+`
+
+export const Flicker = styled.div`
+div {
+  text-align:center;
+  position:relative;
+  border:5px solid #1086e8;
+  width:400px;
+  margin-top:150px;
+  border-radius:20px;
+  margin-left: auto;
+  animation: border-flicker 2s linear infinite;
+
+  @media only screen and (max-width: 600px) {
+      width: 250px;
+  }
+}
+
+h1 {
+  color:#C40667;
+  font-family: 'Raleway', sans-serif;
+  font-size:64px;
+  letter-spacing:10px;
+  animation: text-flicker 3s linear infinite;
+  margin-top: 10px;
+
+  @media only screen and (max-width: 600px) {
+    font-size:34px;
+  }
+}
+
+#offset {
+  animation: letter-flicker 2s linear infinite;
+}
+
+@keyframes text-flicker {
+  0% {
+    opacity:0.1;
+    text-shadow: 0px 0px 29px rgba(242, 22, 22, 1);
+  }
+  
+  2% {
+    opacity:1;
+    text-shadow: 0px 0px 29px rgba(242, 22, 22, 1);
+  }
+  8% {
+    opacity:0.1;
+    text-shadow: 0px 0px 29px rgba(242, 22, 22, 1);
+  }
+  9% {
+    opacity:1;
+    text-shadow: 0px 0px 29px rgba(242, 22, 22, 1);
+  }
+  12% {
+    opacity:0.1;
+    text-shadow: 0px 0px rgba(242, 22, 22, 1);
+  }
+  20% {
+    opacity:1;
+    text-shadow: 0px 0px 29px rgba(242, 22, 22, 1)
+  }
+  25% {
+    opacity:0.3;
+    text-shadow: 0px 0px 29px rgba(242, 22, 22, 1)
+  }
+  30% {
+    opacity:1;
+    text-shadow: 0px 0px 29px rgba(242, 22, 22, 1)
+  }
+  
+  70% {
+    opacity:0.7;
+    text-shadow: 0px 0px 29px rgba(242, 22, 22, 1)
+  }
+  
+  72% {
+    opacity:0.2;
+    text-shadow:0px 0px 29px rgba(242, 22, 22, 1)
+  }
+  
+  77% {
+    opacity:.9;
+    text-shadow: 0px 0px 29px rgba(242, 22, 22, 1)
+  }
+  100% {
+    opacity:.9;
+    text-shadow: 0px 0px 29px rgba(242, 22, 22, 1)
+  }
+}
+
+@keyframes border-flicker {
+  0% {
+    opacity:0.1;
+    -webkit-box-shadow: 0px 0px 78px 4px rgba(16,134,232,0.73);
+-moz-box-shadow: 0px 0px 78px 4px rgba(16,134,232,0.73);
+box-shadow: 0px 0px 78px 4px rgba(16,134,232,0.73);
+  }
+  2% {
+    opacity:1;
+    -webkit-box-shadow: 0px 0px 78px 4px rgba(16,134,232,0.73);
+-moz-box-shadow: 0px 0px 78px 4px rgba(16,134,232,0.73);
+box-shadow: 0px 0px 78px 4px rgba(16,134,232,0.73);
+  }
+  4% {
+    opacity:0.1;
+    -webkit-box-shadow: 0px 0px 78px 4px rgba(16,134,232,0.73);
+-moz-box-shadow: 0px 0px 78px 4px rgba(16,134,232,0.73);
+box-shadow: 0px 0px 78px 4px rgba(16,134,232,0.73);
+  }
+  
+  8% {
+    opacity:1;
+    -webkit-box-shadow: 0px 0px 78px 4px rgba(16,134,232,0.73);
+-moz-box-shadow: 0px 0px 78px 4px rgba(16,134,232,0.73);
+box-shadow: 0px 0px 78px 4px rgba(16,134,232,0.73);
+  }
+  70% {
+    opacity:0.7;
+    -webkit-box-shadow: 0px 0px 78px 4px rgba(16,134,232,0.73);
+-moz-box-shadow: 0px 0px 78px 4px rgba(16,134,232,0.73);
+box-shadow: 0px 0px 78px 4px rgba(16,134,232,0.73);
+  }
+  100% {
+    opacity:1;
+    -webkit-box-shadow: 0px 0px 78px 4px rgba(16,134,232,0.73);
+-moz-box-shadow: 0px 0px 78px 4px rgba(16,134,232,0.73);
+box-shadow: 0px 0px 78px 4px rgba(16,134,232,0.73);
+  }
+}
+
+@keyframes letter-flicker {
+  0% {
+    opacity:0.1;
+    text-shadow: 0px 0px 29px rgba(242, 22, 22, 1);
+  }
+  2% {
+    opacity:0.1;
+    text-shadow: 0px 0px 29px rgba(242, 22, 22, 1);
+  }
+  4% {
+    opacity:1;
+    text-shadow: 0px 0px 29px rgba(242, 22, 22, 1);
+  }
+  
+  
+  19% {
+    opacity:1;
+    text-shadow: 0px 0px 29px rgba(242, 22, 22, 1);
+  }
+  21% {
+    opacity:0.1;
+    text-shadow: 0px 0px 29px rgba(242, 22, 22, 1);
+  }
+  23% {
+    opacity:1;
+    text-shadow: 0px 0px 29px rgba(242, 22, 22, 1);
+  }
+  
+  80% {
+    opacity:1;
+    text-shadow: 0px 0px 29px rgba(242, 22, 22, 1);
+  }
+  83% {
+    opacity:0.4;
+    text-shadow: 0px 0px 29px rgba(242, 22, 22, 1);
+  }
+  87% {
+    opacity:1;
+    text-shadow: 0px 0px 29px rgba(242, 22, 22, 1);
+  }
+}
 `

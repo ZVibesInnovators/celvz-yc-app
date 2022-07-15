@@ -41,13 +41,13 @@ const sendMessage = async (e) => {
         if (!message) throw Error("Please type a message before sending")
         if (!liveStream) throw Error("Can not send message to an unknow channel")
         if (!authData) throw Error("You must be logged in to join the live chat")
+        if(!liveStream.isLive) throw Error("Chat is closed. Live Stream has ended")
         setSendingMessage(true)
         const api = new API(authData.token);
         const res = await api.request("post", `stream/${liveStream._id}/comments`, {
             message,
             user: authData.user
         });
-        console.log({ res, user: authData.user });
         setSendingMessage(false)
         setMessage("")
     } catch (error) {
