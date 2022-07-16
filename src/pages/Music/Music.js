@@ -87,8 +87,6 @@ export default function Music() {
                     scrollButtons="auto"
                  sx={{ borderBottom: "0.001em solid #353535" }} value={value} onChange={handleChange} aria-label="ant example" >
                     <AntTab label="Recommended" />
-                    <AntTab label="New Releases" />
-                    <AntTab label="Top Charts" />
                     <AntTab label="Playlists" />
                 </AntTabs>
 
@@ -96,13 +94,6 @@ export default function Music() {
                     <RecommendedMusic />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <Typography>Item Two</Typography>
-                    <FileUploader />
-                </TabPanel>
-                <TabPanel value={value} index={2}>
-                    <Typography>Item Three</Typography>
-                </TabPanel>
-                <TabPanel value={value} index={3}>
                     <Typography>Item Four</Typography>
                 </TabPanel>
             </Box>

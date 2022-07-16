@@ -1,14 +1,17 @@
-import { Box } from "@mui/material";
+import { Box, Skeleton, Typography } from "@mui/material";
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
+import { Col } from "reactstrap";
 import styled from "styled-components";
+import { LargeHeroButton } from "../home/CallToActionButtons";
 
 export const HeroWrapper = styled.div`
     
     background-color: #111;
+    background-position: center;
 
     .mask {
-        background: rgba(0, 0, 0,0.6);
+        background: rgba(0, 0, 0,0.8);
         padding: 2.5rem;
         
         h1 {
@@ -31,37 +34,37 @@ export const HeroWrapper = styled.div`
 `
 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.black,
-      color: "#4e4c4c",
-      borderColor: "#393838",
-      fontWeight: 700
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 16,
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
-      borderColor: "#393838",
-    },
-  }));
-  
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: "#4e4c4c",
+    borderColor: "#393838",
+    fontWeight: 700
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 16,
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+    borderColor: "#393838",
+  },
+}));
+
 export const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-      border: 0,
-    },
-    '&:hover': {
-      cursor: "pointer",
-      background: "#3a3a3a24",
-      '& > *': {
-        background: "#3a3a3a24 !important",
-      }
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+  '&:hover': {
+    cursor: "pointer",
+    background: "#3a3a3a24",
+    '& > *': {
+      background: "#3a3a3a24 !important",
     }
-  }));
-  
+  }
+}));
+
 export const TrackList = styled.div`
     height: 60vh;
     background: rgba(0, 0, 0,0.6);
@@ -121,5 +124,114 @@ export const MusicPlayerWrapper = (props) => {
     >
       {props.children}
     </Box>
+  )
+}
+
+export const GenreTile = (props) => {
+  return (
+    <Col
+      md={5}
+      style={{
+        height: "calc(50vh/2.5)",
+        padding: "0px",
+        margin: "5px",
+        borderRadius: "10px",
+        display: "flex",
+        backgroundColor: props.color,
+        backgroundImage: `url(${props.bgImage || ""})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat"
+      }}
+      {...props}
+    >
+      {props.children}
+    </Col>
+  )
+}
+
+export const GenreShimmer = (props) => {
+  return (
+    <Skeleton
+      variant="rectangular"
+      sx={{
+        width: "100%",
+        height: "100%",
+        background: props.color,
+        borderRadius: "10px"
+      }}
+    />
+  )
+}
+
+export const GenreTitle = (props) => {
+  return (
+    <Typography
+      component={"h6"}
+      sx={{
+        color: "#FFF",
+        textTransform: "uppercase",
+        fontSize: "12px",
+        letterSpacing: "2px",
+        fontWeight: "600"
+      }}
+      {...props}
+    >{props.children}</Typography>
+  )
+}
+
+export const GenreTilebody = (props) => {
+  return (
+    <Box
+      sx={{
+        padding: "10px",
+        borderRadius: "10px",
+        flex: 1,
+        backgroundColor: "rgb(0 0 0 / 56%)",
+
+        "&:hover": {
+          backdropFilter: "blur(4px)",
+          cursor: "pointer",
+        }
+      }}
+      {...props}
+    >
+      {props.children}
+    </Box>
+  )
+}
+
+export const AddPlayListDismissBtn = (props) => {
+  return (
+    <LargeHeroButton
+      style={{
+        width: "100%",
+        borderRadius: 0,
+        padding: "3px",
+        fontSize: "18px"
+      }}
+      {...props}
+    >
+      {props.children}
+    </LargeHeroButton>
+  )
+}
+
+export const CreatePlayListBtn = (props) => {
+  return (
+    <LargeHeroButton
+      style={{
+        width: "80%",
+        margin: "auto",
+        borderRadius: 0,
+        padding: "3px",
+        fontSize: "18px",
+        background: "#FFF",
+        color: "#111 !important"
+      }}
+      {...props}
+    >
+      {props.children}
+    </LargeHeroButton>
   )
 }

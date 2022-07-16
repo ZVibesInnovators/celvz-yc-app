@@ -78,7 +78,9 @@ const MusicPlayer = forwardRef((props, ref) => {
             <Seeker progress={progress} playing={playing} duration={currentTrack?.media?.meta?.duration || 0} seek={onSeek} />
             <Box className="player">
                 <Avatar
-                    src={!_.isEmpty(currentTrack?.songArt) && currentTrack.songArt[0]?.meta?.thumbnail_url} variant="square" sx={{ width: 60, height: 60 }}
+                    src={!_.isEmpty(currentTrack?.songArt) && currentTrack.songArt[0]?.meta?.secure_url} 
+                    variant="square" 
+                    sx={{ width: 60, height: 60 }}
                     className="thubnail"
                     style={{ background: "#d7d7d7" }}
                 />
