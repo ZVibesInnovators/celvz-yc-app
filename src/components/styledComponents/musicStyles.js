@@ -1,4 +1,4 @@
-import { Box, Skeleton, Typography } from "@mui/material";
+import { Box, Paper, Skeleton, Typography } from "@mui/material";
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import { Col } from "reactstrap";
@@ -233,5 +233,45 @@ export const CreatePlayListBtn = (props) => {
     >
       {props.children}
     </LargeHeroButton>
+  )
+}
+
+export const PlaylistItemWrapper = (props) => {
+  const Item = styled(Box)(({ theme }) => ({
+    backgroundColor: 'transparent',
+    ...theme.typography.body2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center"
+  }));
+
+  return (
+    <Item>
+      {props.children}
+    </Item>
+  )
+
+}
+
+export const PlaylistThumbnailWrapper = (props) => {
+  return (
+    <Box sx={{
+      width: props.size || 40,
+      height: props.size || 40,
+
+      "& :before": {
+        content: "''",
+        position: "relative",
+        height: "6px",
+        width: "calc(100% - 12px)",
+        top: "-6px",
+        left: "6px",
+        background: "#111"
+      }
+    }}>
+      {props.children}
+    </Box>
   )
 }
