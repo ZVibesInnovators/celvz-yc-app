@@ -16,7 +16,7 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 
 const RecommendedMusic = () => {
     const { showError } = useContext(AlertContext)
-    const { playNewSong, currentTrack, playing } = useContext(MusicPlayerContext);
+    const { playNewSong, currentTrack, playing, setNewPlaylistTrack } = useContext(MusicPlayerContext);
     const [isLoading, setLoading] = useState(true);
     const [topTracks, setTopTracks] = useState([]);
 
@@ -86,7 +86,7 @@ const RecommendedMusic = () => {
                                                     <IconButton sx={{ padding: "0px" }}>
                                                         <ShareOutlinedIcon sx={{ color: "#FFF" }} />
                                                     </IconButton>
-                                                    <IconButton sx={{ padding: "0px", margin: "0px 15px" }}>
+                                                    <IconButton sx={{ padding: "0px", margin: "0px 15px" }} onClick={() => setNewPlaylistTrack(song)}>
                                                         <PlaylistAddOutlinedIcon sx={{ color: "#FFF" }} />
                                                     </IconButton>
                                                     <IconButton sx={{ padding: "0px" }}>
