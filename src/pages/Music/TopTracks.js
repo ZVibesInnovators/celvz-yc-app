@@ -39,12 +39,12 @@ const RecommendedMusic = () => {
     }
 
     return (
-        isLoading ?
-            <Loader />
-            :
-            !_.isEmpty(topTracks) &&
-            <Box>
-                <TrackList>
+        <Box>
+            <TrackList style={{ height: "inherit", minHeight: "100px" }}>
+                {isLoading ?
+                    <Loader />
+                    :
+                    !_.isEmpty(topTracks) &&
                     <Row className="mask">
                         <h3>Top Tracks</h3>
                         <TableContainer component={Box} style={{ marginTop: "20px" }}>
@@ -61,10 +61,16 @@ const RecommendedMusic = () => {
                                 </TableHead>
                                 <TableBody>
                                     {_.map(topTracks, function (song, i) {
-                                        const index = i + 1
+                                        const index = i + 1;
+                                        const handlePlay = () => {
+                                            playNewSong({
+                                                songIndex: i,
+                                                list: topTracks
+                                            })
+                                        }
                                         return (
                                             <StyledTableRow key={i}>
-                                                <StyledTableCell onClick={() => playNewSong(song)}>
+                                                <StyledTableCell onClick={handlePlay}>
                                                     {currentTrack?._id === song._id ?
                                                         <IconButton sx={{ padding: "0px" }}>
                                                             {playing ?
@@ -76,12 +82,12 @@ const RecommendedMusic = () => {
                                                         :
                                                         <Typography sx={{ color: "#4e4c4c", fontWeight: "600" }}>{`${index < 10 ? "0" : ""}${index}`}</Typography>}
                                                 </StyledTableCell>
-                                                <StyledTableCell onClick={() => playNewSong(song)}></StyledTableCell>
-                                                <StyledTableCell onClick={() => playNewSong(song)} component="th" scope="row">
+                                                <StyledTableCell onClick={handlePlay}></StyledTableCell>
+                                                <StyledTableCell onClick={handlePlay} component="th" scope="row">
                                                     {song.title}
                                                 </StyledTableCell>
-                                                <StyledTableCell onClick={() => playNewSong(song)} align="right">{`${song.artiste?.firstName || "Unknown Artist"}`}</StyledTableCell>
-                                                <StyledTableCell onClick={() => playNewSong(song)} align="right">{Number(song.media?.meta?.duration / 60).toFixed(2).replace(".", ":")}</StyledTableCell>
+                                                <StyledTableCell onClick={handlePlay} align="right">{`${song.artiste?.firstName || "Unknown Artist"}`}</StyledTableCell>
+                                                <StyledTableCell onClick={handlePlay} align="right">{Number(song.media?.meta?.duration / 60).toFixed(2).replace(".", ":")}</StyledTableCell>
                                                 <StyledTableCell align="right" className="action-cell">
                                                     <IconButton sx={{ padding: "0px" }}>
                                                         <ShareOutlinedIcon sx={{ color: "#FFF" }} />
@@ -99,9 +105,9 @@ const RecommendedMusic = () => {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                    </Row>
-                </TrackList>
-            </Box>
+                    </Row>}
+            </TrackList>
+        </Box>
     )
 }
 

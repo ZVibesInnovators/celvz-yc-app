@@ -42,6 +42,21 @@ const Live = (props) => {
     const socket = socketIOClient(Enums.BASE_URL.replace("/api/v1", ""));
 
     useEffect(() => {
+        const time = setTimeout(() => {
+            if(!isLoggedIn) {
+                showError("You must be logged in to view a live stream");
+                localStorage.setItem("strictPage", "/live")
+                setTimeout(() => navigate("/auth"), 5000)
+            }else {
+                localStorage.removeItem("strictPage")
+            }
+        }, 3000);
+        return () => {
+            clearTimeout(time)
+        }
+    }, [isLoggedIn])
+
+    useEffect(() => {
         if (liveStream) fetchMessages()
     }, [liveStream])
 

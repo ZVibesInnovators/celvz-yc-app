@@ -14,11 +14,11 @@ export const routes = [
         path: "/",
         component: Landing
     },
-    {
-        name: "music",
-        path: "/music",
-        component: Music
-    },
+    // {
+    //     name: "music",
+    //     path: "/music",
+    //     component: Music
+    // },
     // {
     //     name: "testimonies",
     //     path: "/testimonies",

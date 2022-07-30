@@ -1,5 +1,4 @@
 import {DeviceUUID} from "device-uuid";
-import { reject } from "lodash";
 import { React, createContext, useState, useEffect, useMemo } from "react";
 import API from "../services/api";
 

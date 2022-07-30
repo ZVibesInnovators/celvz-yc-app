@@ -7,13 +7,13 @@ import API from "../../services/api";
 import TopTracks from "./TopTracks"
 import _ from "lodash";
 import { AlertContext } from "../../contexts/AlertContextProvider";
+import NewReleases from "./NewReleases";
 
 const RecommendedMusic = () => {
     const { showError } = useContext(AlertContext)
     const [isLoading, setLoading] = useState(true);
     const [album, setAlbum] = useState(null);
     const [genre, setGenre] = useState([]);
-
 
     useEffect(() => {
         getData();
@@ -28,10 +28,9 @@ const RecommendedMusic = () => {
             _.forEach(_genre.data, function (entry, i) {
                 genreObj[i] = entry
             })
-            console.log("TRACKS =>", albums);
-            setLoading(false)
             setAlbum(_.isEmpty(albums?.data) ? null : albums?.data[0]);
-            setGenre(_genre.data)
+            setGenre(_genre.data);
+            setLoading(false);
         } catch (error) {
             showError(error.message)
         }
@@ -99,6 +98,8 @@ const RecommendedMusic = () => {
             </HeroWrapper>
             {/* top tracks */}
             <TopTracks />
+            {/* new releases */}
+            <NewReleases />
         </Box>
     )
 }

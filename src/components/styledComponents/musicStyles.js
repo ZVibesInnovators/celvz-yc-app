@@ -84,6 +84,33 @@ export const TrackList = styled.div`
 
         }
     }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+       opacity: 1;
+      }
+    }
+
+    @keyframes stretch {
+      from {
+        height: 300px;
+      }
+      to {
+       height: 340px;
+      }
+    }
+
+    @Keyframes elastic {
+      from {
+        height: 340px;
+      }
+      to {
+       height: 300px;
+      }
+    }
 `
 
 export const MusicPlayerWrapper = (props) => {
@@ -273,5 +300,18 @@ export const PlaylistThumbnailWrapper = (props) => {
     }}>
       {props.children}
     </Box>
+  )
+}
+
+export const BoxShimmer = (props) => {
+
+  return (
+    <Skeleton 
+      variant="rectangular" 
+      width={240} 
+      height={300}
+      sx={{ bgcolor: 'grey.900' }}
+      {...props}
+    >{props.children}</Skeleton>
   )
 }

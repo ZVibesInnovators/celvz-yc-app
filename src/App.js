@@ -27,7 +27,7 @@ function App() {
           <MusicPlayerContextProvider>
             <LiveChatContextProvider>
               <BrowserRouter history={history}>
-                <div style={{ overflowX: "hidden" }}>
+                <div style={{ overflowX: "hidden", background: "#000" }}>
                   <Navbar />
                   <AppRouter />
                   <Footer />
