@@ -18,12 +18,10 @@ class API {
 
     request(method, path, payload = null) {
         const { token, host } = this;
-        // console.log("Making Request", `METH: ${method}`, `HOTS: ${host}`);
         const allowedMethods = ["post", "put", "delete", "get"]
         return new Promise((resolve, reject) => {
             try {
                 let config = { headers: this.headers }
-                // console.log("HEADERS =>", this.headers)
                 if (token) config["headers"]["Authorization"] = `Bearer ${token}`;
                 if (payload) config['data'] = payload
                 let op = allowedMethods.splice(0, 2).includes(method) ?

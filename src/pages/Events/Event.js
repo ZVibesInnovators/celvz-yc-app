@@ -1,14 +1,14 @@
 import PlaylistAddCheckCircleIcon from '@mui/icons-material/PlaylistAddCheckCircle';
 import { ImSpinner9 } from 'react-icons/im';
 import { FormControl } from "@mui/material";
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useParams, useNavigate } from "react-router";
 import { Button, Col, Form, FormGroup, Input, Row } from "reactstrap";
 import { EventDetailPageWrapper, Mask, Subtitle, SubtitleWrapper, Title } from "../../components/styledComponents/events/EventStyles";
 import { Loader } from '../../components/Misc';
 import { AlertContext } from "../../contexts/AlertContextProvider";
 import API from "../../services/api";
-import Footer from '../../components/Footer';
+import _ from "lodash"
 
 const nigerianStates = require("../../constants/nigerianStates.json")
 
@@ -26,6 +26,7 @@ const Event = () => {
         email: "",
         phone: "",
         location: "Lagos",
+        lga: "Ikeja",
         newMember: true
     })
 
@@ -71,6 +72,14 @@ const Event = () => {
         }))
     }
 
+    const lgas = useMemo(() => {
+        const lgas = nigerianStates.find(s => {
+            return s.name === payload.location
+        })?.lgas;
+        if (!_.isEmpty(lgas)) setPayload({...payload, lga: lgas[0]});
+        return lgas || []
+    }, [payload.location])
+
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
@@ -79,11 +88,13 @@ const Event = () => {
             if (!payload.email) throw Error("Please input your Email Address")
             if (!payload.phone) throw Error("Please input your phone")
             if (!payload.location) throw Error("Please input your location")
+            if (!payload.lga) throw Error("Please input your location")
             setIsSubmitting(true)
             const api = new API();
             const { response } = await api.request("post", `events/register`, {
                 ...payload,
-                event: event?._id
+                event: event?._id,
+                location: `${payload.location} - ${payload.lga}`
             })
             showAlert("success", response.message)
             setPayload({
@@ -91,6 +102,7 @@ const Event = () => {
                 email: "",
                 phone: "",
                 location: "Lagos",
+                lga: "Ikeja",
                 newMember: true
             })
             setIsSubmitting(false)
@@ -117,7 +129,7 @@ const Event = () => {
                                 </Col>
                             </Row>
                             <Row className="w-100 pb-4">
-                                <Col md={4} className={"form ml-5 mb-5"}>
+                                <Col md={5} className={"form ml-5 mb-5"}>
                                     <Form onSubmit={handleSubmit}>
                                         <FormGroup className="mb-5">
                                             <Input
@@ -146,19 +158,41 @@ const Event = () => {
                                                 onChange={handleChange}
                                             />
                                         </FormGroup>
-
+                                        <label style={{
+                                            color: "#FFF",
+                                            background: "#c42167",
+                                            padding: "0px 3px",
+                                            borderRadius: "5px",
+                                            marginBottom: "1px",
+                                            width: "fit-content"
+                                        }}>Location</label>
                                         <FormControl className="mb-5" variant="standard">
-                                            <Input
-                                                type='select'
-                                                placeholder='Location'
-                                                name={"location"}
-                                                className="short"
-                                                value={payload.location}
-                                                onChange={handleChange}
-                                                style={{ width: 466 }}
-                                            >
-                                                {nigerianStates.map((state, i) => <option key={i}>{state}</option>)}
-                                            </Input>
+                                            <div className="row">
+                                                <div className="col-12 col-md-5">
+                                                    <Input
+                                                        type='select'
+                                                        placeholder='Location'
+                                                        name={"location"}
+                                                        className="short"
+                                                        value={payload.location}
+                                                        onChange={handleChange}
+                                                        style={{ maxWidth: "100%", margin: "0px 50px 0px 0px" }}                                                    >
+                                                        {nigerianStates.map((state, i) => <option key={i}>{state?.name}</option>)}
+                                                    </Input>
+                                                </div>
+                                                <div className="col-12 col-md-5 ml-3">
+                                                    <Input
+                                                        type='select'
+                                                        placeholder='Area'
+                                                        name={"lga"}
+                                                        className="short"
+                                                        value={payload.lga}
+                                                        onChange={handleChange}
+                                                        style={{ maxWidth: "100%" }}                                                    >
+                                                        {lgas.map((lga, i) => <option key={i}>{lga}</option>)}
+                                                    </Input>
+                                                </div>
+                                            </div>
                                         </FormControl>
 
                                         <FormGroup className="hint">

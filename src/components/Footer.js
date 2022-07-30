@@ -46,7 +46,7 @@ const Footer = () => {
     const navigate = useNavigate()
 
     return (
-        <FooterWrapper >
+        <FooterWrapper id="site-footer">
             <Row>
                 <Col md={8}>
                     <span>+234 814 8272 285</span>

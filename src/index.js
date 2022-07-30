@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom/client';
 import { ThemeProvider } from "styled-components";
 import App from './App';
 
-import theme from './constants/theme';
+import CssBaseline from '@mui/material/CssBaseline';
+import darkTheme from './constants/theme';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
       <App />
     </ThemeProvider>
   </React.StrictMode>

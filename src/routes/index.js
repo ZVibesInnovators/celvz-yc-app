@@ -1,6 +1,6 @@
 import Landing from "../pages/Landing";
 import Dashboard from "../pages/Dashboard";
-// import Music from "../pages/Music";
+import Music from "../pages/Music";
 // import Testimonies from "../pages/Testimonies";
 import Sign from "../pages/auth/Sign";
 import Register from "../pages/auth/Register";

@@ -3,7 +3,7 @@ import maskBg from "../../../components/assest/image/mask.png"
 
 export const EventDetailPageWrapper = styled.div`
     width: 100vw;
-    min-height: calc(150vh + 100px);
+    min-height: calc(110vh + 100px);
     overflow-x: hidden;
     background-size: cover;
     background-position: top right;
