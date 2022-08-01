@@ -3,11 +3,15 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import { Col } from "reactstrap";
 import styled from "styled-components";
+import Enums from "../../constants/enums";
 import { LargeHeroButton } from "../home/CallToActionButtons";
 
 export const HeroWrapper = styled.div`
     
     background-color: #111;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
     background-position: center;
 
     .mask {
@@ -287,6 +291,11 @@ export const PlaylistThumbnailWrapper = (props) => {
     <Box sx={{
       width: props.size || 40,
       height: props.size || 40,
+      background: Enums.COLORS.grey_500,
+
+      "&:hover": {
+        cursor: "pointer",
+      },
 
       "& :before": {
         content: "''",

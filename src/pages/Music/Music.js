@@ -81,7 +81,7 @@ export default function Music() {
     };
 
     return (
-        <EventDetailPageWrapper style={{ paddingTop: 80, background: "#000" }}>
+        <EventDetailPageWrapper style={{ background: "#000", marginTop: "60px" }}>
             <Box sx={{ width: '100%' }}>
                 <AntTabs
                     variant="scrollable"

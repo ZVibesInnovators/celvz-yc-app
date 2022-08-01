@@ -118,7 +118,7 @@ const MusicPlayer = forwardRef((props, ref) => {
                 />
                 <Box sx={{ display: "flex", flexDirection: "column", margin: "0px 10px", justifyContent: "center" }}>
                     <h4>{currentTrack?.title}</h4>
-                    <span>{currentTrack?.artiste?.firstName}</span>
+                    <span>{currentTrack?.artiste?.name}</span>
                 </Box>
                 <Box style={{ flex: 1, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
 

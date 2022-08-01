@@ -1,4 +1,4 @@
-import { Box, Card, CardActions, CardContent, IconButton, Menu, MenuItem, Typography } from "@mui/material";
+import { Box, Card, CardActions, CardContent, IconButton, Menu, MenuItem, Typography, useTheme } from "@mui/material";
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { Col, Row } from "reactstrap";
 import { BoxShimmer, TrackList } from "../../components/styledComponents/musicStyles";
@@ -11,6 +11,7 @@ import PauseCircleOutlineOutlinedIcon from '@mui/icons-material/PauseCircleOutli
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import { MusicPlayerContext } from "../../contexts/MusicPlayerContext";
 import { AuthContext } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router";
 
 const NewReleases = () => {
     const { showError } = useContext(AlertContext)
@@ -65,8 +66,10 @@ const Shimmers = () => {
     }))
 }
 
-const ReleaseCard = ({ data, index, list }) => {
-    const { authData } = useContext(AuthContext)
+export const ReleaseCard = ({ data, index, list }) => {
+    const theme = useTheme();
+    const navigate = useNavigate();
+    const { authData } = useContext(AuthContext);
     const { playNewSong, currentTrack, playing, setNewPlaylistTrack } = useContext(MusicPlayerContext);
 
     const currentlyPlaying = useMemo(() => {
@@ -102,6 +105,9 @@ const ReleaseCard = ({ data, index, list }) => {
                 flexDirection: "column",
                 transition: "height .5s ease-out",
 
+                [`${theme.breakpoints.down(560)}`]: {
+                    width: "40%"
+                },
 
                 "&:hover": {
                     cursor: "pointer",
@@ -138,19 +144,51 @@ const ReleaseCard = ({ data, index, list }) => {
                 {hovered &&
                     <Box className="mask">
                         <IconButton>
-                            <FavoriteBorderIcon sx={{ color: "#FFF", width: 30, height: 30 }} />
+                            <FavoriteBorderIcon sx={{
+                                color: "#FFF",
+                                width: 30,
+                                height: 30,
+                                [`${theme.breakpoints.down(560)}`]: {
+                                    width: 20
+                                },
+                            }} />
                         </IconButton>
                         <IconButton onClick={() => playNewSong({
                             songIndex: index,
                             list,
                         })}>
                             {currentlyPlaying ?
-                                <PauseCircleOutlineOutlinedIcon sx={{ color: "#FFF", width: 80, height: 80, margin: "0px 10px" }} /> :
-                                <PlayCircleOutlineOutlinedIcon sx={{ color: "#FFF", width: 80, height: 80, margin: "0px 10px" }} />
+                                <PauseCircleOutlineOutlinedIcon sx={{
+                                    color: "#FFF",
+                                    width: 80,
+                                    height: 80,
+                                    margin: "0px 10px",
+                                    [`${theme.breakpoints.down(560)}`]: {
+                                        width: 40,
+                                        height: 40
+                                    },
+                                }} /> :
+                                <PlayCircleOutlineOutlinedIcon sx={{
+                                    color: "#FFF",
+                                    width: 80,
+                                    height: 80,
+                                    margin: "0px 10px",
+                                    [`${theme.breakpoints.down(560)}`]: {
+                                        width: 40,
+                                        height: 40
+                                    },
+                                }} />
                             }
                         </IconButton>
                         <IconButton onClick={handleClick}>
-                            <MoreHorizOutlinedIcon sx={{ color: "#FFF", width: 30, height: 30 }} />
+                            <MoreHorizOutlinedIcon sx={{
+                                color: "#FFF",
+                                width: 30,
+                                height: 30,
+                                [`${theme.breakpoints.down(560)}`]: {
+                                    width: 20
+                                },
+                            }} />
                         </IconButton>
                         <Menu
                             id="basic-menu"
@@ -165,6 +203,10 @@ const ReleaseCard = ({ data, index, list }) => {
                                 handleClose()
                                 setNewPlaylistTrack(data);
                             }}>Add to Playlist</MenuItem>
+                            <MenuItem onClick={() => {
+                                handleClose()
+                                navigate(`/music/artists/${data.artiste?._id}`)
+                            }}>More from this Artist</MenuItem>
                             <MenuItem onClick={handleClose}>Share</MenuItem>
                         </Menu>
                     </Box>}
@@ -203,7 +245,7 @@ const ReleaseCard = ({ data, index, list }) => {
                     }}
                     style={{ marginLeft: "0px" }}
                 >
-                    {data.artiste?.firstName}
+                    {data.artiste?.name}
                 </Typography>
             </CardActions>
         </Card>

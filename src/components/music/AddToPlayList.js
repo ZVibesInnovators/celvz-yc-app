@@ -102,7 +102,7 @@ const PlaylistAddForm = () => {
                         fontSize: "15px",
                         textAlign: "center"
                     }}
-                >{newPlaylistTrack?.artiste?.firstName}</Typography>
+                >{newPlaylistTrack?.artiste?.name}</Typography>
             </Box>
             {
                 !authData ?
