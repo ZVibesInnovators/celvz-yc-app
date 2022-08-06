@@ -2,9 +2,7 @@ import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import Typography from '@mui/material/Typography';
 import React from 'react';
-import FileUploader from "../../components/FileUploader";
 import { EventDetailPageWrapper } from "../../components/styledComponents/events/EventStyles";
 import Playlists from "./Playlists";
 import RecommendedMusic from "./RecommendedMusic";
@@ -95,7 +93,6 @@ export default function Music() {
                     <RecommendedMusic />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <FileUploader />
                     <Playlists />
                 </TabPanel>
             </Box>

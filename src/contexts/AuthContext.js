@@ -13,6 +13,10 @@ export const AuthProvider = (props) => {
         return !_.isNull(authData) && authData["token"]
     }, [authData])
 
+    const permissions = useMemo(() => {
+        return authData?.permissions || []
+    }, [authData])
+
     useEffect(() => {
         try {
             // this initializes the authData if any has been saved to the localStorage
@@ -71,7 +75,8 @@ export const AuthProvider = (props) => {
         logout,
         register,
         isLoggedIn,
-        authData
+        authData,
+        permissions
     }}>
         {props.children}
     </AuthContext.Provider>

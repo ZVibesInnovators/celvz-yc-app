@@ -1,12 +1,13 @@
+import { Fab } from "@mui/material";
 import React, { useContext, useState } from 'react';
 import { AlertContext } from "../../contexts/AlertContextProvider";
 import { AuthContext } from "../../contexts/AuthContext";
 import API from "../../services/api";
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 const FileUploader = () => {
     const { authData } = useContext(AuthContext);
     const { showError, showAlert } = useContext(AlertContext);
-    const [codec, setCodec] = useState(null)
 
     const openUploader = async () => {
         try {
@@ -41,7 +42,14 @@ const FileUploader = () => {
     }
 
     return (
-        codec === "!@#$%^&*()_+" && <button id="upload_widget" onClick={openUploader} className="cloudinary-button">Upload files</button>
+        <Fab id="upload_widget" color={"warning"} onClick={openUploader} className="cloudinary-button" sx={{
+            position: "fixed",
+            bottom: 30,
+            right: 30,
+            zIndex: 5
+        }}>
+            <CloudUploadIcon />
+        </Fab>
     )
 }
 

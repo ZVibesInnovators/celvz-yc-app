@@ -37,12 +37,12 @@ const Landing = () => {
             <div className="top" />
             <div className="footer row">
               <Col lg={8} className="mx-auto">
-                <h1 className='date'>JUNE 4TH-&nbsp;<small>10am prompt</small></h1>
-                <h1 className='venue'>The Tent LCA Liesure Garden</h1>
-                <h1 className='address'><small>8, billings Way,</small>&nbsp;Oregun-Ikeja</h1>
+                <h1 className='date'>SEPTEMBER 1ST-&nbsp;<small>10am prompt</small></h1>
+                <h1 className='venue'>8, Billings Way, Oregun, Ikeja</h1>
+                {/* <h1 className='address'><small>8, billings Way,</small>&nbsp;Oregun-Ikeja</h1> */}
               </Col>
               <Col lg={4} className="right">
-                <LargeHeroButton style={{ width: 245 }} onClick={() => navigate(`/events/dyp2022`)}>Join Event</LargeHeroButton>
+                <LargeHeroButton style={{ width: 245 }} onClick={() => navigate(`/events/gitd`)}>Join Event</LargeHeroButton>
               </Col>
             </div>
           </Col>

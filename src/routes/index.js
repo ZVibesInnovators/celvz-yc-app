@@ -7,9 +7,9 @@ import Register from "../pages/auth/Register";
 import EventRouter from "../pages/Events";
 import Live from "../pages/Live";
 import About from "../pages/About";
-import { musicRoutes } from "./musicRoutes";
 import _ from "lodash";
 import MusicRouter from "../pages/Music";
+import BackOfficeRouter from "../pages/BackOffice";
 
 export const routes = [
     {
@@ -57,5 +57,10 @@ export const routes = [
         name: "dashboard",
         path: "/dashboard",
         component: Dashboard
+    },
+    {
+        name: "admin",
+        path: "/admin/*",
+        component: BackOfficeRouter
     },
 ]
