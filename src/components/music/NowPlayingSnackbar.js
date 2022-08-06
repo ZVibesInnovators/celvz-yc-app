@@ -46,7 +46,7 @@ const NowPlayingSnackBar = forwardRef((props, ref) => {
                         WebkitBoxOrient: "vertical",
                         overflow: "hidden",
                         textOverflow: "ellipsis",
-                    }}>{currentTrack?.artiste?.firstName}</Typography>
+                    }}>{currentTrack?.artiste?.name}</Typography>
                     <Typography component={"small"} sx={{
                         color: "#555",
                         fontSize: "12px",

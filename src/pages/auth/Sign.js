@@ -16,6 +16,15 @@ const Sign = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { login, isLoggedIn } = useContext(AuthContext);
+  
+  useEffect(() => {
+      const footer = document.getElementById("site-footer");
+      // hide and show footer
+      footer.style.display = "none"
+      return () => {
+      footer.style.display = "block"
+      }
+  }, [])
 
   const [payload, setPayload] = useState({
     email: "",

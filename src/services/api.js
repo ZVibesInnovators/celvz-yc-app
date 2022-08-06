@@ -18,7 +18,7 @@ class API {
 
     request(method, path, payload = null) {
         const { token, host } = this;
-        const allowedMethods = ["post", "put", "delete", "get"]
+        const allowedMethods = ["post", "put", "delete", "get"];
         return new Promise((resolve, reject) => {
             try {
                 let config = { headers: this.headers }

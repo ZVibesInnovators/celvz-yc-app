@@ -13,7 +13,7 @@ export const EventDetailPageWrapper = styled.div`
     margin-top: -100px;
     z-index: 0;
 
-    &::before {
+    & .albumArt::before {
         content: "";
         position: absolute;
         top: 0; left: 0;
