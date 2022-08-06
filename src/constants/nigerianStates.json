@@ -97,7 +97,7 @@
     },
     {
         "name": "Lagos",
-        "lgas": ["Shomolu", "Agege", "Alimosho", "Lagos Island", "Lagos Mainland", "Mushin", "Oshodi-Isolo", "Surulere", "Ikorodu", "Eti-Osa", "Ibeju-Lekki", "Epe", "Ojo", "Badagry", "Ikeja", "Kosofe", "Amuwo Odofin", "Ajeromi/Ifelodun", "Ifako/Ijaiye", "Apapa"]
+        "lgas": ["Ikeja", "Shomolu", "Agege", "Alimosho", "Lagos Island", "Lagos Mainland", "Mushin", "Oshodi-Isolo", "Surulere", "Ikorodu", "Eti-Osa", "Ibeju-Lekki", "Epe", "Ojo", "Badagry", "Kosofe", "Amuwo Odofin", "Ajeromi/Ifelodun", "Ifako/Ijaiye", "Apapa"]
     },
     {
         "name": "Nasarawa",

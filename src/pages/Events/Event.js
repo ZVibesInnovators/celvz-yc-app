@@ -21,6 +21,16 @@ const Event = () => {
     const [event, setEvent] = useState(null)
     const [blur, setBlur] = useState(false)
 
+
+    useEffect(() => {
+        const footer = document.getElementById("site-footer");
+        // hide and show footer
+        footer.style.display = "none"
+        return () => {
+            footer.style.display = "block"
+        }
+    }, [])
+
     const [payload, setPayload] = useState({
         name: "",
         email: "",
@@ -76,7 +86,7 @@ const Event = () => {
         const lgas = nigerianStates.find(s => {
             return s.name === payload.location
         })?.lgas;
-        if (!_.isEmpty(lgas)) setPayload({...payload, lga: lgas[0]});
+        if (!_.isEmpty(lgas)) setPayload({ ...payload, lga: lgas[0] });
         return lgas || []
     }, [payload.location])
 
@@ -113,7 +123,8 @@ const Event = () => {
     }
 
     return (
-        <EventDetailPageWrapper blur={blur} image={event?.media?.url}>
+        <EventDetailPageWrapper className="detail-wrapper" blur={blur}
+            style={{ backgroundImage: `url(${event?.media?.meta?.secure_url})` }}>
             <Mask blur={blur}>
                 {
                     isLoading ?

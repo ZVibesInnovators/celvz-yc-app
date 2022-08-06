@@ -35,6 +35,7 @@ export const Mask = styled.div`
     background-repeat: no-repeat;
     position: absolute;
     overflow-y: auto;
+    opacity: 0.9;
     backdrop-filter:${props => props.blur ? "blur(6px)" : "none"};
 
     &>.row {
