@@ -36,7 +36,7 @@ const MusicGenre = (props) => {
             const api = new API();
             if (!genre || id !== genre?._id) {
                 const gResponse = await api.request("get", `genre/${id}?$include=genreArt`)
-                const _genre = await api.request("get", "genre?$limit=4&$include=genreArt");
+                const _genre = await api.request("get", "genre?$limit=100&$include=genreArt");
                 const sponsored = await api.request("get", "artistes/sponsored?$limit=10&$include=artisteArt&$include=account");
                 setGenre(gResponse);
                 setAllGenre(_.shuffle(_genre.data));

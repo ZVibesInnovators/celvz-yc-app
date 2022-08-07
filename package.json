@@ -25,6 +25,7 @@
     "react-dropdown-select": "^4.8.4",
     "react-icons": "^4.3.1",
     "react-moment": "^1.1.2",
+    "react-number-format": "^4.9.3",
     "react-picture-in-picture": "^1.0.0",
     "react-player": "^2.10.1",
     "react-router": "^6.3.0",

@@ -1,10 +1,11 @@
 const Enums =  {
-    BASE_URL: 'https://z-vibes-engine-prod.herokuapp.com/api/v1',
+    BASE_URL: 'http://localhost:3001/api/v1',//'https://z-vibes-staging.herokuapp.com/api/v1',
     COLORS: {
         white: " #fff",
         orange: "#D3006C",
         yellow: "#f5ca04",
-        grey_500: "#333"
+        grey_500: "#333",
+        grey_400: "#555"
     },
     PERMISSIONS: {
         ADMIN_ACCOUNT_MANAGER: "ADMIN_ACCOUNT_MANAGER",

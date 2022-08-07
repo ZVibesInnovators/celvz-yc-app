@@ -126,7 +126,7 @@ export const MusicPlayerWrapper = (props) => {
         width: "100vw",
         position: "fixed",
         bottom: 0,
-        zIndex: 100,
+        zIndex: 1300,
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",

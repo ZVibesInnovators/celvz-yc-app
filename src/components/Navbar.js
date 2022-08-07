@@ -74,7 +74,7 @@ const Navbar = (props) => {
                 :
                 <>
                   {permissions.includes(Enums.PERMISSIONS.BACK_OFFICE_ACCESS) && <li className="btn nav-item" data-toggle={md && "collapse"} data-target="#navbarSupportedContent">
-                    <a href={"/admin/"} target="_blank" className="nav-link">Back Office</a>
+                    <a onClick={() => { navigate("/admin/") }} className="nav-link">Back Office</a>
                   </li>}
                   <li className="btn nav-item" data-toggle={md && "collapse"} data-target="#navbarSupportedContent">
                     <a onClick={() => { logout(); navigate("/") }} className="nav-link">Logout</a>

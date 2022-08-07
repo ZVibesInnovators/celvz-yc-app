@@ -1,11 +1,11 @@
-import { Fab } from "@mui/material";
+import { Button, Fab } from "@mui/material";
 import React, { useContext, useState } from 'react';
-import { AlertContext } from "../../contexts/AlertContextProvider";
-import { AuthContext } from "../../contexts/AuthContext";
-import API from "../../services/api";
+import { AlertContext } from "../../../../contexts/AlertContextProvider";
+import { AuthContext } from "../../../../contexts/AuthContext";
+import API from "../../../../services/api";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
-const FileUploader = () => {
+const FileUploader = ({onSuccess, inline}) => {
     const { authData } = useContext(AuthContext);
     const { showError, showAlert } = useContext(AlertContext);
 
@@ -30,6 +30,7 @@ const FileUploader = () => {
                         meta: info
                     })
                     showAlert("success", "Media upload successful")
+                    onSuccess(media)
                 } else if (error) {
                     showError(error?.message || "We encountered an error while uploading")
                 }
@@ -42,6 +43,8 @@ const FileUploader = () => {
     }
 
     return (
+        inline ? <Button id="upload_widget" color={"warning"} onClick={openUploader} className="cloudinary-button">Upload</Button>
+        :
         <Fab id="upload_widget" color={"warning"} onClick={openUploader} className="cloudinary-button" sx={{
             position: "fixed",
             bottom: 30,

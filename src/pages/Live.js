@@ -43,6 +43,15 @@ const Live = (props) => {
     const [socket, setSocket] = useState()
 
     useEffect(() => {
+      const footer = document.getElementById("site-footer");
+      // hide and show footer
+      footer.style.display = loading ? "none" : "block"
+      return () => {
+        footer.style.display = "block"
+      }
+    }, [loading])
+
+    useEffect(() => {
         const time = setTimeout(() => {
             if(!isLoggedIn) {
                 showError("You must be logged in to view a live stream");

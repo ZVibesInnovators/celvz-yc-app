@@ -1,30 +1,32 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
-import { Box, Breadcrumbs, ImageList, ImageListItem, Link, Typography } from "@mui/material";
-import Enums from "../../constants/enums";
-import { useNavigate } from "react-router";
-import FileUploader from "../../components/FileUploader";
-import { Col, Row } from "reactstrap";
-import { AlertContext } from "../../contexts/AlertContextProvider";
-import API from "../../services/api";
-import { AuthContext } from "../../contexts/AuthContext";
+import { Box, Breadcrumbs, Drawer, ImageList, ImageListItem, Link, Typography, useTheme } from "@mui/material";
 import _ from "lodash";
+import React, { createRef, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useNavigate } from "react-router";
+import FilePreview from "../../components/BackOffice/FileManager/FilePreview";
+import FileUploader from "../../components/BackOffice/FileManager/FileUploader";
+import Enums from "../../constants/enums";
+import { AlertContext } from "../../contexts/AlertContextProvider";
+import { AuthContext } from "../../contexts/AuthContext";
+import API from "../../services/api";
 
 const FileManager = () => {
     const navigate = useNavigate();
     const [files, setFiles] = useState([]);
     const [queryData, setQueryData] = useState(null);
+    const [selected, setSelected] = useState(null);
     const { showError } = useContext(AlertContext);
-    const { authData } = useContext(AuthContext)
+    const { authData } = useContext(AuthContext);
+    const filePreviewRef = createRef()
 
     useEffect(() => {
-        getFiles()
-    }, [])
+        if (authData) getFiles()
+    }, [authData])
 
     const getFiles = async () => {
         try {
             const api = new API(authData?.token);
-            const result = await api.request("get", `media`)
-            console.log("result", result);
+            const result = await api.request("get", `media?$limit=${Math.pow(10, 5)}`)
+            // console.log("result", result);
             setFiles(result.data);
             delete result.data;
             setQueryData(result)
@@ -52,6 +54,15 @@ const FileManager = () => {
         };
     }
 
+    const onUploadSuccess = (data) => {
+        try {
+            const { entry } = data;
+            setFiles((old) => [entry, ...old])
+        } catch (error) {
+            showError(error.message)
+        }
+    }
+
     return (
         <Box>
             <Breadcrumbs aria-label="breadcrumb" sx={{ color: "#FFF" }}>
@@ -60,90 +71,95 @@ const FileManager = () => {
                 </Link>
                 <Typography sx={{ color: Enums.COLORS.yellow }}>File Manager</Typography>
             </Breadcrumbs>
-            <FileUploader />
-            <Row>
-                <Col md={8}>
-                    <Box>
-                        <ImageList
-                            sx={{ width: "100%", }}
-                            variant="quilted"
-                            cols={4}
-                            rowHeight={121}
+            <FileUploader onSuccess={onUploadSuccess} />
+            <Box>
+                <ImageList
+                    sx={{ width: "100%", }}
+                    variant="quilted"
+                    cols={4}
+                    rowHeight={121}
+                >
+                    {dataList.map((item, i) => (
+                        <ImageListItem
+                            key={item._id}
+                            cols={item.cols || 1} rows={item.rows || 1}
+                            onClick={() => {
+                                setSelected(item);
+                                filePreviewRef.current?.setFile(item)
+                            }}
+                            sx={{
+                                cursor: "pointer",
+                                background: "#222",
+
+                                "& img.grey": {
+                                    WebkitFilter: 'grayscale(100%) !important',
+                                    filter: 'grayscale(100%) !important'
+                                }
+                            }}
                         >
-                            {dataList.map((item, i) => (
-                                <ImageListItem
-                                    key={item._id}
-                                    cols={item.cols || 1} rows={item.rows || 1}
-                                    onClick={() => navigate(`/music/genre/${item._id}`)}
-                                    sx={{
-                                        cursor: "pointer",
+                            <img
+                                {...srcset(item.meta.secure_url, 121, item.rows, item.cols)}
+                                alt={item.name}
+                                loading="lazy"
+                                className={selected?._id === item._id ? "grey" : "normal"}
+                            />
+                            <Box
+                                className={selected?._id === item._id && "selected"}
+                                sx={{
+                                    height: "100%",
+                                    width: "100%",
+                                    position: "absolute",
+                                    bottom: "0px",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "flex-end",
 
-                                        "& img.grey": {
-                                            WebkitFilter: 'grayscale(100%) !important',
-                                            filter: 'grayscale(100%) !important'
+                                    "h5": {
+                                        color: "#FFF",
+                                        marginLeft: "10px",
+                                        display: "-webkit-box",
+                                        WebkitLineClamp: 1,
+                                        WebkitBoxOrient: "vertical",
+                                        overflow: "hidden",
+                                        textOverflow: "ellipsis",
+                                    },
+
+                                    "&.selected": {
+                                        "h5": {
+                                            color: Enums.COLORS.yellow
                                         }
-                                    }}
-                                >
-                                    <img
-                                        {...srcset(item.meta.secure_url, 121, item.rows, item.cols)}
-                                        alt={item.name}
-                                        loading="lazy"
-                                        className={"normal"}
-                                    />
-                                    <Box
-                                        sx={{
-                                            height: "100%",
-                                            // background: "rgba(0, 0, 0,0.6)",
-                                            width: "100%",
-                                            position: "absolute",
-                                            bottom: "0px",
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            justifyContent: "flex-end",
+                                    },
 
-                                            "h5": {
-                                                color: "#FFF",
-                                                marginLeft: "10px",
-                                                display: "-webkit-box",
-                                                WebkitLineClamp: 1,
-                                                WebkitBoxOrient: "vertical",
-                                                overflow: "hidden",
-                                                textOverflow: "ellipsis",
-                                            },
+                                    "&:hover": {
+                                        backdropFilter: "blur(4px)",
 
-                                            "&.selected": {
-                                                "h5": {
-                                                    color: Enums.COLORS.yellow
-                                                }
-                                            },
+                                        "h5": {
+                                            color: Enums.COLORS.orange
+                                        }
+                                    }
+                                }}>
+                                <Box sx={{ flex: 1, flexDirection: "row", display: "flex", justifyContent: "flex-end" }}>
+                                    <Box sx={{ padding: "3px 10px", margin: "5px", borderRadius: "20px", background: "#000", position: "absolute" }}><Typography sx={{ color: "#FFF", fontSize: "12px" }}>{item?.meta?.format?.toUpperCase()}</Typography></Box>
+                                </Box>
+                                <Box sx={{
+                                    height: "30px",
+                                    width: "100%",
+                                    background: "#00000075",
+                                    backdropFilter: "blur(5px)",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "center"
+                                }}>
+                                    <Typography component={"h5"} sx={{ maxWidth: "90%" }}>{item.filename}</Typography>
+                                </Box>
+                            </Box>
+                        </ImageListItem>
+                    ))}
+                </ImageList>
+            </Box>
 
-                                            "&:hover": {
-                                                backdropFilter: "blur(4px)",
+            <FilePreview ref={filePreviewRef} file={selected} />
 
-                                                "h5": {
-                                                    color: Enums.COLORS.orange
-                                                }
-                                            }
-                                        }}>
-                                        <Box sx={{
-                                            height: "30px",
-                                            width: "100%",
-                                            background: "#00000075",
-                                            backdropFilter: "blur(5px)",
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            justifyContent: "center"
-                                        }}>
-                                            <Typography component={"h5"}>{item.name}</Typography>
-                                        </Box>
-                                    </Box>
-                                </ImageListItem>
-                            ))}
-                        </ImageList>
-                    </Box>
-                </Col>
-                <Col md={3} className="mx-auto"></Col>
-            </Row>
         </Box>
     )
 }
