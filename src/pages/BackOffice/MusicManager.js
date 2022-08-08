@@ -2,6 +2,7 @@ import { Box, Breadcrumbs, Link, Typography } from "@mui/material";
 import React, { createRef, useContext, useEffect, useState } from 'react';
 import { useNavigate } from "react-router";
 import { Row } from "reactstrap";
+import NewAlbumForm from "../../components/BackOffice/MusicManager/NewAlbumForm";
 import NewArtistForm from "../../components/BackOffice/MusicManager/NewArtistForm";
 import NewGenreModal from "../../components/BackOffice/MusicManager/NewGenreModal";
 import NewSongForm from "../../components/BackOffice/MusicManager/NewSongForm";
@@ -25,6 +26,7 @@ const MusicManager = () => {
     const newArtistFormRef = createRef();
     const newGenreModalRef = createRef();
     const newSongFormRef = createRef();
+    const newAlbumFormRef = createRef();
 
     useEffect(() => {
         if (authData) fetchStats();
@@ -99,6 +101,7 @@ const MusicManager = () => {
                     isLoading={isLoading}
                     label="Albums"
                     count={stats?.albums}
+                    addNew={() => newAlbumFormRef.current?.toggle(true)}
                 />
             </Row>
             <Box>
@@ -109,6 +112,8 @@ const MusicManager = () => {
             <NewArtistForm ref={newArtistFormRef} refresh={fetchStats} />
             {/* NEW SONG DRAWER */}
             <NewSongForm ref={newSongFormRef} refresh={fetchStats} />
+            {/* NEW ALBUM DRAWER */}
+            <NewAlbumForm ref={newAlbumFormRef} refresh={fetchStats} />
             {/* NEW GENRE MODAL */}
             <NewGenreModal ref={newGenreModalRef} refresh={fetchStats} />
         </Box>
