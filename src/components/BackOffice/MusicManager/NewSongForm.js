@@ -1,5 +1,6 @@
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import { Box, Button, Divider, Drawer, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Avatar, Box, Button, Divider, Drawer, FormControl, FormControlLabel, IconButton, InputLabel, Radio, RadioGroup, Switch, Typography } from "@mui/material";
+import _ from "lodash";
 import React, { createRef, forwardRef, useContext, useEffect, useImperativeHandle, useState } from 'react';
 import { Col, Row } from "reactstrap";
 import Enums from "../../../constants/enums";
@@ -8,11 +9,18 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import API from "../../../services/api";
 import { BootstrapInput } from "../../Misc";
 import FileSelectorModal from "../FileManager/FileSelectorModal";
+import FindArtistDialog from "./FindArtistDialog";
+import InlineMusicPlayer from "./InlineMusicPlayer";
+import MusicNoteIcon from '@mui/icons-material/MusicNote';
+import TrackSelectDialog from "./TrackSelectDialog";
 
 const NewSongForm = forwardRef((props, ref) => {
     const [show, toggle] = useState(false)
+    const [isLoading, setLoading] = useState(false)
     const [genre, setGenre] = useState([])
     const [song, setSong] = useState({});
+    const [showArtisteDialog, toggleArtisteDialog] = useState(false);
+    const [showTrackDialog, toggleTrackDialog] = useState(false)
     const fileSelectorRef = createRef();
     const { showError, showAlert } = useContext(AlertContext)
     const { authData } = useContext(AuthContext);
@@ -25,7 +33,7 @@ const NewSongForm = forwardRef((props, ref) => {
         if (authData) {
             const api = new API(authData?.token);
             api.request("get", `genre?$limit=${Math.pow(10, 5)}`).then(({ data }) => {
-                console.log("GEN", data);
+                setGenre(data)
             }).catch(error => {
                 showError(error.message)
             })
@@ -55,22 +63,32 @@ const NewSongForm = forwardRef((props, ref) => {
 
     const submit = async () => {
         try {
-            console.log("DATA =>", song)
-            if (!song.name) throw Error("Please provide a song title")
-            if (!song.description) throw Error("We'd like to know some details about the Song")
+            if (!song.title) throw Error("Please provide a song title")
+            if (!song.artiste) throw Error("Kindly add an artist")
+            if (!song.media) throw Error("Kindly select a track");
             if (!song.thumbnail) throw Error("Kindly upload/select a thumbnail photo")
-            if (!song.hero) throw Error("Kindly upload/select a hero photo");
-            const api = new API(authData?.token);
-            await api.request("post", "songs", {
-                title: song.name,
+            if (!song.description) throw Error("We'd like to know some details about the Song")
+            setLoading(true)
+            const songArt = [song.thumbnail._id]
+            if (song.hero) songArt.push(song.hero._id)
+            const payload = {
+                title: song.title,
                 description: song.description,
-                artisteArt: [song.thumbnail?._id, song.hero?._id]
-            })
+                artiste: song.artiste._id,
+                media: song.media._id,
+                genre: song.genre,
+                songArt,
+                isPublished: song.isPublished
+            }
+            const api = new API(authData?.token);
+            await api.request("post", "songs", payload)
             showAlert("success", "Song Created Successfully");
+            setLoading(false)
             props.refresh();
             toggle(false);
         } catch (error) {
             showError(error.message)
+            setLoading(false)
         }
     }
 
@@ -78,7 +96,7 @@ const NewSongForm = forwardRef((props, ref) => {
         <Drawer
             anchor={"bottom"}
             open={show}
-            onClose={() => toggle(false)}
+            onClose={() => !isLoading && toggle(false)}
             sx={{
                 position: "absolute",
                 zIndex: 2000
@@ -120,27 +138,67 @@ const NewSongForm = forwardRef((props, ref) => {
                             </InputLabel>
                             <BootstrapInput onChange={(e) => setSong({ ...song, title: e.target.value })} />
                         </FormControl>
+                        <Row>
+                            <Col md={6}>
+                                <FormControl variant="standard" sx={{ marginY: 2 }}>
+                                    <InputLabel shrink sx={{ color: Enums.COLORS.yellow }}>
+                                        Genre (Optional)
+                                    </InputLabel>
+                                    <RadioGroup
+                                        onChange={(e) => setSong((old) => ({ ...old, genre: e.target.value }))}
+                                        sx={{
+                                            marginY: 2,
 
-                        <FormControl variant="standard" sx={{ marginY: 2 }}>
-                            <InputLabel shrink sx={{ color: Enums.COLORS.yellow }}>
-                                Description
-                            </InputLabel>
-                            <BootstrapInput multiline rows={4} onChange={(e) => setSong({ ...song, description: e.target.value })} />
-                        </FormControl>
-                        <FormControl variant="standard" sx={{ marginY: 2 }}>
-                            <InputLabel id="demo-simple-select-label">Genre (Optional)</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={song?.genre}
-                                label="genre"
-                                // onChange={handleChange}
-                            >
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
-                            </Select>
-                        </FormControl>
+                                            "span": {
+                                                color: "#FFF"
+                                            },
+
+                                            "span:hover": {
+                                                color: `${Enums.COLORS.yellow} !important`
+                                            },
+                                        }}
+                                    >
+                                        {genre.map((entry, i) => (<FormControlLabel key={i} value={entry._id} control={<Radio />} label={entry.name} />))}
+                                    </RadioGroup>
+                                </FormControl>
+                            </Col>
+                            <Col md={6}>
+                                <InputLabel shrink sx={{ color: Enums.COLORS.yellow, marginTop: 2 }}>
+                                    Artist
+                                </InputLabel>
+                                <Avatar
+                                    onClick={() => toggleArtisteDialog(true)}
+                                    variant="square"
+                                    src={!_.isEmpty(song?.artiste?.artisteArt) && song?.artiste?.artisteArt[0].meta?.secure_url}
+                                    sx={{
+                                        width: 150,
+                                        height: 150,
+                                        cursor: 'pointer'
+                                    }} />
+                                <Typography sx={{
+                                    color: Enums.COLORS.white,
+                                    background: "#000",
+                                    maxWidth: 150,
+                                    paddingX: 1,
+                                    display: "-webkit-box",
+                                    WebkitLineClamp: 1,
+                                    WebkitBoxOrient: "vertical",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                }}>{song?.artiste?.name}</Typography>
+                            </Col>
+                        </Row>
+                        {/* music player */}
+                        <InputLabel shrink sx={{ color: Enums.COLORS.yellow, marginTop: 2 }}>
+                            Select a Track
+                        </InputLabel>
+                        <InlineMusicPlayer currentTrack={song?.media}
+                            rightComponent={
+                                <Button onClick={() => toggleTrackDialog(true)} size="small" sx={{ color: Enums.COLORS.yellow, textTransform: "capitalize" }}>
+                                    <MusicNoteIcon />
+                                    &nbsp;Add Track
+                                </Button>
+                            } />
                     </Col>
                     <Col md={7} className="mx-auto">
                         <Row>
@@ -184,7 +242,7 @@ const NewSongForm = forwardRef((props, ref) => {
                             </Col>
                             <Col md={7} className="mx-auto">
                                 <InputLabel shrink sx={{ color: Enums.COLORS.yellow, marginTop: 2 }}>
-                                    Hero Art
+                                    Hero Art (Optional)
                                 </InputLabel>
                                 <Box sx={{
                                     border: "2px dashed #d7d7d7",
@@ -219,51 +277,100 @@ const NewSongForm = forwardRef((props, ref) => {
                                         <AddPhotoAlternateIcon sx={{ color: Enums.COLORS.white, fontSize: 40 }} />
                                     </Box>
                                 </Box>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md={12}>
+                                <FormControl variant="standard" sx={{ marginY: 2, width: "inherit" }}>
+                                    <InputLabel shrink sx={{ color: Enums.COLORS.yellow }}>
+                                        Description
+                                    </InputLabel>
+                                    <BootstrapInput sx={{ width: "inherit" }} multiline rows={4} onChange={(e) => setSong({ ...song, description: e.target.value })} />
+                                </FormControl>
+
+                                <Box sx={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    justifyContent: "space-between",
+                                    alignItems: "center"
+                                }}>
+                                    <InputLabel shrink sx={{ color: Enums.COLORS.yellow, fontSize: 20 }}>
+                                        Publish Song
+                                    </InputLabel>
+                                    <Switch checked={song?.isPublished} onClick={() => setSong((old) => ({ ...old, isPublished: !song?.isPublished }))} />
+                                </Box>
                                 <Box sx={{
                                     marginY: 2,
                                     display: "flex",
                                     flexDirection: "row",
                                     justifyContent: "flex-end"
                                 }}>
-                                    <Button onClick={() => toggle(false)} sx={{
-                                        minHeight: "40px",
-                                        padding: "5px 15px",
-                                        background: "#eee",
-
-                                        ":hover": {
-                                            background: Enums.COLORS.orange,
-                                            "span": {
-                                                color: `${Enums.COLORS.white} !important`
-                                            }
-                                        },
-
-                                        "span": {
-                                            color: "#333 !important"
-                                        }
-                                    }}><span>Cancel</span></Button>
-
-                                    <Button onClick={submit} sx={{
-                                        marginX: "5px",
-                                        minHeight: "40px",
-                                        padding: "5px 15px",
-                                        background: Enums.COLORS.yellow,
-
-                                        ":hover": {
+                                    <Button
+                                        disabled={isLoading}
+                                        onClick={() => toggle(false)} sx={{
+                                            minHeight: "40px",
+                                            padding: "5px 15px",
                                             background: "#eee",
+
+                                            ":hover": {
+                                                background: Enums.COLORS.orange,
+                                                "span": {
+                                                    color: `${Enums.COLORS.white} !important`
+                                                }
+                                            },
+
                                             "span": {
                                                 color: "#333 !important"
                                             }
-                                        },
+                                        }}><span>Cancel</span></Button>
 
-                                        "span": {
-                                            color: `${Enums.COLORS.grey_500} !important`
-                                        }
-                                    }}><span>Submit</span></Button>
+                                    <Button
+                                        disabled={isLoading}
+                                        onClick={submit} sx={{
+                                            marginX: "5px",
+                                            minHeight: "40px",
+                                            padding: "5px 15px",
+                                            background: isLoading ? Enums.COLORS.grey_400 : Enums.COLORS.yellow,
+
+                                            ":hover": {
+                                                background: "#eee",
+                                                "span": {
+                                                    color: "#333 !important"
+                                                }
+                                            },
+
+                                            "span": {
+                                                color: `${Enums.COLORS.grey_500} !important`
+                                            }
+                                        }}><span>{isLoading ? "Please Wait..." : "Submit"}</span></Button>
                                 </Box>
                             </Col>
                         </Row>
                     </Col>
                 </Row>
+                {/* music track select dialog */}
+                <TrackSelectDialog
+                    selectedValue={song?.media}
+                    open={showTrackDialog}
+                    onClose={(v) => {
+                        toggleTrackDialog(false);
+                        if (v) {
+                            setSong((old) => ({ ...old, media: v }))
+                        }
+                    }}
+                />
+                {/* artiste select dialog */}
+                <FindArtistDialog
+                    selectedValue={song?.artiste}
+                    open={showArtisteDialog}
+                    onClose={(v) => {
+                        toggleArtisteDialog(false);
+                        if (v) {
+                            setSong((old) => ({ ...old, artiste: v }))
+                        }
+                    }}
+                />
+                {/* file selector */}
                 <FileSelectorModal ref={fileSelectorRef} type={"image"} onSelect={handleImageSelect} />
             </Box>
         </Drawer>

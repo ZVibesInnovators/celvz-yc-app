@@ -8,6 +8,9 @@ import Enums from "../../constants/enums";
 import { AlertContext } from "../../contexts/AlertContextProvider";
 import { AuthContext } from "../../contexts/AuthContext";
 import API from "../../services/api";
+import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
+import TheatersIcon from '@mui/icons-material/Theaters';
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 
 const FileManager = () => {
     const navigate = useNavigate();
@@ -90,6 +93,10 @@ const FileManager = () => {
                             sx={{
                                 cursor: "pointer",
                                 background: "#222",
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                justifyContent: "center",
 
                                 "& img.grey": {
                                     WebkitFilter: 'grayscale(100%) !important',
@@ -97,12 +104,20 @@ const FileManager = () => {
                                 }
                             }}
                         >
-                            <img
+                            {item.meta?.resource_type === "image" ? <img
                                 {...srcset(item.meta.secure_url, 121, item.rows, item.cols)}
                                 alt={item.name}
                                 loading="lazy"
                                 className={selected?._id === item._id ? "grey" : "normal"}
                             />
+                                :
+                                (item.meta?.resource_type === "audio" || ["mp3", "wav", "m4a"].includes(item.meta?.format.toLowerCase())) ?
+                                    <LibraryMusicIcon sx={{ color: Enums.COLORS.orange, width: 50, height: 50, marginTop: "-20px" }} />
+                                    :
+                                    item.meta?.resource_type === "video" ? <TheatersIcon sx={{ color: Enums.COLORS.orange, width: 50, height: 50, marginTop: "-20px" }} />
+                                        :
+                                        <InsertDriveFileIcon sx={{ color: Enums.COLORS.white, width: 50, height: 50, marginTop: "-20px" }} />
+                            }
                             <Box
                                 className={selected?._id === item._id && "selected"}
                                 sx={{

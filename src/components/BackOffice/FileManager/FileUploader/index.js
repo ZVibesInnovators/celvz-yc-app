@@ -4,15 +4,19 @@ import { AlertContext } from "../../../../contexts/AlertContextProvider";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import API from "../../../../services/api";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
 
-const FileUploader = ({onSuccess, inline}) => {
+const FileUploader = ({ onSuccess, inline }) => {
     const { authData } = useContext(AuthContext);
     const { showError, showAlert } = useContext(AlertContext);
+    const [loading, setLoading] = useState(false)
 
     const openUploader = async () => {
         try {
+            setLoading(true)
             const api = new API(authData?.token);
             const data = await api.request("get", "media/getSignature")
+            setTimeout(() => setLoading(false), 3000)
             const options = {
                 cloudName: data.cloud_name,
                 apiKey: data.api_key,
@@ -32,6 +36,7 @@ const FileUploader = ({onSuccess, inline}) => {
                     showAlert("success", "Media upload successful")
                     onSuccess(media)
                 } else if (error) {
+                    setLoading(false);
                     showError(error?.message || "We encountered an error while uploading")
                 }
             }
@@ -39,20 +44,21 @@ const FileUploader = ({onSuccess, inline}) => {
             myWidget.open()
         } catch (error) {
             showError(error.message)
+            setLoading(false)
         }
     }
 
     return (
-        inline ? <Button id="upload_widget" color={"warning"} onClick={openUploader} className="cloudinary-button">Upload</Button>
-        :
-        <Fab id="upload_widget" color={"warning"} onClick={openUploader} className="cloudinary-button" sx={{
-            position: "fixed",
-            bottom: 30,
-            right: 30,
-            zIndex: 5
-        }}>
-            <CloudUploadIcon />
-        </Fab>
+        inline ? <Button disabled={loading} id="upload_widget" color={"warning"} onClick={openUploader} className="cloudinary-button">Upload</Button>
+            :
+            <Fab disabled={loading} id="upload_widget" color={"warning"} onClick={openUploader} className="cloudinary-button" sx={{
+                position: "fixed",
+                bottom: 30,
+                right: 30,
+                zIndex: 5
+            }}>
+                {loading ? <AutorenewIcon className="fa-spin" sx={{ color: "#FFF" }} /> : <CloudUploadIcon />}
+            </Fab>
     )
 }
 

@@ -10,6 +10,7 @@ import { BootstrapInput } from "../../Misc";
 import FileSelectorModal from "../FileManager/FileSelectorModal";
 
 const NewArtistForm = forwardRef((props, ref) => {
+    const [isLoading, setLoading] = useState(false)
     const [show, toggle] = useState(false)
     const [artist, setArtist] = useState({});
     const fileSelectorRef = createRef();
@@ -47,6 +48,7 @@ const NewArtistForm = forwardRef((props, ref) => {
             if (!artist.bio) throw Error("We'd like to know some details about the Artist")
             if (!artist.thumbnail) throw Error("Kindly upload/select a thumbnail photo")
             if (!artist.hero) throw Error("Kindly upload/select a hero photo");
+            setLoading(true)
             const api = new API(authData?.token);
             await api.request("post", "artistes", {
                 name: artist.name,
@@ -55,9 +57,11 @@ const NewArtistForm = forwardRef((props, ref) => {
             })
             showAlert("success", "Artist Created Successfully");
             props.refresh();
+            setLoading(false)
             toggle(false);
         } catch (error) {
             showError(error.message)
+            setLoading(false)
         }
     }
 
@@ -65,7 +69,7 @@ const NewArtistForm = forwardRef((props, ref) => {
         <Drawer
             anchor={"bottom"}
             open={show}
-            onClose={() => toggle(false)}
+            onClose={() => !isLoading && toggle(false)}
             sx={{
                 position: "absolute",
                 zIndex: 2000
@@ -198,40 +202,45 @@ const NewArtistForm = forwardRef((props, ref) => {
                                     flexDirection: "row",
                                     justifyContent: "flex-end"
                                 }}>
-                                    <Button onClick={() => toggle(false)} sx={{
-                                        minHeight: "40px",
-                                        padding: "5px 15px",
-                                        background: "#eee",
-
-                                        ":hover": {
-                                            background: Enums.COLORS.orange,
-                                            "span": {
-                                                color: `${Enums.COLORS.white} !important`
-                                            }
-                                        },
-
-                                        "span": {
-                                            color: "#333 !important"
-                                        }
-                                    }}><span>Cancel</span></Button>
-
-                                    <Button onClick={submit} sx={{
-                                        marginX: "5px",
-                                        minHeight: "40px",
-                                        padding: "5px 15px",
-                                        background: Enums.COLORS.yellow,
-
-                                        ":hover": {
+                                    <Button
+                                        disabled={isLoading}
+                                        onClick={() => toggle(false)}
+                                        sx={{
+                                            minHeight: "40px",
+                                            padding: "5px 15px",
                                             background: "#eee",
+
+                                            ":hover": {
+                                                background: Enums.COLORS.orange,
+                                                "span": {
+                                                    color: `${Enums.COLORS.white} !important`
+                                                }
+                                            },
+
                                             "span": {
                                                 color: "#333 !important"
                                             }
-                                        },
+                                        }}><span>Cancel</span></Button>
 
-                                        "span": {
-                                            color: `${Enums.COLORS.grey_500} !important`
-                                        }
-                                    }}><span>Submit</span></Button>
+                                    <Button
+                                        disabled={isLoading}
+                                        onClick={submit} sx={{
+                                            marginX: "5px",
+                                            minHeight: "40px",
+                                            padding: "5px 15px",
+                                            background: isLoading ? Enums.COLORS.grey_400 : Enums.COLORS.yellow,
+
+                                            ":hover": {
+                                                background: "#eee",
+                                                "span": {
+                                                    color: "#333 !important"
+                                                }
+                                            },
+
+                                            "span": {
+                                                color: `${Enums.COLORS.grey_500} !important`
+                                            }
+                                        }}><span>{isLoading ? "Please Wait..." : "Submit"}</span></Button>
                                 </Box>
                             </Col>
                         </Row>

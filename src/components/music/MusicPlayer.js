@@ -6,9 +6,10 @@ import { MusicPlayerWrapper } from "../styledComponents/musicStyles";
 import PlayCircleOutlineOutlinedIcon from '@mui/icons-material/PlayCircleOutlineOutlined';
 import PauseCircleOutlineOutlinedIcon from '@mui/icons-material/PauseCircleOutlineOutlined';
 import { styled } from '@mui/material/styles';
+import StopIcon from '@mui/icons-material/Stop';
 
 const MusicPlayer = forwardRef((props, ref) => {
-    const { currentTrack, showPlayer, playing, setPlaying, songList, playNewSong } = useContext(MusicPlayerContext);
+    const { currentTrack, showPlayer, playing, setPlaying, songList, playNewSong, setCurrentTrack, togglePlayer } = useContext(MusicPlayerContext);
     const [playTime, setPlayTime] = useState(0);
     let interval;
 
@@ -121,7 +122,12 @@ const MusicPlayer = forwardRef((props, ref) => {
                     <span>{currentTrack?.artiste?.name}</span>
                 </Box>
                 <Box style={{ flex: 1, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
-
+                <IconButton onClick={() => {
+                    setCurrentTrack();
+                    togglePlayer(false)
+                }}>
+                    <StopIcon sx={{ color: "#FFF", width: 20, height: 20 }}/>
+                </IconButton>
                     <IconButton onClick={togglePlay}>
                         {playing ?
                             <PauseCircleOutlineOutlinedIcon sx={{ color: "#FFF", width: 40, height: 40 }} />
