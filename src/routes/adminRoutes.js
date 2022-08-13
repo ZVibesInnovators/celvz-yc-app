@@ -1,10 +1,13 @@
-import Dashboard from "../pages/BackOffice/BackOffice";
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
-import MusicManager from "../pages/BackOffice/MusicManager";
 import Inventory2Icon from '@mui/icons-material/Inventory2';
+import LiveTvIcon from '@mui/icons-material/LiveTv';
+
+import Dashboard from "../pages/BackOffice/BackOffice";
 import FileManager from "../pages/BackOffice/FileManager";
+import MusicManager from "../pages/BackOffice/MusicManager";
+import LiveStreams from "../pages/BackOffice/LiveStreams";
 
 export const adminRoutes = [
     {
@@ -27,5 +30,12 @@ export const adminRoutes = [
         sideNavItem: true,
         iconElement: <Inventory2Icon />,
         component: FileManager
+    },,
+    {
+        name: "Live TV",
+        path: "streams",
+        sideNavItem: true,
+        iconElement: <LiveTvIcon />,
+        component: LiveStreams
     },
 ]

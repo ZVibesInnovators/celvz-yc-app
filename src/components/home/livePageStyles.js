@@ -257,7 +257,6 @@ div {
   position:relative;
   border:5px solid #1086e8;
   width:400px;
-  margin-top:150px;
   border-radius:20px;
   margin-left: auto;
   animation: border-flicker 2s linear infinite;
