@@ -259,9 +259,9 @@ const Live = (props) => {
 
 export default Live
 
-const NoLiveStream = () => {
+export const NoLiveStream = (props) => {
 
-    return <NoLiveStreamWrapper>
+    return <NoLiveStreamWrapper {...props}>
         <Flicker>
             <div id="text">
                 <h1>OFF&nbsp;<span id="offset">A</span>IR</h1>

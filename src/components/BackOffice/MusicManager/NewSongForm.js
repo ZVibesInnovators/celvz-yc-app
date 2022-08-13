@@ -307,7 +307,8 @@ const NewSongForm = forwardRef((props, ref) => {
                                 }}>
                                     <Button
                                         disabled={isLoading}
-                                        onClick={() => toggle(false)} sx={{
+                                        onClick={() => toggle(false)} 
+                                        sx={{
                                             minHeight: "40px",
                                             padding: "5px 15px",
                                             background: "#eee",
