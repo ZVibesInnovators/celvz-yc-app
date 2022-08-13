@@ -98,15 +98,17 @@ const LiveStreams = (props) => {
                             </VideoWrapper>}
                     </Col>
                     <Col md={3} className="ml-auto">
-                        {liveStream && <Box>
-                            <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "flex-start" }}>
-                                <OnAir style={{ margin: "0px 10px" }}>
-                                    <p style={{ fontSize: "18px", margin: "0px", color: "#cc0100" }}>ON-AIR</p>
-                                </OnAir>
-                                <IconButton color="primary" size="medium">
-                                    <TvOffIcon sx={{ color: "#d7d7d7" }} />
-                                </IconButton>
-                            </Box>
+                        <Box>
+                            {liveStream &&
+                                <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "flex-start" }}>
+                                    <OnAir style={{ margin: "0px 10px" }}>
+                                        <p style={{ fontSize: "18px", margin: "0px", color: "#cc0100" }}>ON-AIR</p>
+                                    </OnAir>
+                                    <IconButton color="primary" size="medium">
+                                        <TvOffIcon sx={{ color: "#d7d7d7" }} />
+                                    </IconButton>
+                                </Box>
+                            }
                             <Box sx={{ marginY: 1 }}>
                                 <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                                     <Typography sx={{ color: Enums.COLORS.white, fontSize: 20 }}>New Live Stream</Typography>
@@ -165,7 +167,7 @@ const LiveStreams = (props) => {
                                     </Dialog>
                                 </Box>
                             </Box>
-                        </Box>}
+                        </Box>
                     </Col>
                 </Row>
             </Box>
