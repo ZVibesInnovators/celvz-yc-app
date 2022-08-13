@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router"
+import { Route, Routes, useLocation, useNavigate } from "react-router"
 import { adminRoutes } from "../../routes/adminRoutes"
 
 // const BackOfficeRouter 
@@ -96,6 +96,7 @@ export default function BackOfficeRouter() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const navigate = useNavigate()
+    const location = useLocation()
 
     useEffect(() => {
         const footer = document.getElementById("site-footer");
@@ -145,8 +146,10 @@ export default function BackOfficeRouter() {
                 <Divider />
                 <List>
                     {adminRoutes.filter(r => r.sideNavItem).map((route, index) => (
-                        <ListItem key={index} disablePadding sx={{ display: 'block' }} onClick={() => navigate(`/admin/${route.path}`)}>
+                        <ListItem key={index} disablePadding sx={{ display: 'block' }}
+                            onClick={() => navigate(`/admin/${route.path}`)}>
                             <ListItemButton
+                                disabled={location?.pathname === `/admin/${route.path}`}
                                 sx={{
                                     minHeight: 48,
                                     justifyContent: open ? 'initial' : 'center',

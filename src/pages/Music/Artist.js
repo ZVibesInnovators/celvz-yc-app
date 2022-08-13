@@ -83,8 +83,10 @@ const Artist = () => {
                             backgroundSize: "cover",
                             backgroundPosition: "center",
                             minHeight: "40vh",
+                            display: "flex",
+                            flexDirection: "column"
                         }}>
-                            <Row className="mask h-100">
+                            <Row className="mask h-100" style={{ flex: 1 }}>
                                 <Box
                                     className="p-2 col-md-6"
                                     sx={{
