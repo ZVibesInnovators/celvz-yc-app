@@ -37,7 +37,7 @@ const Landing = () => {
             <div className="top" />
             <div className="footer row">
               <Col lg={8} className="mx-auto">
-                <h1 className='date'>SEPTEMBER 1ST-&nbsp;<small>10am prompt</small></h1>
+                <h1 className='date'>OCTOBER 15TH&nbsp;-&nbsp;<small>10am prompt</small></h1>
                 <h1 className='venue'>8, Billings Way, Oregun, Ikeja</h1>
                 {/* <h1 className='address'><small>8, billings Way,</small>&nbsp;Oregun-Ikeja</h1> */}
               </Col>
