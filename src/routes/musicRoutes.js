@@ -5,5 +5,5 @@ export const musicRoutes = [
         name: "music",
         path: "/",
         component: Music
-    },
+    }
 ]

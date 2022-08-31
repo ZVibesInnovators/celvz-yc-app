@@ -7,6 +7,7 @@ import Register from "../pages/auth/Register";
 import EventRouter from "../pages/Events";
 import Live from "../pages/Live";
 import About from "../pages/About";
+import MusicRouter from "../pages/Music";
 
 export const routes = [
     {
@@ -17,7 +18,7 @@ export const routes = [
     {
         name: "music",
         path: "/music",
-        component: Music
+        component: MusicRouter
     },
     // {
     //     name: "testimonies",

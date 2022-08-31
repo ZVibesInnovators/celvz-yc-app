@@ -49,6 +49,20 @@ export const WeAreSection = styled.div`
 
     @media only screen and (max-width: 600px) {
         padding-left: 30px;
+
+        h1 {
+            font-size: 40px;
+        }
+
+        h1 span{
+            font-size: 35px;
+        }
+    }
+
+    @media only screen and (max-width: 270px) {
+        h1 span{
+            font-size: 25px !important;
+        }
     }
 `
 export const AdsSection = styled.div`
@@ -171,10 +185,34 @@ export const FollowGodSection = styled.div`
                 }
 
                 h1 {
-                    font-size: 5rem !important
+                    font-size: 3rem !important;
+                    line-height: 35px;
+                }
+
+                .social-buttons {
+                    line-height: 1px
                 }
             }
         }
+
+        .col-md-6 {
+            @media only screen and (max-width: 300px) {
+                h1 {
+                    font-size: 2.2rem !important;
+                }
+                h3 {
+                    font-size: 3 0px ! important;
+                }
+            }
+        }
+
+        
+
+       
+       
+
+
+        
 
         .col-md-6 {
             display: flex;
@@ -224,6 +262,7 @@ export const FollowGodSection = styled.div`
                     border: 0px;
                 }
             }
+            
         }
 
         .right {
@@ -244,5 +283,12 @@ export const FollowGodSection = styled.div`
         background-size: cover;
         background-position: top;
         background-repeat: no-repeat;
+    }
+
+    @media only screen and (max-width: 300px) {
+        button {
+            padding: 1px !important;
+            margin-right: 2px !important;
+        }
     }
 `
