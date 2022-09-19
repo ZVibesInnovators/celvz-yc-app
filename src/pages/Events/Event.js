@@ -53,7 +53,6 @@ const Event = () => {
             const response = await api.request("get", `events?$or=link:${stub}&$include=media`);
             setIsLoading(false);
             setEvent(_.isEmpty(response.data) ? null : response.data[0])
-            console.log("response =>", response);
         } catch (error) {
             showError(error.message);
             navigate("/")
