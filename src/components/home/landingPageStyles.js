@@ -245,4 +245,27 @@ export const FollowGodSection = styled.div`
         background-position: top;
         background-repeat: no-repeat;
     }
+    .pulse {
+        animation: pulse 1s infinite ease-in-out alternate;
+
+        &.delay-1 {
+            animation-duration: 1.3s;
+            transition: 2s;
+        }
+
+        &.delay-2 {
+            animation-duration: 1.6s;
+            transition: 2.7s;
+        }
+
+        &.delay-3 {
+            animation-duration: 2s;
+            transition: 2.5s;
+        }
+    }
+
+    @keyframes pulse {
+        from { transform: scale(0.8); }
+        to { transform: scale(1.2); }
+    }
 `

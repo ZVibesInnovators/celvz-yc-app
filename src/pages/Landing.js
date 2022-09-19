@@ -79,16 +79,16 @@ const Landing = () => {
             <h3>FOLLOW GOD ON</h3>
             <h1>SOCIALS</h1>
             <div className="social-buttons">
-              <Button onClick={() => window.open("https://www.instagram.com/celvzyouthchurch/", "_blank")}>
+              <Button className='pulse' onClick={() => window.open("https://www.instagram.com/celvzyouthchurch/", "_blank")}>
                 <AiFillInstagram />
               </Button>
-              <Button onClick={() => window.open()}>
+              <Button className='pulse delay-1' onClick={() => window.open()}>
                 <FaTiktok />
               </Button>
-              <Button onClick={() => window.open("https://www.youtube.com/channel/UCygsDfFK6e5nzAZ4Gl8S0Wg", "_blank")}>
+              <Button className='pulse delay-3' onClick={() => window.open("https://www.youtube.com/channel/UCygsDfFK6e5nzAZ4Gl8S0Wg", "_blank")}>
                 <AiFillYoutube />
               </Button>
-              <Button onClick={() => window.open("https://twitter.com/celvzyouth", "_blank")}>
+              <Button className='pulse delay-2' onClick={() => window.open("https://twitter.com/celvzyouth", "_blank")}>
                 <AiOutlineTwitter />
               </Button>
             </div>
