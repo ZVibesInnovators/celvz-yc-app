@@ -80,7 +80,7 @@ const Event = () => {
     }
 
     const handleChange = (e) => {
-        if (e.target.name !== "lga") toggleCountryList(e.target.value !== "Nigeria" && !e.target.value.includes("State") && !nigerianStates.find(state => {
+        if (e.target.name !== "lga") toggleCountryList(e.target.value !== "Nigeria" && e.target.value !== "-- Select State --" && !nigerianStates.find(state => {
             return state.name === e.target.value
         }))
         setPayload((oldPayload) => ({
@@ -90,7 +90,7 @@ const Event = () => {
     }
 
     const isOtherCountry = useMemo(() => {
-        return payload.location !== "Nigeria" && !payload.location.includes("State") && !nigerianStates.find(state => {
+        return payload.location !== "Nigeria" && payload.location !== "-- Select State --" && !nigerianStates.find(state => {
             return state.name === payload.location
         })
     }, [payload.location])
@@ -108,7 +108,7 @@ const Event = () => {
             e.preventDefault();
             if (!event) throw Error("Please select an event")
             if (!payload.name) throw Error("Please input your full name")
-            if (!payload.email) throw Error("Please input your Email Address")
+            // if (!payload.email) throw Error("Please input your Email Address")
             if (!payload.phone) throw Error("Please input your phone")
             if (!payload.location) throw Error("Please input your location")
             if (!payload.lga && !isOtherCountry) throw Error("Please input your location")
@@ -117,6 +117,7 @@ const Event = () => {
             const { response } = await api.request("post", `events/register`, {
                 ...payload,
                 event: event?._id,
+                email: payload.email || `${payload.phone.trim()}@zvibes.org`,
                 location: !isOtherCountry ? `${payload.location} - ${payload.lga}` : payload.location
             })
             showAlert("success", response.message)
@@ -136,9 +137,11 @@ const Event = () => {
     }, [isOtherCountry, payload])
 
     return (
-        <EventDetailPageWrapper className="detail-wrapper" blur={blur}
-            style={{ backgroundImage: `url(${event?.media?.meta?.secure_url})` }}>
-            <Mask blur={blur}>
+        <EventDetailPageWrapper className="detail-wrapper event" blur={blur}
+            style={{
+                backgroundImage: `url(${event?.media?.meta?.secure_url})`
+            }}>
+            <Mask blur={blur} >
                 {
                     isLoading ?
                         <Loader /> :
@@ -154,7 +157,7 @@ const Event = () => {
                             <>
                                 <Row className="w-100">
                                     <Col md={8}>
-                                        <Title>{event?.title}</Title>
+                                        <Title style={{ lineHeight: "70px" }}>{event?.title}</Title>
                                         <SubtitleWrapper>
                                             <Subtitle>{event.description}</Subtitle>
                                             <Subtitle className="next" small={true}>{event.tagline}</Subtitle>
@@ -165,6 +168,15 @@ const Event = () => {
                                     <Col md={5} className={"form ml-5 mb-5"}>
                                         <Form onSubmit={handleSubmit}>
                                             <FormGroup className="mb-5">
+                                                <label style={{
+                                                    color: "#FFF",
+                                                    background: "#c42167",
+                                                    padding: "0px 3px",
+                                                    borderRadius: "5px",
+                                                    marginBottom: "1px",
+                                                    width: "fit-content",
+                                                    marginRight: "10px"
+                                                }}>Full Name</label>
                                                 <Input
                                                     type='text'
                                                     placeholder='Name'
@@ -174,6 +186,15 @@ const Event = () => {
                                                 />
                                             </FormGroup>
                                             <FormGroup className="mb-5">
+                                                <label style={{
+                                                    color: "#FFF",
+                                                    background: "#c42167",
+                                                    padding: "0px 3px",
+                                                    borderRadius: "5px",
+                                                    marginBottom: "1px",
+                                                    width: "fit-content",
+                                                    marginRight: "10px"
+                                                }}>Email Address (Optional)</label>
                                                 <Input
                                                     type='text'
                                                     placeholder='Email'
@@ -183,9 +204,18 @@ const Event = () => {
                                                 />
                                             </FormGroup>
                                             <FormGroup className="mb-5">
+                                                <label style={{
+                                                    color: "#FFF",
+                                                    background: "#c42167",
+                                                    padding: "0px 3px",
+                                                    borderRadius: "5px",
+                                                    marginBottom: "1px",
+                                                    width: "fit-content",
+                                                    marginRight: "10px"
+                                                }}>Phone No.</label>
                                                 <Input
                                                     type='text'
-                                                    placeholder='Contact Number'
+                                                    placeholder='Phone Number'
                                                     name={"phone"}
                                                     value={payload.phone}
                                                     onChange={handleChange}
@@ -228,7 +258,7 @@ const Event = () => {
                                                                 value={payload.location}
                                                                 onChange={handleChange}
                                                                 style={{ maxWidth: "100%", margin: "0px 50px 0px 0px" }}                                                    >
-                                                                {[{ name: "-- Select State --"}, ...nigerianStates].map((state, i) => <option key={i}>{state?.name}</option>)}
+                                                                {[{ name: "-- Select State --" }, ...nigerianStates].map((state, i) => <option key={i}>{state?.name}</option>)}
                                                             </Input>
                                                         </div>
                                                         <div className="col-12 col-md-5 ml-3">
