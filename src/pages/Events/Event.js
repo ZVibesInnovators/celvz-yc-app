@@ -41,7 +41,8 @@ const Event = () => {
         phone: "",
         location: "Lagos",
         lga: "Ikeja",
-        newMember: true
+        newMember: true,
+        freeTransport: false
     })
 
     const fetch = async () => {
@@ -176,10 +177,10 @@ const Event = () => {
                                                     marginBottom: "1px",
                                                     width: "fit-content",
                                                     marginRight: "10px"
-                                                }}>Full Name</label>
+                                                }}>Full Name <small>(Surname first)</small></label>
                                                 <Input
                                                     type='text'
-                                                    placeholder='Name'
+                                                    placeholder='Ann Dominique'
                                                     name={"name"}
                                                     value={payload.name}
                                                     onChange={handleChange}
@@ -279,6 +280,11 @@ const Event = () => {
                                             <FormGroup className="hint">
                                                 <span>Is this Your First Time With Us?</span>
                                                 <input style={{ marginLeft: 10 }} type={"checkbox"} checked={payload.newMember} onClick={(e) => { setPayload({ ...payload, newMember: !payload.newMember }) }} />
+                                            </FormGroup>
+
+                                            <FormGroup className="hint">
+                                                <span>Should we provide you with free transportation?</span>
+                                                <input style={{ marginLeft: 10 }} type={"checkbox"} checked={payload.freeTransport} onClick={(e) => { setPayload({ ...payload, freeTransport: !payload.freeTransport }) }} />
                                             </FormGroup>
 
                                             <Button type="submit" disabled={isSubmitting}>Register {isSubmitting ?
