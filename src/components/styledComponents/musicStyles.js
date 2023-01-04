@@ -239,7 +239,8 @@ export const AddPlayListDismissBtn = (props) => {
         width: "100%",
         borderRadius: 0,
         padding: "3px",
-        fontSize: "18px"
+        fontSize: "18px",
+        opacity: props.disabled ? "0.5" : "1"
       }}
       {...props}
     >

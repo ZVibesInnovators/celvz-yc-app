@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import logo from "../components/assest/image/logo.png"
+import logo from "../components/assest/image/logoLarge.png"
 import { FiSearch } from "react-icons/fi"
 // REACT FRONTAWESOME IMPORTS
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -32,7 +32,9 @@ const Navbar = (props) => {
       <nav className="navbar navbar-expand-xl navbar-light main-nav fixed-top">
         <div className='container-fluid'>
 
-          <Link to="/" className="navbar-brand"><img className='logo' src={logo} alt="logo..." /></Link>
+          <Link to="/" className="navbar-brand" style={{ width: 120, height: 120, backgroundImage: `url(${logo})`, backgroundSize: "contain", backgroundRepeat: "no-repeat", backgroundPosition: "center" }}>
+            {/* <img className='logo' src={logo} alt="logo..." /> */}
+            </Link>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <FontAwesomeIcon icon={faBars} style={{ color: "#fff" }} />
           </button>

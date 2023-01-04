@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined';
 import { AiFillInstagram, AiFillYoutube, AiOutlineTwitter } from "react-icons/ai";
 import { FaTiktok } from "react-icons/fa";
+import { NoLiveStreamWrapper } from '../components/styledComponents/events/EventStyles';
+import { Flicker } from '../components/home/livePageStyles';
 
 
 const Landing = () => {
@@ -32,17 +34,20 @@ const Landing = () => {
         </div>
       </div>
       <AdsSection>
-        <div className="mask row">
+        <div className="mask row" style={{ alignItems: "center" }}>
           <Col md={7}>
-            <div className="top" />
-            <div className="footer row">
-              <Col lg={8} className="mx-auto">
-                <h1 className='date'>OCTOBER 15TH&nbsp;-&nbsp;<small>10am prompt</small></h1>
-                <h1 className='venue'>8, Billings Way, Oregun, Ikeja</h1>
+            {/* <div className="top" /> */}
+            <div className="footer row" >
+               <Col lg={4} className="right">
+               {/* <LargeHeroButton style={{ width: 245 }} onClick={() => navigate(`/events/gitd`)}>Join Event</LargeHeroButton>
+              */}</Col> 
+              <Col lg={8} className="ml-auto" style={{ justifyContent: "flex-end"}} >
+                <h1 className='date'>The Cornerstone Basement,</h1>
+                <h1 className='venue'>LCA Leisure Car Park,</h1>
+                <h1 className='venue'>8 Billings Way, Off Kudirat Abiola Way,</h1>
+                <h1 className='venue'>Oregun, Ikeja - Lagos.</h1>
+                <LargeHeroButton style={{ width: 245, marginTop: 20 }} onClick={() => navigate(`/about`)}>Learn More</LargeHeroButton>
                 {/* <h1 className='address'><small>8, billings Way,</small>&nbsp;Oregun-Ikeja</h1> */}
-              </Col>
-              <Col lg={4} className="right">
-                <LargeHeroButton style={{ width: 245 }} onClick={() => navigate(`/events/gitd`)}>Join Event</LargeHeroButton>
               </Col>
             </div>
           </Col>
@@ -103,3 +108,14 @@ const Landing = () => {
 };
 
 export default Landing
+
+export const WorshipWithUs = (props) => {
+
+  return <NoLiveStreamWrapper style={{ height: "300px"}}>
+      <Flicker>
+          <div id="text">
+              <h1>Wor<span id="offset">sh</span>ip &nbsp; With <span id="offset">Us</span></h1>
+          </div>
+      </Flicker>
+  </NoLiveStreamWrapper>
+}
