@@ -57,7 +57,7 @@ const LiveStreams = (props) => {
         try {
             if (!newStream.title) throw Error("Please provide a title");
             if (!newStream.description) throw Error("Kindly input a description");
-            if (!Enums.URL_REGEX.test(newStream.stream?.url)) throw Error("A valid video feed url is required")
+            if (!newStream.stream?.url) throw Error("A valid video feed url is required")
             setNewStream((old) => ({ ...old, channelId: `CH-${moment().format("DDMMYY")}-${moment().format("HHMMSS")}` }))
             setConfirmNew(true)
         } catch (error) {
