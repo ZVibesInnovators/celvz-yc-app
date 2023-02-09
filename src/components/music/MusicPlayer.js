@@ -6,9 +6,10 @@ import { MusicPlayerWrapper } from "../styledComponents/musicStyles";
 import PlayCircleOutlineOutlinedIcon from '@mui/icons-material/PlayCircleOutlineOutlined';
 import PauseCircleOutlineOutlinedIcon from '@mui/icons-material/PauseCircleOutlineOutlined';
 import { styled } from '@mui/material/styles';
+import StopIcon from '@mui/icons-material/Stop';
 
 const MusicPlayer = forwardRef((props, ref) => {
-    const { currentTrack, showPlayer, playing, setPlaying } = useContext(MusicPlayerContext);
+    const { currentTrack, showPlayer, playing, setPlaying, songList, playNewSong, setCurrentTrack, togglePlayer } = useContext(MusicPlayerContext);
     const [playTime, setPlayTime] = useState(0);
     let interval;
 
@@ -18,7 +19,6 @@ const MusicPlayer = forwardRef((props, ref) => {
     }))
 
     useEffect(() => {
-        // console.log("curr track", currentTrack)
         clearInterval(interval)
         setPlaying(false)
         togglePlay()
@@ -28,6 +28,28 @@ const MusicPlayer = forwardRef((props, ref) => {
             clearInterval(interval)
         }
     }, [currentTrack])
+
+    useEffect(() => {
+        // queue the next track
+        try {
+            const duration = currentTrack?.media?.meta?.duration;
+            if (playTime === duration) {
+                const currIndex = _.findIndex(songList, function (song) {
+                    return song?._id === currentTrack?._id
+                });
+                if (currIndex >= 0 && currIndex < (_.size(songList) - 1)) {
+                    setTimeout(() => {
+                        playNewSong({
+                            list: songList,
+                            songIndex: currIndex + 1
+                        })
+                    }, 3000);
+                }
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+    }, [playTime, currentTrack])
 
     const onPlay = (e) => {
         setPlaying(true);
@@ -46,7 +68,18 @@ const MusicPlayer = forwardRef((props, ref) => {
     const togglePlay = () => {
         try {
             const player = document.getElementById("audio-player");
-            player[playing ? "pause" : "play"]();
+            const playPromise = player[playing ? "pause" : "play"]();
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                  // Automatic playback started!
+                  // Show playing UI.
+                })
+                .catch(error => {
+                  // Auto-play was prevented
+                  // Show paused UI.
+                  console.log(error.message);
+                });
+              }
         } catch (error) {
             console.log(error.message);
         }
@@ -54,9 +87,9 @@ const MusicPlayer = forwardRef((props, ref) => {
 
     const progress = useMemo(() => {
         try {
-            if(!currentTrack) return 0
+            if (!currentTrack) return 0
             const duration = currentTrack.media?.meta.duration;
-            const result = (playTime/duration) * 100;
+            const result = (playTime / duration) * 100;
             return result
         } catch (error) {
             return 0
@@ -78,18 +111,23 @@ const MusicPlayer = forwardRef((props, ref) => {
             <Seeker progress={progress} playing={playing} duration={currentTrack?.media?.meta?.duration || 0} seek={onSeek} />
             <Box className="player">
                 <Avatar
-                    src={!_.isEmpty(currentTrack?.songArt) && currentTrack.songArt[0]?.meta?.secure_url} 
-                    variant="square" 
+                    src={!_.isEmpty(currentTrack?.songArt) && currentTrack.songArt[0]?.meta?.secure_url}
+                    variant="square"
                     sx={{ width: 60, height: 60 }}
                     className="thubnail"
                     style={{ background: "#d7d7d7" }}
                 />
                 <Box sx={{ display: "flex", flexDirection: "column", margin: "0px 10px", justifyContent: "center" }}>
                     <h4>{currentTrack?.title}</h4>
-                    <span>{currentTrack?.artiste?.firstName}</span>
+                    <span>{currentTrack?.artiste?.name}</span>
                 </Box>
-                <Box style={{  flex: 1, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
-
+                <Box style={{ flex: 1, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "flex-end" }}>
+                <IconButton onClick={() => {
+                    setCurrentTrack();
+                    togglePlayer(false)
+                }}>
+                    <StopIcon sx={{ color: "#FFF", width: 20, height: 20 }}/>
+                </IconButton>
                     <IconButton onClick={togglePlay}>
                         {playing ?
                             <PauseCircleOutlineOutlinedIcon sx={{ color: "#FFF", width: 40, height: 40 }} />
@@ -108,25 +146,25 @@ export default MusicPlayer;
 
 const Seeker = ({ playing, progress, seek }) => {
     const PrettoSlider = styled(Slider)({
-      color: '#52af77',
-      height: 4,
-      '& .MuiSlider-track': {
-        border: 'none',
-        background: "#D3006C",
-      },
-      '& .MuiSlider-thumb': {
-        height: 18,
-        width: 18,
-        zIndex: 3,
-        backgroundColor: '#fff',
-        '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
-          boxShadow: 'inherit',
-          backgroundColor: "#D3006C"
+        color: '#52af77',
+        height: 4,
+        '& .MuiSlider-track': {
+            border: 'none',
+            background: "#D3006C",
         },
-        '&:before': {
-          display: 'none',
-        },
-      }
+        '& .MuiSlider-thumb': {
+            height: 18,
+            width: 18,
+            zIndex: 3,
+            backgroundColor: '#fff',
+            '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
+                boxShadow: 'inherit',
+                backgroundColor: "#D3006C"
+            },
+            '&:before': {
+                display: 'none',
+            },
+        }
     });
 
     return (
@@ -140,14 +178,14 @@ const Seeker = ({ playing, progress, seek }) => {
             justifyContent: "center",
             zIndex: 3
         }}>
-            <PrettoSlider 
-                size={"small"} 
+            <PrettoSlider
+                size={"small"}
                 value={progress}
                 min={0}
                 step={1}
                 max={100}
                 onChange={(_, value) => seek(value)}
-              />
+            />
         </Box>
     )
 }

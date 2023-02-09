@@ -3,11 +3,15 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import { Col } from "reactstrap";
 import styled from "styled-components";
+import Enums from "../../constants/enums";
 import { LargeHeroButton } from "../home/CallToActionButtons";
 
 export const HeroWrapper = styled.div`
     
     background-color: #111;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
     background-position: center;
 
     .mask {
@@ -84,6 +88,33 @@ export const TrackList = styled.div`
 
         }
     }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+       opacity: 1;
+      }
+    }
+
+    @keyframes stretch {
+      from {
+        height: 300px;
+      }
+      to {
+       height: 340px;
+      }
+    }
+
+    @Keyframes elastic {
+      from {
+        height: 340px;
+      }
+      to {
+       height: 300px;
+      }
+    }
 `
 
 export const MusicPlayerWrapper = (props) => {
@@ -95,7 +126,7 @@ export const MusicPlayerWrapper = (props) => {
         width: "100vw",
         position: "fixed",
         bottom: 0,
-        zIndex: 100,
+        zIndex: 1300,
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
@@ -208,7 +239,8 @@ export const AddPlayListDismissBtn = (props) => {
         width: "100%",
         borderRadius: 0,
         padding: "3px",
-        fontSize: "18px"
+        fontSize: "18px",
+        opacity: props.disabled ? "0.5" : "1"
       }}
       {...props}
     >
@@ -260,6 +292,11 @@ export const PlaylistThumbnailWrapper = (props) => {
     <Box sx={{
       width: props.size || 40,
       height: props.size || 40,
+      background: Enums.COLORS.grey_500,
+
+      "&:hover": {
+        cursor: "pointer",
+      },
 
       "& :before": {
         content: "''",
@@ -273,5 +310,18 @@ export const PlaylistThumbnailWrapper = (props) => {
     }}>
       {props.children}
     </Box>
+  )
+}
+
+export const BoxShimmer = (props) => {
+
+  return (
+    <Skeleton 
+      variant="rectangular" 
+      width={240} 
+      height={300}
+      sx={{ bgcolor: 'grey.900' }}
+      {...props}
+    >{props.children}</Skeleton>
   )
 }

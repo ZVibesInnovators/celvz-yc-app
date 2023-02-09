@@ -14,6 +14,7 @@ import { MusicPlayerContextProvider } from "./contexts/MusicPlayerContext";
 import MaintenancePage from "./pages/MaintenancePage";
 import { routes } from './routes';
 import React from 'react';
+import Firebase from "./services/firebase";
 
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
           <MusicPlayerContextProvider>
             <LiveChatContextProvider>
               <BrowserRouter history={history}>
-                <div style={{ overflowX: "hidden" }}>
+                <div style={{ overflowX: "hidden", background: "#000" }}>
                   <Navbar />
                   <AppRouter />
                   <Footer />
@@ -46,6 +47,10 @@ export default App;
 
 const AppRouter = () => {
   const params = useLocation();
+  useEffect(() => { 
+    const firebase = new Firebase();
+    firebase.initialize();
+  }, [])
 
   useEffect(() => {
     // scroll to page top

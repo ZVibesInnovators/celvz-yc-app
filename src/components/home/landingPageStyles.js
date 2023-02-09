@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import youthIMG from "../assest/image/youths.png";
-import pastIMG from "../assest/image/everbrite_banner_size2x2.png"
+import youthIMG from "../assest/image/gitd-circle-1.png";
+import mainMaskImg from "../assest/image/Glow-in-the-Dark-official-logo-text-only.png"
 import maskIMG from "../assest/image/adsMask.png"
 import socialsFooterMaskIMG from "../assest/image/socialsFooterMask.png"
 import socialsMask from "../assest/image/socialsMask.png"
-import dypIMG from "../assest/image/dyp2x2.png"
+import sideMaskImg from "../assest/image/Glow-in-the-Dark1a.png"
 import weareIMG from "../assest/image/blwMask.png"
 import emojisIMG from "../assest/image/back-icons.png"
 import phonesIMG from "../assest/image/phones.png"
@@ -12,7 +12,7 @@ import phonesIMG from "../assest/image/phones.png"
 export const YouthImg = styled.div`
     width: 100%;
     max-width: 555px;
-    height: 420px;
+    height: 500px;
     margin-right: 100px;
     background: url(${youthIMG});
     background-size: contain;
@@ -69,7 +69,7 @@ export const AdsSection = styled.div`
     margin-top: -10px;
     min-height: 683px;
     background-color: #000;
-    background-image: url(${pastIMG});
+    background-image: url(${mainMaskImg});
     background-size: contain;
     background-position: top left;
     background-repeat: no-repeat;
@@ -101,7 +101,7 @@ export const AdsSection = styled.div`
 
             .top {
                 flex: 1;
-                background-image: url(${dypIMG});
+                background-image: url(${sideMaskImg});
                 background-size: contain;
                 background-position: top;
                 background-repeat: no-repeat;
@@ -290,5 +290,27 @@ export const FollowGodSection = styled.div`
             padding: 1px !important;
             margin-right: 2px !important;
         }
+    .pulse {
+        animation: pulse 1s infinite ease-in-out alternate;
+
+        &.delay-1 {
+            animation-duration: 1.3s;
+            transition: 2s;
+        }
+
+        &.delay-2 {
+            animation-duration: 1.6s;
+            transition: 2.7s;
+        }
+
+        &.delay-3 {
+            animation-duration: 2s;
+            transition: 2.5s;
+        }
+    }
+
+    @keyframes pulse {
+        from { transform: scale(0.8); }
+        to { transform: scale(1.2); }
     }
 `

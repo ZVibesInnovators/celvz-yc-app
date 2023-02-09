@@ -2,10 +2,9 @@ import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import Typography from '@mui/material/Typography';
 import React from 'react';
-import FileUploader from "../../components/FileUploader";
 import { EventDetailPageWrapper } from "../../components/styledComponents/events/EventStyles";
+import Playlists from "./Playlists";
 import RecommendedMusic from "./RecommendedMusic";
 
 const AntTabs = styled(Tabs)({
@@ -80,13 +79,13 @@ export default function Music() {
     };
 
     return (
-        <EventDetailPageWrapper style={{ paddingTop: 80 }}>
+        <EventDetailPageWrapper style={{ background: "#000", marginTop: "60px" }}>
             <Box sx={{ width: '100%' }}>
                 <AntTabs
                     variant="scrollable"
                     scrollButtons="auto"
                  sx={{ borderBottom: "0.001em solid #353535" }} value={value} onChange={handleChange} aria-label="ant example" >
-                    <AntTab label="Recommended" />
+                    <AntTab label="All Music" />
                     <AntTab label="Playlists" />
                 </AntTabs>
 
@@ -94,7 +93,7 @@ export default function Music() {
                     <RecommendedMusic />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <Typography>Item Four</Typography>
+                    <Playlists />
                 </TabPanel>
             </Box>
         </EventDetailPageWrapper>

@@ -78,6 +78,10 @@ export const LiveChatWrapper = styled.div`
         border-top: 0px;
         background: #1e1e1e;
         min-height: 60px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
 
         small {
             color: #d7d7d7;
@@ -91,13 +95,21 @@ export const LiveChatWrapper = styled.div`
             align-items: center;
             padding: 10px;
         }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: 10px;
+            background-color: ${props => props.online ? "green" : "red"};
+        }
     }
 
     .header-wrapper {
         border: 1px solid #424040;
         border-bottom: 0px;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
         justify-content: center;
 
@@ -245,7 +257,6 @@ div {
   position:relative;
   border:5px solid #1086e8;
   width:400px;
-  margin-top:150px;
   border-radius:20px;
   margin-left: auto;
   animation: border-flicker 2s linear infinite;

@@ -1,5 +1,4 @@
 import {DeviceUUID} from "device-uuid";
-import { reject } from "lodash";
 import { React, createContext, useState, useEffect, useMemo } from "react";
 import API from "../services/api";
 
@@ -12,6 +11,10 @@ export const AuthProvider = (props) => {
 
     const isLoggedIn = useMemo(() => {
         return !_.isNull(authData) && authData["token"]
+    }, [authData])
+
+    const permissions = useMemo(() => {
+        return authData?.permissions || []
     }, [authData])
 
     useEffect(() => {
@@ -72,7 +75,8 @@ export const AuthProvider = (props) => {
         logout,
         register,
         isLoggedIn,
-        authData
+        authData,
+        permissions
     }}>
         {props.children}
     </AuthContext.Provider>

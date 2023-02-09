@@ -9,6 +9,8 @@ import Live from "../pages/Live";
 import About from "../pages/About";
 import MusicRouter from "../pages/Music";
 import LoveLetter from "../pages/LoveLetter";
+import _ from "lodash";
+import BackOfficeRouter from "../pages/BackOffice";
 
 export const routes = [
     {
@@ -32,16 +34,6 @@ export const routes = [
         component: Sign
     },
     {
-        name: "register",
-        path: "/auth/register",
-        component: Register
-    },
-    {
-        name: "about",
-        path: "/about",
-        component: About
-    },
-    {
         name: "about",
         path: "/about",
         component: About
@@ -58,6 +50,11 @@ export const routes = [
         component: EventRouter
     },
     {
+        name: "music",
+        path: "/music/*",
+        component: MusicRouter
+    },
+    {
         name: "live",
         path: "/live",
         component: Live
@@ -72,5 +69,10 @@ export const routes = [
         path: "/loveletter",
         component: LoveLetter
     },
+    {
 
+        name: "admin",
+        path: "/admin/*",
+        component: BackOfficeRouter
+    },
 ]

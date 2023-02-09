@@ -5,7 +5,9 @@ class API {
     constructor(token, host) {
         this.token = token;
         this.host = host || Enums.BASE_URL;
-        this.headers = {}
+        this.headers = {
+            "Content-Type": "application/json"
+        }
     }
 
     addHost(host) {
@@ -18,15 +20,13 @@ class API {
 
     request(method, path, payload = null) {
         const { token, host } = this;
-        console.log("Making Request", `METH: ${method}`, `HOTS: ${host}`);
-        const allowedMethods = ["post", "put", "delete", "get"]
+        const allowedMethods = ["post", "put", "patch", "delete", "get"];
         return new Promise((resolve, reject) => {
             try {
                 let config = { headers: this.headers }
-                console.log("HEADERS =>", this.headers)
                 if (token) config["headers"]["Authorization"] = `Bearer ${token}`;
                 if (payload) config['data'] = payload
-                let op = allowedMethods.splice(0, 2).includes(method) ?
+                let op = allowedMethods.splice(0, 3).includes(method) ?
                     Axios[method](`${host}/${path}`, config.data, config)
                     :
                     Axios[method](`${host}/${path}`, config)

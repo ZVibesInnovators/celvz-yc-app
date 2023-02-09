@@ -53,7 +53,6 @@ const PlaylistAddForm = () => {
             const api = new API(authData?.token);
             const { data } = await api.request("get", `playlists/me`);
             setPlaylists(data)
-            console.log("DATA =>", { authData, data });
         } catch (error) {
             showError(error.message)
         }
@@ -103,7 +102,7 @@ const PlaylistAddForm = () => {
                         fontSize: "15px",
                         textAlign: "center"
                     }}
-                >{newPlaylistTrack?.artiste?.firstName}</Typography>
+                >{newPlaylistTrack?.artiste?.name}</Typography>
             </Box>
             {
                 !authData ?

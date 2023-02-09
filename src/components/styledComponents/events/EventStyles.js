@@ -3,7 +3,7 @@ import maskBg from "../../../components/assest/image/mask.png"
 
 export const EventDetailPageWrapper = styled.div`
     width: 100vw;
-    min-height: calc(150vh + 100px);
+    min-height: calc(110vh + 100px);
     overflow-x: hidden;
     background-size: cover;
     background-position: top right;
@@ -13,7 +13,18 @@ export const EventDetailPageWrapper = styled.div`
     margin-top: -100px;
     z-index: 0;
 
-    &::before {
+    &.event {
+        background-attachment: fixed;
+        background-size: contain;
+        background-position-x: center;
+
+        @media only screen and (max-width: 600px) {
+            background-size: cover;
+        }
+
+    }
+
+    & .albumArt::before {
         content: "";
         position: absolute;
         top: 0; left: 0;
@@ -29,12 +40,18 @@ export const EventDetailPageWrapper = styled.div`
 export const Mask = styled.div`
     width: 100%;
     height: 100%;
-    background-image: url(${maskBg});
+    // background-image: url(${maskBg});
+    background: rgb(0,0,0);
+    background: -moz-linear-gradient(0deg, rgba(0,0,0,0.8449973739495799) 3%, rgba(0,0,0,0.7329525560224089) 45%, rgba(0,0,0,0.7189469537815126) 69%);
+    background: -webkit-linear-gradient(0deg, rgba(0,0,0,0.8449973739495799) 3%, rgba(0,0,0,0.7329525560224089) 45%, rgba(0,0,0,0.7189469537815126) 69%);
+    background: linear-gradient(0deg, rgba(0,0,0,0.8449973739495799) 3%, rgba(0,0,0,0.7329525560224089) 45%, rgba(0,0,0,0.7189469537815126) 69%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#000000",GradientType=1);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     position: absolute;
     overflow-y: auto;
+    opacity: 1;
     backdrop-filter:${props => props.blur ? "blur(6px)" : "none"};
 
     &>.row {
@@ -114,13 +131,13 @@ export const Title = styled.h1`
 `
 
 export const SubtitleWrapper = styled.div`
-    align-items: center;
+    align-items: flex-start;
     margin-left: 85px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     width: 100%;
     & .next {
-        margin-left: 24px;
+        margin-left: 0px;
     }
 
     @media only screen and (max-width: 600px) {

@@ -19,6 +19,14 @@ const Register = (props) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { register, isLoggedIn } = useContext(AuthContext);
 
+  useEffect(() => {
+    const footer = document.getElementById("site-footer");
+    // hide and show footer
+    footer.style.display = "none"
+    return () => {
+      footer.style.display = "block"
+    }
+  }, [])
 
   const [payload, setPayload] = useState({
     email: "",
@@ -32,8 +40,14 @@ const Register = (props) => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      // redirect the user to the dashboard if already logged in
-      navigate("/")
+      // check if user visited a previous strict page and then redirect back after login
+      const strictPage = localStorage.getItem("strictPage");
+      if (strictPage) {
+        window.location = strictPage
+      } else {
+        // redirect the user to the dashboard if already logged in
+        navigate("/")
+      }
     }
   }, [isLoggedIn])
 

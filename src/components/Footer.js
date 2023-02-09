@@ -49,13 +49,15 @@ const Footer = () => {
         <FooterWrapper id="site-footer">
             <Row>
                 <Col md={8}>
-                    <span>+234 814 8272 285</span>
-                    <span>celvzyouthchurch@gmail.com</span>
-                    <span>24 Sanyaolu Street Off Kudirat Abiola Way<br />
-                        Ikeja, Lagos State.</span>
+                    <span>The Cornerstone Basement,<br />
+                        LCA Leisure Car Park,<br />
+                        8 Billings Way, Off Kudirat Abiola Way,<br />
+                        Oregun, Ikeja - Lagos.</span>
+                    <small style={{ color: "#FFF" }}>+234 814 8272 285</small>
+                    <small style={{ color: "#FFF" }}>celvzyouthchurch@gmail.com</small>
                 </Col>
                 <Col md={4}>
-                    <img src={logo} onClick={() => navigate("/")} />
+                    <img src={logo} style={{ width: "100px", marginTop: "20px" }} onClick={() => navigate("/")} />
                 </Col>
             </Row>
             <div className='copyright'>

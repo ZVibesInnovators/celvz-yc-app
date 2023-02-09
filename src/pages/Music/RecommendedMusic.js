@@ -7,13 +7,15 @@ import API from "../../services/api";
 import TopTracks from "./TopTracks"
 import _ from "lodash";
 import { AlertContext } from "../../contexts/AlertContextProvider";
+import NewReleases from "./NewReleases";
+import { useNavigate } from "react-router";
 
 const RecommendedMusic = () => {
     const { showError } = useContext(AlertContext)
     const [isLoading, setLoading] = useState(true);
     const [album, setAlbum] = useState(null);
     const [genre, setGenre] = useState([]);
-
+    const navigate = useNavigate();
 
     useEffect(() => {
         getData();
@@ -24,14 +26,9 @@ const RecommendedMusic = () => {
             const api = new API();
             const albums = await api.request("get", `albums?$limit=1&$include=albumArt&$include=artiste`);
             const _genre = await api.request("get", "genre?$limit=4&$include=genreArt");
-            const genreObj = {};
-            _.forEach(_genre.data, function (entry, i) {
-                genreObj[i] = entry
-            })
-            console.log("TRACKS =>", albums);
-            setLoading(false)
             setAlbum(_.isEmpty(albums?.data) ? null : albums?.data[0]);
-            setGenre(_genre.data)
+            setGenre(_genre.data);
+            setLoading(false);
         } catch (error) {
             showError(error.message)
         }
@@ -41,7 +38,7 @@ const RecommendedMusic = () => {
             <HeroWrapper style={{ backgroundImage: `url(${album?.albumArt?.meta?.secure_url})` }}>
                 <Row className="mask h-100">
                     <Col md={6} className="p-2" style={{ display: "flex", flexDirection: "column", justifyContent: "flex-end", marginTop: "20px" }} >
-                        <h1>New Trending Album {album && `from ${album.artiste.firstName}`}</h1>
+                        <h1>New Trending Album {album?.artiste && `from ${album?.artiste?.name}`}</h1>
                         <label>Featured Content</label>
                         <LargeHeroButton style={{ width: "150px", fontSize: "15px", borderRadius: "50px", marginTop: 10 }}>Play All</LargeHeroButton>
                     </Col>
@@ -53,7 +50,7 @@ const RecommendedMusic = () => {
                             >
                                 {isLoading ? <GenreShimmer color="#d81b60" />
                                     :
-                                    <GenreTilebody>
+                                    <GenreTilebody onClick={() => genre[0] && navigate(`/music/genre/${genre[0]._id}`)}>
                                         <GenreTitle>{genre[0]?.name}</GenreTitle>
                                     </GenreTilebody>
                                 }
@@ -64,7 +61,7 @@ const RecommendedMusic = () => {
                             >
                                 {isLoading ? <GenreShimmer color="#1d77be" />
                                     :
-                                    <GenreTilebody>
+                                    <GenreTilebody onClick={() => genre[1] && navigate(`/music/genre/${genre[1]._id}`)}>
                                         <GenreTitle>{genre[1]?.name}</GenreTitle>
                                     </GenreTilebody>
                                 }
@@ -77,7 +74,7 @@ const RecommendedMusic = () => {
                             >
                                 {isLoading ? <GenreShimmer color="#179bab" />
                                     :
-                                    <GenreTilebody>
+                                    <GenreTilebody onClick={() => genre[2] && navigate(`/music/genre/${genre[2]._id}`)}>
                                         <GenreTitle>{genre[2]?.name}</GenreTitle>
                                     </GenreTilebody>
                                 }
@@ -88,7 +85,7 @@ const RecommendedMusic = () => {
                             >
                                 {isLoading ? <GenreShimmer color="#b59124" />
                                     :
-                                    <GenreTilebody>
+                                    <GenreTilebody onClick={() => genre[3] && navigate(`/music/genre/${genre[3]._id}`)}>
                                         <GenreTitle>{genre[3]?.name}</GenreTitle>
                                     </GenreTilebody>
                                 }
@@ -99,6 +96,8 @@ const RecommendedMusic = () => {
             </HeroWrapper>
             {/* top tracks */}
             <TopTracks />
+            {/* new releases */}
+            <NewReleases />
         </Box>
     )
 }
