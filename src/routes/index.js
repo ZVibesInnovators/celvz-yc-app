@@ -8,6 +8,7 @@ import EventRouter from "../pages/Events";
 import Live from "../pages/Live";
 import About from "../pages/About";
 import MusicRouter from "../pages/Music";
+import LoveLetter from "../pages/LoveLetter";
 
 export const routes = [
     {
@@ -65,6 +66,11 @@ export const routes = [
         name: "dashboard",
         path: "/dashboard",
         component: Dashboard
-    }
+    },
+    {
+        name: "loveletter",
+        path: "/loveletter",
+        component: LoveLetter
+    },
 
 ]
