@@ -1,7 +1,7 @@
 import { InputBase, styled, alpha } from "@mui/material";
 import { ImSpinner9 } from 'react-icons/im';
 
-export const Loader = () => {
+export const Loader = ({containerStyle}) => {
     return (<div
         className='shadow'
         style={{
@@ -12,7 +12,8 @@ export const Loader = () => {
             width: "100%",
             height: "100%",
             position: "absolute",
-            zIndex: "200"
+            zIndex: "200",
+            ...containerStyle
         }}>
         <div style={{
             backgroundColor: "#C40667",
