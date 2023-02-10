@@ -8,9 +8,9 @@ import EventRouter from "../pages/Events";
 import Live from "../pages/Live";
 import About from "../pages/About";
 import MusicRouter from "../pages/Music";
-import LoveLetter from "../pages/LoveLetter";
 import _ from "lodash";
 import BackOfficeRouter from "../pages/BackOffice";
+import MessagingRouter from "../pages/Messaging";
 
 export const routes = [
     {
@@ -50,6 +50,11 @@ export const routes = [
         component: EventRouter
     },
     {
+        name: "messaging",
+        path: "/msg/*",
+        component: MessagingRouter
+    },
+    {
         name: "music",
         path: "/music/*",
         component: MusicRouter
@@ -65,12 +70,6 @@ export const routes = [
         component: Dashboard
     },
     {
-        name: "loveletter",
-        path: "/loveletter",
-        component: LoveLetter
-    },
-    {
-
         name: "admin",
         path: "/admin/*",
         component: BackOfficeRouter
