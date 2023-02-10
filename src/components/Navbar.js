@@ -22,7 +22,7 @@ const Navbar = (props) => {
     // localStorage.setItem("strictPage", "/live")
     const linkItems = document.querySelector("ul")
     linkItems.addEventListener("click", () => {
-      console.log("params =>", permissions)
+      // console.log("params =>", permissions)
     })
   }, [])
 
@@ -54,10 +54,7 @@ const Navbar = (props) => {
                 <Link to="/live" className="nav-link">Live</Link>
               </li>
               <li className="nav-item" data-toggle={md && "collapse"} data-target="#navbarSupportedContent">
-                <Link to="/testimonies" className="nav-link">Testimony</Link>
-              </li>
-              <li className="nav-item">
-                <a href="/loveletter" className="nav-link">LoveLetter</a>
+                <a href="https://blog.zvibes.org" target="_blank" className="nav-link">Blog</a>
               </li>
               {/* ***********SEARCH ICON*********** */}
               <div className='search-bar'>
