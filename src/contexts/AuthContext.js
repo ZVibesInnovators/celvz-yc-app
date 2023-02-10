@@ -23,8 +23,9 @@ export const AuthProvider = (props) => {
             setAuthData(JSON.parse(localStorage.getItem("authData")))
             // generate a unique id for the device if none exists
             if(!localStorage.getItem("UUID")){
+                const randID = OTP_GEN(10)
                 var uuid = new DeviceUUID().get();
-                localStorage.setItem("UUID", uuid)
+                localStorage.setItem("UUID", `${uuid}-${randID}`)
             }
         } catch (error) {
             console.log(error.message)
@@ -69,6 +70,15 @@ export const AuthProvider = (props) => {
         localStorage.removeItem("authData");
         setAuthData(null)
     }
+
+    const OTP_GEN = (len) => {
+        var digits = "0123456789";
+        let OTP = "";
+        for (let i = 0; i < len; i++) {
+          OTP += digits[Math.floor(Math.random() * 10)];
+        }
+        return OTP;
+      }
 
     return <AuthContext.Provider value={{
         login,
