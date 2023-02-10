@@ -7,15 +7,21 @@ import Register from "../pages/auth/Register";
 import EventRouter from "../pages/Events";
 import Live from "../pages/Live";
 import About from "../pages/About";
-import _ from "lodash";
 import MusicRouter from "../pages/Music";
+import _ from "lodash";
 import BackOfficeRouter from "../pages/BackOffice";
+import MessagingRouter from "../pages/Messaging";
 
 export const routes = [
     {
         name: "home",
         path: "/",
         component: Landing
+    },
+    {
+        name: "music",
+        path: "/music",
+        component: MusicRouter
     },
     // {
     //     name: "testimonies",
@@ -42,6 +48,11 @@ export const routes = [
         name: "events",
         path: "/events/*",
         component: EventRouter
+    },
+    {
+        name: "messaging",
+        path: "/msg/*",
+        component: MessagingRouter
     },
     {
         name: "music",

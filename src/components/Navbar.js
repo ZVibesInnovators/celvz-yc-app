@@ -56,6 +56,9 @@ const Navbar = (props) => {
               <li className="nav-item" data-toggle={md && "collapse"} data-target="#navbarSupportedContent">
                 <Link to="/testimonies" className="nav-link">Testimony</Link>
               </li>
+              <li className="nav-item">
+                <a href="/loveletter" className="nav-link">LoveLetter</a>
+              </li>
               {/* ***********SEARCH ICON*********** */}
               <div className='search-bar'>
                 <FiSearch color='#fff' size={17} />
