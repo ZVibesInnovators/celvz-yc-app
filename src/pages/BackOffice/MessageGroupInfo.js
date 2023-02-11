@@ -7,14 +7,18 @@ import _ from 'lodash';
 import moment from 'moment';
 import React, { createRef, useContext, useMemo, useState } from 'react';
 import { Col, Row } from 'reactstrap';
+import FileSelectorModal from "../../components/BackOffice/FileManager/FileSelectorModal";
+import MUIColorPicker from "../../components/ColorPicker";
 import { BootstrapInput } from '../../components/Misc';
 import Enums from '../../constants/enums';
 import { AlertContext } from '../../contexts/AlertContextProvider';
 import { AuthContext } from '../../contexts/AuthContext';
 import API from '../../services/api';
 import ConfirmationDialog from './ConfirmationDialog';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 const confirmRef = createRef();
+const fileSelectorRef = createRef();
 
 const MessageGroupInfo = ({ messages, selectedGroup, setSelectedGroup, refresh }) => {
     const theme = useTheme();
@@ -37,9 +41,14 @@ const MessageGroupInfo = ({ messages, selectedGroup, setSelectedGroup, refresh }
             if (!group?.name) throw Error("Kindly provide a name for this group");
             if (!group?.description) throw ("A breif description is required for the group");
             if (!group?.slug) throw Error("Please provide a URL Slug");
+            const payload = { ...group }
+            // replace the object in groupArt with the id only
+            if (typeof payload?.groupArt === "object") {
+                payload["groupArt"] = payload.groupArt?._id
+            }
             setLoading(true)
             const api = new API(authData?.token);
-            await api.request("patch", `anon-messages/groups/${group._id}`, group)
+            await api.request("patch", `anon-messages/groups/${group._id}`, payload)
             showAlert("success", "Message Group Updated Successfully");
             setLoading(false)
             refresh();
@@ -85,13 +94,41 @@ const MessageGroupInfo = ({ messages, selectedGroup, setSelectedGroup, refresh }
         }
     }
 
+    const handleColorChange = (fieldName, colorCode) => {
+        setGroup({
+            ...group,
+            properties: {
+                ...group.properties,
+                [fieldName]: colorCode || "#FFF"
+            }
+        })
+    }
+
+    const selectPhoto = (index) => {
+        try {
+            fileSelectorRef.current.toggle(true)
+            fileSelectorRef.current.setIndex(index)
+        } catch (error) {
+            showError(error.message)
+        }
+    }
+
+    const handleImageSelect = (data) => {
+        try {
+            console.log(data);
+            setGroup((old) => ({ ...old, [data.index]: data.item }))
+        } catch (error) {
+            showError(error.message)
+        }
+    }
+
     return (
         <>
             <ConfirmationDialog ref={confirmRef} />
             <Row style={{ height: "100%" }}>
                 <Col md={6} style={{ borderRight: `1px solid ${Enums.COLORS.grey_400}` }}>
-                    <Typography sx={{ fontSize: "30px", fontWeight: "800", color: Enums.COLORS.yellow }}>{group.name}</Typography>
-                    <Typography sx={{ color: Enums.COLORS.white }}>{group.description}</Typography>
+                    <Typography sx={{ fontSize: "30px", fontWeight: "800", color: group?.properties?.nameColor || Enums.COLORS.yellow }}>{group.name}</Typography>
+                    <Typography sx={{ color: group?.properties?.descColor || Enums.COLORS.white }}>{group.description}</Typography>
                     <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center", color: Enums.COLORS.grey_400 }}>
                         <Typography sx={{ color: Enums.COLORS.grey_400 }}>{moment(group.createdAt).format("DD-mm-YYYY hh:mm a")}</Typography>
                         &nbsp;&middot;&nbsp;
@@ -101,7 +138,7 @@ const MessageGroupInfo = ({ messages, selectedGroup, setSelectedGroup, refresh }
                             <SafetyCheckIcon sx={{ color: Enums.COLORS[group.requireAuth ? "yellow" : "grey_400"] }} />
                         </>
                     </Box>
-                    <a style={{ color: Enums.COLORS.yellow }} href={window.location.origin+`/msg/`+group.slug} target="_blank">{window.location.origin+`/msg/`+group.slug}</a>
+                    <a style={{ color: Enums.COLORS.yellow }} href={window.location.origin + `/msg/` + group.slug} target="_blank">{window.location.origin + `/msg/` + group.slug}</a>
                     <Box sx={{ marginTop: "50px", paddingTop: "50px", borderTop: `1px solid ${Enums.COLORS.grey_400}` }}>
                         <Box sx={{
                             marginBottom: 1,
@@ -120,25 +157,69 @@ const MessageGroupInfo = ({ messages, selectedGroup, setSelectedGroup, refresh }
                         </Box>
                         <Divider />
                         <Row>
-                            <Box sx={{
-                                marginTop: 2,
-                                display: "flex",
-                                flexDirection: "row",
-                                justifyContent: "space-between",
-                                alignItems: "center"
-                            }}>
-                                <InputLabel shrink sx={{ color: Enums.COLORS.yellow, fontSize: 20 }}>
-                                    Require Authentication
+                            <Col md={12}>
+                                <InputLabel shrink sx={{ color: Enums.COLORS.yellow, marginTop: 2 }}>
+                                    Hero Art (Optional)
                                 </InputLabel>
-                                <Switch checked={group?.requireAuth} onChange={() => setGroup({ ...group, requireAuth: !group?.requireAuth })} />
-                            </Box>
-                            <small style={{ color: "#d7d7d7", fontSize: 12 }}>Enabling this will require that users MUST be signed in before they are allowed to comment on this message group</small>
+                                <Box sx={{
+                                    border: "2px dashed #d7d7d7",
+                                    width: "100%",
+                                    height: "200px",
+                                    borderRadius: "5px",
+                                    backgroundImage: `url(${group?.groupArt?.meta?.secure_url})`,
+                                    backgroundSize: "cover",
+                                    backgroundPosition: "top",
+                                    backgroundRepeat: "no-repeat",
+                                    ".mask": {
+                                        display: "none"
+                                    },
 
+                                    ":hover": {
+                                        cursor: "pointer",
+
+                                        ".mask": {
+                                            background: 'rgba(0, 0, 0,0.6)',
+                                            width: "100%",
+                                            height: "100%",
+                                            animation: 'fadeIn 2s',
+                                            opacity: 1,
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            alignItems: "center",
+                                            justifyContent: "center"
+                                        }
+                                    }
+                                }}>
+                                    <Box className="mask" onClick={() => selectPhoto("groupArt")}>
+                                        <AddPhotoAlternateIcon sx={{ color: Enums.COLORS.white, fontSize: 40 }} />
+                                    </Box>
+                                </Box>
+                            </Col>
+                            <Col md={12}>
+                                <Box sx={{
+                                    marginTop: 2,
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    justifyContent: "space-between",
+                                    alignItems: "center"
+                                }}>
+                                    <InputLabel shrink sx={{ color: Enums.COLORS.yellow, fontSize: 20 }}>
+                                        Require Authentication
+                                    </InputLabel>
+                                    <Switch checked={group?.requireAuth} onChange={() => setGroup({ ...group, requireAuth: !group?.requireAuth })} />
+                                </Box>
+                                <small style={{ color: "#d7d7d7", fontSize: 12 }}>Enabling this will require that users MUST be signed in before they are allowed to comment on this message group</small>
+                            </Col>
                             <Col md={12} style={{ display: "flex", flexDirection: "column" }}>
-                                <FormControl variant="standard" sx={{ marginY: 2 }}>
+                                <Box sx={{ marginTop: "10px", display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                                     <InputLabel shrink sx={{ color: Enums.COLORS.yellow }}>
                                         Group Name
                                     </InputLabel>
+                                    <Box sx={{ alignSelf: "flex-end" }}>
+                                        <MUIColorPicker value={group.properties?.nameColor} name="nameColor" onChange={handleColorChange} />
+                                    </Box>
+                                </Box>
+                                <FormControl variant="standard" sx={{ marginY: 2 }}>
                                     <BootstrapInput components={Input} value={group.name} placeholder="Give it a great name" onChange={(e) => {
                                         const data = { ...group, name: e.target.value };
                                         data["slug"] = e.target.value.toLowerCase()?.replace(/[^\w\s]|\s/gi, '-')
@@ -147,10 +228,15 @@ const MessageGroupInfo = ({ messages, selectedGroup, setSelectedGroup, refresh }
                                 </FormControl>
                             </Col>
                             <Col md={12} style={{ display: "flex", flexDirection: "column" }}>
-                                <FormControl variant="standard" sx={{ marginY: 2 }}>
+                                <Box sx={{ marginTop: "10px", display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                                     <InputLabel shrink sx={{ color: Enums.COLORS.yellow }}>
                                         Description
                                     </InputLabel>
+                                    <Box sx={{ alignSelf: "flex-end" }}>
+                                        <MUIColorPicker value={group.properties?.descColor} name="descColor" onChange={handleColorChange} />
+                                    </Box>
+                                </Box>
+                                <FormControl variant="standard" sx={{ marginY: 2 }}>
                                     <BootstrapInput components={Input} value={group.description} placeholder="Let users know what this message group is about" multiline rows={4} onChange={(e) => setGroup({ ...group, description: e.target.value })} />
                                 </FormControl>
                             </Col>
@@ -261,6 +347,7 @@ const MessageGroupInfo = ({ messages, selectedGroup, setSelectedGroup, refresh }
                     </Box>
                 </Col>
             </Row>
+            <FileSelectorModal ref={fileSelectorRef} type={"image"} onSelect={handleImageSelect} />
         </>
     )
 }

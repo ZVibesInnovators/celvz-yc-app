@@ -91,25 +91,27 @@ const FileSelectorModal = forwardRef((props, ref) => {
                     bgcolor: Enums.COLORS.grey_500,
                     boxShadow: 24,
                     p: 0,
-                    overflow: "auto",
+                    overflow: "none",
+                    maxHeight: "70vh",
+                    display: "flex",
 
                     [`${theme.breakpoints.down("sm")}`]: {
                         width: "95% !important"
                     }
                 }}>
-                    <FileUploader onSuccess={onUploadSuccess} />
                     <ImageList
-                        sx={{ width: "100%", }}
+                        sx={{ width: "100%", flex: 1, overflowY: "auto" }}
                         variant="quilted"
                         cols={4}
                         rowHeight={121}
                     >
+                        <FileUploader onSuccess={onUploadSuccess} />
                         {dataList.map((item, i) => (
                             <ImageListItem
                                 key={item._id}
                                 cols={item.cols || 1} rows={item.rows || 1}
                                 onClick={() => {
-                                    onSelect({index, item});
+                                    onSelect({ index, item });
                                     toggle(false)
                                 }}
                                 sx={{

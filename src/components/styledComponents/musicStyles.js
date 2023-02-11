@@ -15,7 +15,7 @@ export const HeroWrapper = styled.div`
     background-position: center;
 
     .mask {
-        background: rgba(0, 0, 0,0.8);
+        background: rgba(0, 0, 0,0.6);
         padding: 2.5rem;
         
         h1 {

@@ -22,6 +22,7 @@
     "device-uuid": "^1.0.4",
     "firebase": "^9.9.2",
     "lodash": "^4.17.21",
+    "material-ui-color-picker": "^3.5.1",
     "moment": "^2.29.3",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

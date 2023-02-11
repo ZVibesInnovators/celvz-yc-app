@@ -13,6 +13,10 @@ export const LargeHeroButton = styled.button`
     padding: 6px;
     border-radius: 5px;
 
+    :hover {
+        opacity: 0.8;
+    }
+
     @media only screen and (max-width: 300px) {
      width: 180px  !important;
     }
