@@ -99,7 +99,7 @@ const Messaging = () => {
                             <Row className="mask h-100">
                                 <Col md={6} className="p-2" style={{ display: "flex", flexDirection: "column", justifyContent: "flex-end", marginTop: "20px" }} >
                                     <label style={{ color: messageGroup?.properties?.nameColor || "inherit" }}><a onClick={() => navigate("/")} style={{ color: "#FFF", cursor: "pointer" }}>Home&nbsp;</a>&nbsp;<span style={{ color: "#FFF" }}>/</span>&nbsp;Messaging</label>
-                                    <h1>Let's hear from you</h1>
+                                    <h1>&nbsp;</h1>
                                 </Col>
                             </Row>
                         </HeroWrapper>
