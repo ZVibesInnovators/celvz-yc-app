@@ -394,9 +394,16 @@ function EnhancedTable({ rows, refresh }) {
         setOrderBy(property);
     };
 
+    const entries = useMemo(() => {
+        return rows.map((row) => ({
+            ...row,
+            viewers: _.uniqBy(row.viewers, 'user')
+        }))
+    }, [rows])
+
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelected = rows.map((n) => n.name);
+            const newSelected = entries.map((n) => n.name);
             setSelected(newSelected);
             return;
         }
@@ -434,14 +441,14 @@ function EnhancedTable({ rows, refresh }) {
 
     const isSelected = (name) => selected.indexOf(name) !== -1;
 
-    // Avoid a layout jump when reaching the last page with empty rows.
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    // Avoid a layout jump when reaching the last page with empty entries.
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - entries.length) : 0;
 
     const toggleLive = async (stream, state) => {
         const changeStreamState = async () => {
             try {
                 // check if there are other live streams if the user intends to Go live
-                const liveStream = rows.find(r => r.isLive);
+                const liveStream = entries.find(r => r.isLive);
                 if (state && liveStream) throw Error(`Please stop any active stream (${liveStream.title}) before starting another one`)
                 showAlert("info", `We're updating ${stream.title} in the background`)
                 const api = new API(authData?.token);
@@ -482,10 +489,10 @@ function EnhancedTable({ rows, refresh }) {
                             orderBy={orderBy}
                             onSelectAllClick={handleSelectAllClick}
                             onRequestSort={handleRequestSort}
-                            rowCount={rows.length}
+                            rowCount={entries.length}
                         />
                         <TableBody>
-                            {stableSort(rows, getComparator(order, orderBy))
+                            {stableSort(entries, getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
                                     const isItemSelected = isSelected(row.name);

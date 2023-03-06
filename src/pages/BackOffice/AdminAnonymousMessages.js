@@ -33,7 +33,6 @@ const AdminAnonymousMessages = () => {
             const res = await api.request("get", "anon-messages/groups?$include=groupArt&$limit=5000")
             const mRes = await api.request("get", "anon-messages?$limit=10000&$include=author")
             setMessageGroups(res.data);
-            console.log(res.data);
             setMessages(mRes.data);
             setLoading(false)
         } catch (error) {
