@@ -58,12 +58,12 @@ const Live = (props) => {
         const loader = async () => {
             if (liveStream) {
                 const UUID = localStorage.getItem("UUID")
-                if (!isLoggedIn && !authData?.user) {
+                if (!isLoggedIn) {
                     // check if the device has been registered for the live stream
                     const api = new API();
                     let { data } = await api.request("get", `stream/${liveStream?._id}/viewers?$or=deviceId:${UUID}&$or=liveStream:${liveStream?._id}`)
                     // filter only records for the current live stream
-                    data = _.filter(data, function (entry) { return entry?.liveStream === liveStream?._id })
+                    data = _.filter(data, function (entry) { return ((entry?.liveStream === liveStream?._id) && (entry?.deviceId === UUID)) })
                     // show name modal
                     setTimeout(() => setshowViewerModal(_.isEmpty(data)), 10000)
                 } else {
@@ -71,7 +71,8 @@ const Live = (props) => {
                         user: authData?.user?._id,
                         liveStream: liveStream?._id,
                         name: `${authData?.user?.firstName} ${authData?.user?.lastName} (${authData?.user?.phone})`,
-                        deviceId: UUID
+                        deviceId: UUID,
+                        firstTimer: false
                     })
                 }
             }
@@ -125,27 +126,28 @@ const Live = (props) => {
     }, [liveStream])
 
     useEffect(() => {
-        socket?.on("connect", () => {
-            setConnected(true);
-            socket.emit("identity", authData?.user?._id, (v) => {
+        if (socket && liveStream && authData) {
+            socket?.on("connect", () => {
                 setConnected(true);
-                const UUID = localStorage.getItem("UUID")
-                socket.emit("subscribe", { liveStream, user: authData?.user, deviceId: UUID })
-            });
-        })
+                socket.emit("identity", authData?.user?._id, (v) => {
+                    setConnected(true);
+                    const UUID = localStorage.getItem("UUID")
+                    socket.emit("subscribe", { liveStream, user: authData?.user, deviceId: UUID })
+                });
+            })
 
-        socket?.on("new-message", handleNewMessage)
+            socket?.on("new-message", handleNewMessage)
 
-        socket?.on("audience-size", (v) => {
-            if (population !== v) setPopulation(v);
-        })
+            socket?.on("audience-size", (v) => {
+                if (population !== v) setPopulation(v);
+            })
 
-        socket?.on("disconnect", () => {
-            setConnected(false)
-        })
+            socket?.on("disconnect", () => {
+                setConnected(false)
+            })
 
-        socket?.on("live-page-refresh", () => window.location.reload())
-
+            socket?.on("live-page-refresh", () => window.location.reload())
+        }
         return () => {
             socket?.emit("unsubscribe")
             socket?.emit("disconnect")
@@ -323,7 +325,8 @@ const ViewerInfoForm = ({ show, addViewerInfo, liveStream, close }) => {
             await addViewerInfo({
                 liveStream: liveStream?._id,
                 name: `${payload.name}${payload.phone ? ` (${payload.phone})` : ""}`,
-                deviceId: UUID
+                deviceId: UUID,
+                firstTimer: payload.firstTimer
             })
             setLoading(false);
             close();
@@ -363,9 +366,10 @@ const ViewerInfoForm = ({ show, addViewerInfo, liveStream, close }) => {
                             color: "#FFF",
                             fontSize: "30px",
                             textAlign: "center",
-                            marginLeft: "0px !important"
+                            marginLeft: "0px !important",
+                            textTransform: "none"
                         }}
-                    >We&apos;d like to know you</Typography>
+                    >Hi! we&apos;d like to know you</Typography>
                     <Divider sx={{ background: "#D3006C" }} />
                     <Box sx={{ width: "80%", margin: "auto" }}>
                         <Form className="form-group" onSubmit={handleSubmit}>
@@ -405,6 +409,10 @@ const ViewerInfoForm = ({ show, addViewerInfo, liveStream, close }) => {
                                     value={payload.phone}
                                     onChange={(e) => setPayload({ ...payload, phone: e.target.value })}
                                 />
+                            </FormGroup>
+                            <FormGroup className="hint">
+                                <span>Is this your first time with us?</span>
+                                <input style={{ marginLeft: 10 }} type={"checkbox"} checked={payload.firstTimer} onClick={(e) => { setPayload({ ...payload, firstTimer: !payload.firstTimer }) }} />
                             </FormGroup>
                         </Form>
                     </Box>

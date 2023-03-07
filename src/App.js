@@ -16,28 +16,48 @@ import { routes } from './routes';
 import React from 'react';
 import Firebase from "./services/firebase";
 
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+
+const theme = createTheme({
+  palette: {
+    mode: 'dark',
+    background: {
+      default: '#1c1c1c',
+      paper: '#424242'
+    },
+    text: {
+      primary: '#ffffff',
+      secondary: '#b0bec5'
+    }
+  },
+});
 
 function App() {
   const history = createBrowserHistory({
 
   })
+  
   return (
     <>
-      <AlertContextProvider>
-        <AuthProvider>
-          <MusicPlayerContextProvider>
-            <LiveChatContextProvider>
-              <BrowserRouter history={history}>
-                <div style={{ overflowX: "hidden", background: "#000" }}>
-                  <Navbar />
-                  <AppRouter />
-                  <Footer />
-                </div>
-              </BrowserRouter>
-            </LiveChatContextProvider>
-          </MusicPlayerContextProvider>
-        </AuthProvider>
-      </AlertContextProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <AlertContextProvider>
+          <AuthProvider>
+            <MusicPlayerContextProvider>
+              <LiveChatContextProvider>
+                <BrowserRouter history={history}>
+                  <div style={{ overflowX: "hidden" }}>
+                    <Navbar />
+                    <AppRouter />
+                    <Footer />
+                  </div>
+                </BrowserRouter>
+              </LiveChatContextProvider>
+            </MusicPlayerContextProvider>
+          </AuthProvider>
+        </AlertContextProvider>
+      </ThemeProvider>
     </>
   );
 }

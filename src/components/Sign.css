@@ -37,6 +37,7 @@
 }
 
 @media only screen and (max-width: 767px) {
+    /* @media only screen and (max-width: 600px) { */
     .gradient {
         flex-direction: row-reverse;
     }
