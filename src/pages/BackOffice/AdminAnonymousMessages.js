@@ -63,7 +63,7 @@ const AdminAnonymousMessages = () => {
                                 </Link>
                                 <Typography sx={{ color: Enums.COLORS.yellow }}>Anonymous Messages</Typography>
                             </Breadcrumbs>
-                            <Button onClick={() => newGroupModalRef.current.toggle(true)} size="small" variant='contained' color='inherit'>New Group</Button>
+                            <Button onClick={() => newGroupModalRef.current.toggle(true)} size="small" variant='contained' color='primary'>New Group</Button>
                         </Box>
                         <Box sx={{ flex: 1, overflow: "auto" }}>
                             {_.isEmpty(messageGroups) ?
