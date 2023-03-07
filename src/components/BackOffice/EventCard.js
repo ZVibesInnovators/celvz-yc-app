@@ -13,7 +13,7 @@ import Enums from '../../constants/enums';
 import { Box, IconButton } from '@mui/material';
 import ShareIcon from '@mui/icons-material/Share';
 
-export default function EventCard({ event, selectedEvent, setSelectedEvent, onSelect }) {
+export default function EventCard({ event, selectedEvent, shareEvent, setSelectedEvent, onSelect }) {
   const isSelected = selectedEvent?.id === event.id;
   const eventLink = Enums.URL_REGEX.test(event.link) ? event.link : `${window.location.origin}/events/${event.link}`;
   const eventDate = React.useMemo(() => {
@@ -41,7 +41,7 @@ export default function EventCard({ event, selectedEvent, setSelectedEvent, onSe
         <Typography variant="body2" color="text.secondary" sx={{ fontSize: 14, alignItems: "flex-start", display: "flex" }}><LocationOnIcon sx={{ fontSize: 18 }} />&nbsp;{event?.venue} | {event?.address}</Typography>
       </CardContent>
       <CardActions>
-        <IconButton size="small"><ShareIcon /></IconButton>
+        <IconButton size="small" onClick={() => shareEvent(event)}><ShareIcon /></IconButton>
         <IconButton size="small" onClick={openEventLink}><LinkIcon /></IconButton>
       </CardActions>
       <CardActions>

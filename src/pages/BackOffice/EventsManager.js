@@ -28,7 +28,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { ConvertToExcel } from "../../services/operations";
+import { ConvertToExcel, copyToClipboard } from "../../services/operations";
 import ConfirmationDialog from "./ConfirmationDialog";
 import NewEventModal from "../../components/BackOffice/NewEventModal";
 
@@ -42,8 +42,9 @@ const EventsManager = () => {
     const { authData } = useContext(AuthContext);
     const [events, setEvents] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState(null)
+    const [page, setPage] = useState(1);
 
-    useEffect(() => { if (authData) fetchData() }, [authData])
+    useEffect(() => { if (authData) fetchData({}) }, [authData])
 
     const fetchData = async ({ shouldUpdateSelected }) => {
         try {
@@ -52,7 +53,7 @@ const EventsManager = () => {
             setEvents(res.data);
             if (shouldUpdateSelected && selectedEvent) {
                 // find the selected event and update the selectedEvent value with the latest
-                const newSelected = _.find(res.data, function(evt) {
+                const newSelected = _.find(res.data, function (evt) {
                     return evt._id === selectedEvent?._id
                 })
                 if (newSelected) setSelectedEvent(newSelected)
@@ -63,6 +64,25 @@ const EventsManager = () => {
         }
     }
 
+    const shareEvent = (event) => {
+        try {
+            const eventLink = Enums.URL_REGEX.test(event?.link) ? event?.link : `${window.location.origin}/events/${event?.link}`;
+            copyToClipboard(`I am beyond excited to share with you the incredible event of a lifetime – "${event.title}".Get ready to participate on ${moment(event.startDate).format("ddd MMM, DD YYYY")+" by "+moment(event.startDate).format("hh:mm a")}, where we will gather at the magnificent ${event.venue}. This is an event that you absolutely do not want to miss!Join us at ${event.address}. Don't wait any longer, take the first step and register now for this extraordinary experience by visiting ${eventLink}.I cannot wait to see you there and witness the transformation that awaits you!`)
+            showAlert("info", "Text copied to clipboard")
+        } catch (error) {
+            showError(error.message)
+        }
+    }
+
+    const handleScroll = (event) => {
+        // const element = event.target;
+        // console.log(element.scrollHeight - element.scrollTop - 20, element.clientHeight);
+        // if (element.scrollHeight - element.scrollTop - 20 <= element.clientHeight) {
+        //   console.log("ppp =>",page + 1);
+        //   setPage(page + 1);
+        // }
+      };
+
     return (
         <>
             <NewEventModal ref={newEventModalRef} refresh={(v) => fetchData({ shouldUpdateSelected: v })} />
@@ -71,7 +91,7 @@ const EventsManager = () => {
                 :
                 <Box sx={{ height: "calc(100vh - 150px)", overflow: "none" }}>
                     <Row style={{ height: "100%", overflow: "none" }}>
-                        <Col md="6" style={{ height: "100%", overflow: "auto" }}>
+                        <Col md="6" style={{ height: "100%", overflow: "auto" }} onScroll={handleScroll}>
                             <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: "10px" }}>
                                 <Breadcrumbs aria-label="breadcrumb" sx={{ color: "#FFF" }}>
                                     <Link underline="none" color="inherit" onClick={() => navigate("/admin")} sx={{ ":hover": { color: Enums.COLORS.orange, cursor: "pointer" } }}>
@@ -101,7 +121,7 @@ const EventsManager = () => {
                                             _.map(events, function (event, i) {
                                                 return (
                                                     <Box key={i} width={1 / 2}>
-                                                        <EventCard event={event} onSelect={(v) => setSelectedEvent(v)} selectedEvent={selectedEvent} />
+                                                        <EventCard event={event} onSelect={(v) => setSelectedEvent(v)} shareEvent={shareEvent} selectedEvent={selectedEvent} />
                                                     </Box>
                                                 )
                                             })
@@ -130,9 +150,10 @@ const EventsManager = () => {
                                     <EventDetailPreview
                                         newEventModalRef={newEventModalRef}
                                         event={selectedEvent}
+                                        shareEvent={shareEvent}
                                         refresh={() => {
                                             setSelectedEvent();
-                                            fetchData()
+                                            fetchData({})
                                         }}
                                     />
                             }
@@ -145,7 +166,7 @@ const EventsManager = () => {
 
 export default EventsManager;
 
-const EventDetailPreview = ({ event, refresh, newEventModalRef }) => {
+const EventDetailPreview = ({ event, refresh, newEventModalRef, shareEvent }) => {
     const [payload, setPayload] = useState({});
     const [loading, setLoading] = useState(true);
     const { showError, showAlert } = useContext(AlertContext);
@@ -226,7 +247,7 @@ const EventDetailPreview = ({ event, refresh, newEventModalRef }) => {
                 <Typography variant="body2" color="text.secondary" sx={{ fontSize: 14, alignItems: "center", display: "flex" }}><EventIcon sx={{ fontSize: 18 }} />&nbsp;{eventDate}</Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ fontSize: 14, alignItems: "flex-start", display: "flex" }}><LocationOnIcon sx={{ fontSize: 18 }} />&nbsp;{event?.venue} | {event?.address}</Typography>
                 <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "10px", mt: "10px" }}>
-                    <IconButton color="secondary" title='Share'><ShareIcon /></IconButton>
+                    <IconButton color="secondary" title='Share' onClick={() => shareEvent(event)}><ShareIcon /></IconButton>
                     <IconButton color="warning" title="Open Link" onClick={openEventLink}><LinkIcon /></IconButton>
                     <IconButton color="primary" title="Edit Event" onClick={() => newEventModalRef?.current.toggle(true, event)}><EditIcon /></IconButton>
                     <IconButton color="error" title="Delete Event" onClick={confirmDelete}><DeleteIcon /></IconButton>
