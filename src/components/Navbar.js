@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import logo from "../components/assest/image/logoLarge.png"
 import { FiSearch } from "react-icons/fi"
 // REACT FRONTAWESOME IMPORTS
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { Link, useParams, useRoutes } from "react-router-dom";
+import { Link, useLocation, useParams, useRoutes } from "react-router-dom";
 import { AuthContext } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,6 +15,7 @@ import Enums from "../constants/enums";
 
 const Navbar = (props) => {
   const navigate = useNavigate();
+  const location = useLocation()
   const md = useMediaQuery('(max-width:1199px)')
   const { isLoggedIn, logout, permissions } = useContext(AuthContext);
 
@@ -25,6 +26,10 @@ const Navbar = (props) => {
       // console.log("params =>", permissions)
     })
   }, [])
+
+  const callbackURL = useMemo(() => {
+    return location.pathname
+  }, [location])
 
   return (
     // isAuth &&
@@ -66,11 +71,11 @@ const Navbar = (props) => {
               {!isLoggedIn ?
                 <>
                   <li className="btn nav-item" data-toggle={md && "collapse"} data-target="#navbarSupportedContent">
-                    <Link to="/auth/register" className="nav-link">Register</Link>
+                    <Link to={`/auth/register?callback=${callbackURL}`} className="nav-link">Register</Link>
                   </li>
 
                   <li className="btn nav-item bg-transparent sign-inn" data-toggle={md && "collapse"} data-target="#navbarSupportedContent">
-                    <Link to="/auth" className="nav-link">Sign In</Link>
+                    <Link to={`/auth?callback=${callbackURL}`} className="nav-link">Sign In</Link>
                   </li>
                 </>
                 :

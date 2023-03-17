@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import React, { useContext, useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router";
+import React, { useContext, useEffect, useMemo, useState } from "react";
+import { useParams, useNavigate, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import SyncIcon from '@mui/icons-material/Sync';
 import { Button, Form, FormGroup, Input, Row, Col, Label } from "reactstrap";
@@ -12,7 +12,7 @@ import { LargeHeroButton } from "../../components/home/CallToActionButtons";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const Register = (props) => {
-  const params = useParams();
+  const params = useLocation();
   const navigate = useNavigate();
   const { showError, showAlert } = useContext(AlertContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -38,18 +38,26 @@ const Register = (props) => {
     dob: moment().format("DD-MM-YYYY")
   });
 
+  
+  const callbackURL = useMemo(() => {
+    const queryString = window.location.search;
+    const parameters = new URLSearchParams(queryString);
+    const callback = parameters.get('callback');
+    return callback
+  }, [params])
+
   useEffect(() => {
     if (isLoggedIn) {
       // check if user visited a previous strict page and then redirect back after login
       const strictPage = localStorage.getItem("strictPage");
-      if (strictPage) {
-        window.location = strictPage
+      if (strictPage || callbackURL) {
+        window.location = callbackURL || strictPage
       } else {
         // redirect the user to the dashboard if already logged in
         navigate("/")
       }
     }
-  }, [isLoggedIn])
+  }, [isLoggedIn, callbackURL])
 
 
   const handleSubmit = async (e) => {
