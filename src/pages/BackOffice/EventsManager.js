@@ -67,7 +67,7 @@ const EventsManager = () => {
     const shareEvent = (event) => {
         try {
             const eventLink = Enums.URL_REGEX.test(event?.link) ? event?.link : `${window.location.origin}/events/${event?.link}`;
-            copyToClipboard(`I am beyond excited to share with you the incredible event of a lifetime – "${event.title}".Get ready to participate on ${moment(event.startDate).format("ddd MMM, DD YYYY")+" by "+moment(event.startDate).format("hh:mm a")}, where we will gather at the magnificent ${event.venue}. This is an event that you absolutely do not want to miss!Join us at ${event.address}. Don't wait any longer, take the first step and register now for this extraordinary experience by visiting ${eventLink}.I cannot wait to see you there and witness the transformation that awaits you!`)
+            copyToClipboard(`I am beyond excited to share with you the incredible event of a lifetime – "${event.title}".Get ready to participate on ${moment(event.startDate).format("ddd MMM, DD YYYY") + " by " + moment(event.startDate).format("hh:mm a")}, where we will gather at the magnificent ${event.venue}. This is an event that you absolutely do not want to miss!Join us at ${event.address}. Don't wait any longer, take the first step and register now for this extraordinary experience by visiting ${eventLink}.I cannot wait to see you there and witness the transformation that awaits you!`)
             showAlert("info", "Text copied to clipboard")
         } catch (error) {
             showError(error.message)
@@ -81,7 +81,7 @@ const EventsManager = () => {
         //   console.log("ppp =>",page + 1);
         //   setPage(page + 1);
         // }
-      };
+    };
 
     return (
         <>
@@ -235,6 +235,52 @@ const EventDetailPreview = ({ event, refresh, newEventModalRef, shareEvent }) =>
         }
     }
 
+    const exportData = (rows) => {
+        const confirmExport = () => {
+            showAlert("info", `Exporting registrants data for "${event.title}" event in the background`);
+            // ConvertToExcel({ jsonData: rows })
+            confirmRef.current.close();
+            const api = new API(authData?.token);
+            // const res = await api.request("get", `events/${event._id}/attendees-export`)
+            // console.log("export =>", res.blob())
+
+            // Add authorization token to headers
+            const headers = new Headers();
+            headers.append('Authorization', 'Bearer ' + authData?.token);
+
+            // Make API call to endpoint that returns a file with headers
+            fetch(`${Enums.BASE_URL}/events/${event._id}/attendees-export`, {
+                headers: headers
+            })
+                .then(response => response.blob())
+                .then(blob => {
+                    console.log("BLOB =>", window.URL.createObjectURL(blob), blob);
+                    // Create a URL for the returned file blob
+                    const url = window.URL.createObjectURL(blob);
+                    // Create an anchor element with the URL and download attribute
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'file.xlsx'; // Replace with the name of the downloaded file
+                    // Append the anchor element to the document body
+                    document.body.appendChild(a);
+                    // Click the anchor element to trigger the download
+                    a.click();
+                    // Remove the anchor element from the document body
+                    document.body.removeChild(a);
+                    // Revoke the URL object to free up memory
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(error => console.error(error));
+        }
+
+        confirmRef.current.open({
+            title: "Export Registrants",
+            description: "This operation may take some time depending on the data size.\nAre you sure you want to proceed?",
+            submitText: "Export to Excel",
+            confirm: () => confirmExport()
+        })
+    }
+
     return (loading ?
         <Loader containerStyle={{ position: "relative", height: "100%", flex: 1 }} />
         :
@@ -254,7 +300,7 @@ const EventDetailPreview = ({ event, refresh, newEventModalRef, shareEvent }) =>
                 </Box>
                 <Box sx={{ display: "flex", mb: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                     <Typography color="text.secondary">Attendees&nbsp;&middot;&nbsp;{_.size(attendees)}</Typography>
-                    <Button variant="contained" size="small" color="inherit" sx={{ color: Enums.COLORS.grey_500 }} onClick={() => ConvertToExcel({ jsonData: rows })}>Export <FileDownloadIcon sx={{ ml: 1 }} /></Button>
+                    <Button variant="contained" size="small" color="inherit" sx={{ color: Enums.COLORS.grey_500 }} onClick={() => exportData(rows)}>Export <FileDownloadIcon sx={{ ml: 1 }} /></Button>
                 </Box>
                 {_.isEmpty(attendees) ?
                     <Box sx={{
