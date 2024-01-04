@@ -29,13 +29,16 @@ const NewEventModal = forwardRef((props, ref) => {
     useImperativeHandle(ref, () => ({
         toggle: (v, data) => {
             toggle(v);
-            setIsEditMode(!_.isNull(data))
+            setIsEditMode(!_.isEmpty(data))
             setEvent(data || {})
         },
     }))
 
     useEffect(() => {
-        if (!show) setEvent({})
+        if (!show) {
+            setEvent({})
+            setIsEditMode(false)
+        }
     }, [show])
 
 

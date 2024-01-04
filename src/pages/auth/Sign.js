@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import SyncIcon from '@mui/icons-material/Sync';
-import { useParams, useNavigate } from "react-router";
+import { useParams, useNavigate, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { Button, Form, FormGroup, Input, Row, Col } from "reactstrap";
 import { AlertContext } from "../../contexts/AlertContextProvider";
@@ -10,20 +10,28 @@ import { LargeHeroButton } from "../../components/home/CallToActionButtons";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const Sign = (props) => {
-  const params = useParams();
+  const params = useLocation();
   const navigate = useNavigate();
   const { showError, showAlert } = useContext(AlertContext);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { login, isLoggedIn } = useContext(AuthContext);
-  
+
+
+  const callbackURL = useMemo(() => {
+    const queryString = window.location.search;
+    const parameters = new URLSearchParams(queryString);
+    const callback = parameters.get('callback');
+    return callback
+  }, [params])
+
   useEffect(() => {
-      const footer = document.getElementById("site-footer");
-      // hide and show footer
-      footer.style.display = "none"
-      return () => {
+    const footer = document.getElementById("site-footer");
+    // hide and show footer
+    footer.style.display = "none"
+    return () => {
       footer.style.display = "block"
-      }
+    }
   }, [])
 
   const [payload, setPayload] = useState({
@@ -42,14 +50,14 @@ const Sign = (props) => {
     if (isLoggedIn) {
       // check if user visited a previous strict page and then redirect back after login
       const strictPage = localStorage.getItem("strictPage");
-      if(strictPage) {
-          window.location = strictPage
-      }else {
+      if (strictPage || callbackURL) {
+        window.location = callbackURL || strictPage
+      } else {
         // redirect the user to the dashboard if already logged in
         navigate("/")
       }
     }
-  }, [isLoggedIn])
+  }, [isLoggedIn, callbackURL])
 
   const handleSubmit = async (e) => {
     try {

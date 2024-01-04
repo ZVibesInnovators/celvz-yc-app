@@ -2,7 +2,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import HelpIcon from '@mui/icons-material/Help';
 import SafetyCheckIcon from '@mui/icons-material/SafetyCheck';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
-import { Box, Button, Divider, FormControl, Input, InputLabel, Switch, Typography, useTheme } from '@mui/material';
+import { Avatar, Box, Button, Divider, FormControl, Input, InputLabel, Switch, Typography, useTheme } from '@mui/material';
 import _ from 'lodash';
 import moment from 'moment';
 import React, { createRef, useContext, useMemo, useState } from 'react';
@@ -338,8 +338,14 @@ const MessageGroupInfo = ({ messages, selectedGroup, setSelectedGroup, refresh }
                                         }}>
                                         <Box sx={{ flex: 1, overflowX: "hidden" }}>
                                             <Typography sx={{ color: Enums.COLORS.white, fontSize: "20px" }}>{msg.message}</Typography>
-                                            {msg.author && <Typography sx={{ color: Enums.COLORS.grey_400, fontSize: "14px" }}>{msg.author.name}</Typography>}
-                                            <Typography sx={{ color: Enums.COLORS.grey_400, fontSize: "14px" }}>{moment(msg.createdAt).format("DD-mm-YYYY hh:mm a")}</Typography>
+                                            <Box sx={{ flexDirection: "row", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                                                <Typography sx={{ color: Enums.COLORS.grey_400, fontSize: "14px" }}>{moment(msg.createdAt).format("DD-MMM-YYYY hh:mm a")}</Typography>
+                                                {msg.author && <Box sx={{ flexDirection: "row", display: "flex", gap: "10px" }}>
+                                                    <Avatar sizes="xs" style={{ width: 20, height: 20 }} />
+                                                    <Typography sx={{ color: Enums.COLORS.yellow, fontSize: "14px" }}>{`${msg.author.firstName || ""} ${msg.author.lastName || ""}`}</Typography>
+                                                </Box>
+                                                }
+                                            </Box>
                                         </Box>
                                     </Box>
                                 )

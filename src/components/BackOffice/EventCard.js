@@ -26,7 +26,7 @@ export default function EventCard({ event, selectedEvent, shareEvent, setSelecte
   }
 
   return (
-    <Card sx={{ maxWidth: 345, height: "98%", m: 1, mb: 2, display: "flex", flexDirection: "column" }}>
+    <Card sx={{ maxWidth: 345, minWidth: 300, height: "98%", m: 1, mb: 2, display: "flex", flexDirection: "column" }}>
       <CardMedia
         sx={{ height: 180, backgroundPositionY: "top", backgroundSize: "cover" }}
         image={event?.media?.meta?.secure_url}
